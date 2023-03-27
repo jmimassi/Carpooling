@@ -1,0 +1,303 @@
+openapi: 3.0.0
+info:
+  title: Application de covoiturage universitaire
+  version: 1.0.0
+  description: API pour publier et rechercher des itinéraires universitaires
+
+paths:
+  /users/register:
+    post:
+      summary: S'inscrire sur le site
+      requestBody:
+        description: Informations d'inscription
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "200":
+          description: Utilisateur enregistré avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Création de l'utilisateur impossible
+  /routes:
+    post:
+      summary: Créer un itinéraire
+      requestBody:
+        description: Informations de l'itinéraire
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Itinaries"
+      responses:
+        "200":
+          description: Itinéraire créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de créer l'itinéraire
+
+    get:
+      summary: Obtenir la liste des itinéraires disponibles
+      responses:
+        "200":
+          description: Liste des itinéraires récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de récupérer la liste des itinéraires disponibles
+
+  /routes/{adress}:
+    get:
+      summary: Obtenir les informations de la destination universitaire disponible
+      parameters:
+        - name: address
+          in: path
+          description: Destination
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des destinations universitaires
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Destinations introuvable
+
+  /routes/{id}:
+    put:
+      summary: Mettre à jour un itinéraire existant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'itinéraire à mettre à jour
+          schema:
+            type: integer
+      requestBody:
+        description: Informations de l'itinéraire mises à jour
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Itinaries"
+      responses:
+        "200":
+          description: Itinéraire mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de mettre à jour l'itinéraire
+
+    delete:
+      summary: Supprimer un itinéraire existant
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de l'itinéraire à supprimer
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Itinéraire supprimé avec succès
+        "404":
+          description: Impossible de supprimer l'itinéraire
+
+  /routes/{id}/seats:
+    put:
+      summary: Mettre à jour le nombre de places disponibles dans un itinéraire existant pour un conducteur
+      parameters:
+        - name: id
+          in: path
+          description: ID de l'itinéraire
+          required: true
+          schema:
+            type: integer
+        - name: seats
+          in: body
+          description: Nombre de places disponibles
+          required: true
+          schema:
+            type: object
+            properties:
+              seats:
+                type: integer
+      responses:
+        "200":
+          description: nombre de places mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de mettre à jour le nombre de places
+
+  /bookings:
+    post:
+      summary: Réserver une place dans un itinéraire existant en tant que passager
+      requestBody:
+        description: Informations de réservation
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Itinaries_User"
+      responses:
+        "200":
+          description: Réservation effectuée avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries_User"
+        "404":
+          description: Réservation impossible
+
+    get:
+      summary: Obtenir toutes les réservations effectuées par tout les utilisateur
+      responses:
+        "200":
+          description: Réservations récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Itinaries_User"
+
+  /bookings/{id}/accept:
+    put:
+      summary: Accepter un passager
+      parameters:
+        - name: id
+          in: path
+          description: ID de la réservation
+          required: true
+          schema:
+            type: integer
+        - name: request_user
+          in: body
+          description: Nombre de places disponibles
+          required: true
+          schema:
+            type: object
+            properties:
+              request_user:
+                type: boolean
+      responses:
+        "200":
+          description: réservation mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries_User"
+        "404":
+          description: Impossible de mettre à jour la réservation
+
+  /bookings/{id}/deny:
+    put:
+      summary: Refuser un passager
+      parameters:
+        - name: id
+          in: path
+          description: ID de la réservation
+          required: true
+          schema:
+            type: integer
+        - name: request_user
+          in: body
+          description: Nombre de places disponibles
+          required: true
+          schema:
+            type: object
+            properties:
+              request_user:
+                type: boolean
+      responses:
+        "200":
+          description: réservation mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries_User"
+        "404":
+          description: Impossible de mettre à jour la réservation
+
+  /destinations:
+    get:
+      summary: Obtenir toutes les destinations universitaires disponibles
+      responses:
+        "200":
+          description: Liste de toutes les destinations universitaires
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Destination"
+        "404":
+          description: Destinations introuvable
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        adress:
+          type: string
+        number_passengers_max:
+          type: integer
+        lisence_plate:
+          type: string
+        picture:
+          type: string
+
+    Itinaries:
+      type: object
+      properties:
+        destination:
+          type: string
+        date:
+          type: string
+        hours:
+          type: string
+        startAdress:
+          type: string
+        seats:
+          type: integer
+
+    Itinaries_User:
+      type: object
+      properties:
+        fk_itiniaries:
+          type: integer
+        fk_user:
+          type: string
+        type_user:
+          type: string
+        request_user:
+          type: boolean
+
+    Destination:
+      type: object
+      properties:
+        adress:
+          type: string
