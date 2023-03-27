@@ -24,6 +24,20 @@ paths:
                 $ref: "#/components/schemas/User"
         "404":
           description: Création de l'utilisateur impossible
+
+  /users/login:
+    get:
+      summary: Récupérer tout les utilisateurs et leurs informations
+      responses:
+        "200":
+          description: Récuperation de la listes des utilisateur enregistré avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: Création de l'utilisateur impossible
+
   /routes:
     post:
       summary: Créer un itinéraire
@@ -46,6 +60,28 @@ paths:
 
     get:
       summary: Obtenir la liste des itinéraires disponibles
+      responses:
+        "200":
+          description: Liste des itinéraires récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de récupérer la liste des itinéraires disponibles
+
+  /routes/{startAdress}:
+    get:
+      summary: Obtenir la liste des itinéraires disponibles pour une adresse de départ
+      parameters:
+        - name: startAdress
+          in: path
+          description: Adresse de départ
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Liste des itinéraires récupérée avec succès
@@ -131,7 +167,7 @@ paths:
           schema:
             type: integer
         - name: seats
-          in: body
+          in: path
           description: Nombre de places disponibles
           required: true
           schema:
@@ -151,7 +187,7 @@ paths:
 
   /bookings:
     post:
-      summary: Réserver une place dans un itinéraire existant en tant que passager
+      summary: Réserver une place dans un itinéraire existant
       requestBody:
         description: Informations de réservation
         required: true
@@ -181,6 +217,26 @@ paths:
                 items:
                   $ref: "#/components/schemas/Itinaries_User"
 
+  /booking/{id}:
+    get:
+      summary: Obtenir toutes les informations d'une réservation
+      parameters:
+        - name: Id
+          in: path
+          description: Id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Liste des destinations universitaires
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries_User"
+        "404":
+          description: Destinations introuvable
+
   /bookings/{id}/accept:
     put:
       summary: Accepter un passager
@@ -192,7 +248,7 @@ paths:
           schema:
             type: integer
         - name: request_user
-          in: body
+          in: path
           description: Nombre de places disponibles
           required: true
           schema:
@@ -221,7 +277,7 @@ paths:
           schema:
             type: integer
         - name: request_user
-          in: body
+          in: path
           description: Nombre de places disponibles
           required: true
           schema:
@@ -238,6 +294,22 @@ paths:
                 $ref: "#/components/schemas/Itinaries_User"
         "404":
           description: Impossible de mettre à jour la réservation
+
+  /bookings/{id}:
+    delete:
+      summary: Supprimer une réservation existante
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la réservation à supprimer
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Itinéraire supprimé avec succès
+        "404":
+          description: Impossible de supprimer l'itinéraire
 
   /destinations:
     get:
@@ -294,7 +366,7 @@ components:
         type_user:
           type: string
         request_user:
-          type: boolean
+          type: string
 
     Destination:
       type: object
