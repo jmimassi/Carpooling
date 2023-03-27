@@ -324,6 +324,59 @@ paths:
         "404":
           description: Destinations introuvable
 
+  /chat/{sender}/{receiver}:
+    get:
+      summary: Récupérer les messages du chat
+      description: Renvoie une liste de tous les messages envoyés sur le chat.
+      parameters:
+        - in: path
+          name: sender
+          required: true
+          description: email du sender
+          schema:
+            type: integer
+        - in: path
+          name: receiver
+          required: true
+          description: email du receiver
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Succès de la récupération des messages du chat
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Message"
+        "401":
+          description: Accès non autorisé
+        "404":
+          description: Message introuvable
+
+  /chat:
+    post:
+      summary: Envoyer un message
+      requestBody:
+        description: Description du message
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Message"
+      responses:
+        "200":
+          description: Succès de l'envoi du message sur le chat
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+        "401":
+          description: Accès non autorisé
+        "404":
+          description: Message impossible à envoyer
+
 components:
   schemas:
     User:
@@ -373,3 +426,19 @@ components:
       properties:
         adress:
           type: string
+
+    Message:
+      type: object
+      properties:
+        sender:
+          type: string
+          description: Nom de l'envoyeur du message
+        receiver:
+          type: string
+          description: Nom du receiver du message
+        message:
+          type: string
+          description: Contenu du message
+        timestamp:
+          type: string
+          description: date émis du message
