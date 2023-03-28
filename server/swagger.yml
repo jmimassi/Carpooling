@@ -26,8 +26,15 @@ paths:
           description: Création de l'utilisateur impossible
 
   /users/login:
-    get:
+    post:
       summary: Récupérer tout les utilisateurs et leurs informations
+      requestBody:
+        description: Informations d'inscription
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
       responses:
         "200":
           description: Récuperation de la listes des utilisateur enregistré avec succès
