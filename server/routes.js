@@ -1,8 +1,8 @@
 let express = require('express');
 
 let router = express.Router();
-let airController = require('./controllers/airController');
+let userController = require('./controllers/userController');
 
-router.get('/reservation', airController.reservation);
+router.get('/', userController.userList);
 
 module.exports = router;
