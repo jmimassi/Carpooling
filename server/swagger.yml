@@ -5,7 +5,7 @@ info:
   description: API pour publier et rechercher des itinéraires universitaires
 
 paths:
-  /users/register:
+  /user/register:
     post:
       summary: S'inscrire sur le site
       requestBody:
@@ -25,7 +25,7 @@ paths:
         "404":
           description: Création de l'utilisateur impossible
 
-  /users/login:
+  /user/login:
     post:
       summary: Récupérer tout les utilisateurs et leurs informations
       requestBody:
@@ -34,14 +34,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: "#/components/schemas/UserLogin"
       responses:
         "200":
           description: Récuperation de la listes des utilisateur enregistré avec succès
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: "#/components/schemas/UserLogin"
         "404":
           description: Création de l'utilisateur impossible
 
@@ -121,7 +121,7 @@ paths:
         "404":
           description: Destinations introuvable
 
-  /routes/{id}:
+  /route/{id}:
     put:
       summary: Mettre à jour un itinéraire existant
       parameters:
@@ -163,7 +163,7 @@ paths:
         "404":
           description: Impossible de supprimer l'itinéraire
 
-  /routes/{id}/seats:
+  /route/{id}/seats:
     put:
       summary: Mettre à jour le nombre de places disponibles dans un itinéraire existant pour un conducteur
       parameters:
@@ -244,7 +244,7 @@ paths:
         "404":
           description: Destinations introuvable
 
-  /bookings/{id}/accept:
+  /booking/{id}/accept:
     put:
       summary: Accepter un passager
       parameters:
@@ -273,7 +273,7 @@ paths:
         "404":
           description: Impossible de mettre à jour la réservation
 
-  /bookings/{id}/deny:
+  /booking/{id}/deny:
     put:
       summary: Refuser un passager
       parameters:
@@ -302,7 +302,7 @@ paths:
         "404":
           description: Impossible de mettre à jour la réservation
 
-  /bookings/{id}:
+  /booking/{id}:
     delete:
       summary: Supprimer une réservation existante
       parameters:
@@ -330,59 +330,6 @@ paths:
                 $ref: "#/components/schemas/Destination"
         "404":
           description: Destinations introuvable
-
-  /chat/{sender}/{receiver}:
-    get:
-      summary: Récupérer les messages du chat
-      description: Renvoie une liste de tous les messages envoyés sur le chat.
-      parameters:
-        - in: path
-          name: sender
-          required: true
-          description: email du sender
-          schema:
-            type: integer
-        - in: path
-          name: receiver
-          required: true
-          description: email du receiver
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Succès de la récupération des messages du chat
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Message"
-        "401":
-          description: Accès non autorisé
-        "404":
-          description: Message introuvable
-
-  /chat:
-    post:
-      summary: Envoyer un message
-      requestBody:
-        description: Description du message
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Message"
-      responses:
-        "200":
-          description: Succès de l'envoi du message sur le chat
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-        "401":
-          description: Accès non autorisé
-        "404":
-          description: Message impossible à envoyer
 
 components:
   schemas:
@@ -427,6 +374,8 @@ components:
           type: string
         request_user:
           type: string
+        message:
+          type: string
 
     Destination:
       type: object
@@ -434,18 +383,10 @@ components:
         adress:
           type: string
 
-    Message:
+    UserLogin:
       type: object
       properties:
-        sender:
+        email:
           type: string
-          description: Nom de l'envoyeur du message
-        receiver:
+        password:
           type: string
-          description: Nom du receiver du message
-        message:
-          type: string
-          description: Contenu du message
-        timestamp:
-          type: string
-          description: date émis du message
