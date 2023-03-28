@@ -243,6 +243,20 @@ paths:
                 $ref: "#/components/schemas/Itinaries_User"
         "404":
           description: Destinations introuvable
+    delete:
+      summary: Supprimer une réservation existante
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: ID de la réservation à supprimer
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Itinéraire supprimé avec succès
+        "404":
+          description: Impossible de supprimer l'itinéraire
 
   /booking/{id}/accept:
     put:
@@ -301,22 +315,6 @@ paths:
                 $ref: "#/components/schemas/Itinaries_User"
         "404":
           description: Impossible de mettre à jour la réservation
-
-  /booking/{id}:
-    delete:
-      summary: Supprimer une réservation existante
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: ID de la réservation à supprimer
-          schema:
-            type: integer
-      responses:
-        "200":
-          description: Itinéraire supprimé avec succès
-        "404":
-          description: Impossible de supprimer l'itinéraire
 
   /destinations:
     get:
