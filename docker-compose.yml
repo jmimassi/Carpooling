@@ -8,4 +8,4 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - $HOME/Desktop/MySQL-Snippets/school.sql:/school.sql
+      - $HOME/Desktop/MySQL-Snippets/carpooling.sql:/carpooling.sql

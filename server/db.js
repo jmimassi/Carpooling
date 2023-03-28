@@ -4,11 +4,11 @@ Sequelize = require('sequelize')
 const sequelize = new Sequelize(
     'carpooling',
     'root',
-    '', {
+    'root', {
     dialect: 'mysql',
     host: 'localhost',
-    port:"3307"
-    }
+    port: "3307"
+}
 );
 
 module.exports = sequelize
