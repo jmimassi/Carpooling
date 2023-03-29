@@ -82,13 +82,13 @@ paths:
         "404":
           description: Impossible de récupérer la liste des itinéraires disponibles
 
-  /routes/{startAdress}:
+  /routes/{startAddress}:
     get:
       summary: Obtenir la liste des itinéraires disponibles pour une adresse de départ
       parameters:
-        - name: startAdress
+        - name: startAddress
           in: path
-          description: Adresse de départ
+          description: Addresse de départ
           required: true
           schema:
             type: string
@@ -104,7 +104,7 @@ paths:
         "404":
           description: Impossible de récupérer la liste des itinéraires disponibles
 
-  /routes/{adress}:
+  /routes/{address}:
     get:
       summary: Obtenir les informations de la destination universitaire disponible
       parameters:
@@ -341,7 +341,7 @@ components:
           type: string
         password:
           type: string
-        adress:
+        address:
           type: string
         number_passengers_max:
           type: integer
@@ -359,7 +359,7 @@ components:
           type: string
         hours:
           type: string
-        startAdress:
+        startAddress:
           type: string
         seats:
           type: integer
@@ -381,7 +381,7 @@ components:
     Destination:
       type: object
       properties:
-        adress:
+        address:
           type: string
 
     UserLogin:

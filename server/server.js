@@ -17,6 +17,16 @@ db.sync({ alter: true })
 
 app.use("/api", routes);
 
+
+const swaggerUi = require('swagger-ui-express');
+const fs = require("fs")
+const YAML = require('yaml')
+
+const file = fs.readFileSync('./swagger.yaml', 'utf8')
+const swaggerDocument = YAML.parse(file)
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.listen(8000, () => {
     console.log("listening on port 8000")
 })
