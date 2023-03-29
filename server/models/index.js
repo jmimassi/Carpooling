@@ -10,7 +10,12 @@ db.Itinaries_User = require('./itinaries_userModel');
 db.Itinaries = require('./itinariesModel');
 db.User = require('./userModel');
 
-db.User.belongsTo( db.Itinaries_User, {foreignKey: "fk_user"} );
-db.Itinaries_User.hasMany(db.User, { foreignKey: "fk_user" });
+db.User.hasMany(db.Itinaries_User, { foreignKey: "fk_user" });
+db.Itinaries_User.belongsTo(db.User);
+db.Itinaries.hasMany(db.Itinaries_User, { foreignKey: "fk_itinaries" });
+db.Itinaries_User.belongsTo(db.Itinaries);
+db.Destination.hasMany(db.Itinaries, { foreignKey: "fk_destination" });
+db.Itinaries.belongsTo(db.Destination);
+
 
 module.exports = db

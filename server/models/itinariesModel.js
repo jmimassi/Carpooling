@@ -8,8 +8,9 @@ const Itinaries = db.define('itinaries', {
         autoIncrement: true,
         primaryKey: true
     },
-    fk_destination_id: { type: Sequelize.STRING, allowNull: false },
-    date: { type: Sequelize.DATE, allowNull: false}
+    // fk_destination: { type: Sequelize.STRING, allowNull: false },
+    startAddress: { type: Sequelize.STRING, allowNull: false },
+    seats: { type: Sequelize.INTEGER, allowNull: false }
 })
 
 module.exports = Itinaries

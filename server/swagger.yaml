@@ -353,11 +353,7 @@ components:
     Itinaries:
       type: object
       properties:
-        destination:
-          type: string
-        date:
-          type: string
-        hours:
+        fk_destination:
           type: string
         startAddress:
           type: string
@@ -367,14 +363,14 @@ components:
     Itinaries_User:
       type: object
       properties:
-        fk_itiniaries:
+        fk_itinaries:
           type: integer
         fk_user:
           type: string
         type_user:
           type: string
         request_user:
-          type: string
+          type: boolean
         message:
           type: string
 
