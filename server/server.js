@@ -12,7 +12,7 @@ const db = require('./db.js');
 
 // Creating all the tables defined in agency
 //db.sync()
-db.sync({ force: true })
+db.sync({ alter: true })
 
 
 app.use("/api", routes);

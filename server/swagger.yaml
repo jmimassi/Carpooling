@@ -320,6 +320,24 @@ paths:
           description: Impossible de mettre à jour la réservation
 
   /destinations:
+    post:
+      summary: Créer une nouvelle destination
+      requestBody:
+        description: Informations de la destination
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Destination"
+      responses:
+        "200":
+          description: Creation de destiantion effectuée avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Destination"
+        "404":
+          description: Creation de destination impossible
     get:
       summary: Obtenir toutes les destinations universitaires disponibles
       responses:
@@ -354,7 +372,7 @@ components:
       type: object
       properties:
         fk_destination:
-          type: string
+          type: integer
         startAddress:
           type: string
         seats:

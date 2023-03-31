@@ -6,7 +6,7 @@ const Destination = db.Destination;
 
 
 exports.itinariesList = async function (req, res) {
-    await Itinaries_User.findAll()
+    await Itinaries.findAll()
         .then(data => {
             console.log("All itinaries:", JSON.stringify(data, null, 2));
             res.json(data);
@@ -17,7 +17,7 @@ exports.itinariesList = async function (req, res) {
 }
 
 exports.itinarieCreate = async (req, res) => {
-    let itinarie = Itinaries_User.build({
+    let itinarie = Itinaries.build({
         fk_destination: req.body.fk_destination,
         startAddress: req.body.startAddress,
         seats: req.body.seats
@@ -33,7 +33,7 @@ exports.itinarieCreate = async (req, res) => {
 }
 
 exports.itinariesstartAddressList = async function (req, res) {
-    await Itinaries_User.findAll({ where: { startAddress: req.params.startAddress } })
+    await Itinaries.findAll({ where: { startAddress: req.params.startAddress } })
         .then(data => {
             console.log(`All itinaries with :${req.params.startAddress} in params`, JSON.stringify(data, null, 2));
             res.json(data);
