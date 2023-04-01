@@ -33,3 +33,14 @@ exports.itinarie_userCreate = async (req, res) => {
             res.status(500).json({ message: err.message })
         })
 }
+
+exports.itinaries_userById = async function (req, res) {
+    await Itinaries_User.findAll()
+        .then(data => {
+            console.log("All itinaries_user:", JSON.stringify(data, null, 2));
+            res.json(data);
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message })
+        })
+}

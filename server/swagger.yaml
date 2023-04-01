@@ -7,9 +7,17 @@ info:
 servers:
   - url: http://localhost:8000/api
 
+tags:
+  - name: Users
+  - name: Itinaries
+  - name: Bookings
+  - name: Destinations
+
 paths:
   /user/register:
     post:
+      tags:
+        - Users
       summary: S'inscrire sur le site
       requestBody:
         description: Informations d'inscription
@@ -30,6 +38,8 @@ paths:
 
   /user/login:
     post:
+      tags:
+        - Users
       summary: Récupérer tout les utilisateurs et leurs informations
       requestBody:
         description: Informations d'inscription
@@ -48,8 +58,10 @@ paths:
         "404":
           description: Création de l'utilisateur impossible
 
-  /routes:
+  /itinaries:
     post:
+      tags:
+        - Itinaries
       summary: Créer un itinéraire
       requestBody:
         description: Informations de l'itinéraire
@@ -69,6 +81,8 @@ paths:
           description: Impossible de créer l'itinéraire
 
     get:
+      tags:
+        - Itinaries
       summary: Obtenir la liste des itinéraires disponibles
       responses:
         "200":
@@ -82,8 +96,10 @@ paths:
         "404":
           description: Impossible de récupérer la liste des itinéraires disponibles
 
-  /routes/{startAddress}:
+  /itinaries/{startAddress}:
     get:
+      tags:
+        - Itinaries
       summary: Obtenir la liste des itinéraires disponibles pour une adresse de départ
       parameters:
         - name: startAddress
@@ -104,8 +120,10 @@ paths:
         "404":
           description: Impossible de récupérer la liste des itinéraires disponibles
 
-  /routes/{address}:
+  /itinaries/{address}:
     get:
+      tags:
+        - Itinaries
       summary: Obtenir les informations de la destination universitaire disponible
       parameters:
         - name: address
@@ -124,12 +142,14 @@ paths:
         "404":
           description: Destinations introuvable
 
-  /route/{id}:
+  /itinarie/{itinaries_id}:
     put:
+      tags:
+        - Itinaries
       summary: Mettre à jour un itinéraire existant
       parameters:
         - in: path
-          name: id
+          name: itinaries_id
           required: true
           description: ID de l'itinéraire à mettre à jour
           schema:
@@ -152,10 +172,12 @@ paths:
           description: Impossible de mettre à jour l'itinéraire
 
     delete:
+      tags:
+        - Itinaries
       summary: Supprimer un itinéraire existant
       parameters:
         - in: path
-          name: id
+          name: itinaries_id
           required: true
           description: ID de l'itinéraire à supprimer
           schema:
@@ -166,25 +188,28 @@ paths:
         "404":
           description: Impossible de supprimer l'itinéraire
 
-  /route/{id}/seats:
-    put:
+  /itinarie/{itinaries_id}/seats:
+    patch:
+      tags:
+        - Itinaries
       summary: Mettre à jour le nombre de places disponibles dans un itinéraire existant pour un conducteur
       parameters:
-        - name: id
+        - name: itinaries_id
           in: path
           description: ID de l'itinéraire
           required: true
           schema:
             type: integer
-        - name: seats
-          in: path
-          description: Nombre de places disponibles
-          required: true
-          schema:
-            type: object
-            properties:
-              seats:
-                type: integer
+      requestBody:
+        description: Informations de l'itinéraire mises à jour
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                seats:
+                  type: integer
       responses:
         "200":
           description: nombre de places mis à jour avec succès
@@ -197,6 +222,8 @@ paths:
 
   /bookings:
     post:
+      tags:
+        - Bookings
       summary: Réserver une place dans un itinéraire existant
       requestBody:
         description: Informations de réservation
@@ -216,6 +243,8 @@ paths:
           description: Réservation impossible
 
     get:
+      tags:
+        - Bookings
       summary: Obtenir toutes les réservations effectuées par tout les utilisateur
       responses:
         "200":
@@ -227,11 +256,13 @@ paths:
                 items:
                   $ref: "#/components/schemas/Itinaries_User"
 
-  /booking/{id}:
+  /booking/{itinaries_user_id}:
     get:
+      tags:
+        - Bookings
       summary: Obtenir toutes les informations d'une réservation
       parameters:
-        - name: Id
+        - name: itinaries_user_id
           in: path
           description: Id
           required: true
@@ -247,10 +278,12 @@ paths:
         "404":
           description: Destinations introuvable
     delete:
+      tags:
+        - Bookings
       summary: Supprimer une réservation existante
       parameters:
         - in: path
-          name: id
+          name: itinaries_user_id
           required: true
           description: ID de la réservation à supprimer
           schema:
@@ -261,11 +294,13 @@ paths:
         "404":
           description: Impossible de supprimer l'itinéraire
 
-  /booking/{id}/accept:
+  /booking/{itinaries_user_id}/accept:
     put:
+      tags:
+        - Bookings
       summary: Accepter un passager
       parameters:
-        - name: id
+        - name: itinaries_user_id
           in: path
           description: ID de la réservation
           required: true
@@ -290,11 +325,13 @@ paths:
         "404":
           description: Impossible de mettre à jour la réservation
 
-  /booking/{id}/deny:
+  /booking/{itinaries_user_id}/deny:
     put:
+      tags:
+        - Bookings
       summary: Refuser un passager
       parameters:
-        - name: id
+        - name: itinaries_user_id
           in: path
           description: ID de la réservation
           required: true
@@ -321,6 +358,8 @@ paths:
 
   /destinations:
     post:
+      tags:
+        - Destinations
       summary: Créer une nouvelle destination
       requestBody:
         description: Informations de la destination
@@ -339,6 +378,8 @@ paths:
         "404":
           description: Creation de destination impossible
     get:
+      tags:
+        - Destinations
       summary: Obtenir toutes les destinations universitaires disponibles
       responses:
         "200":

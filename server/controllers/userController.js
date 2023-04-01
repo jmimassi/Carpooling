@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const db = require('../models/index');
 const User = db.User;
 const Itinaries_User = db.Itinaries_User;

@@ -10,13 +10,17 @@ let destinationController = require('./controllers/destinationController');
 router.post('/user/register', userController.userCreate);
 
 // Itinaries
-router.get('/routes', itinarieController.itinariesList);
-router.post('/routes', itinarieController.itinarieCreate);
-router.get('/routes/:startAddress', itinarieController.itinariesstartAddressList)
+router.get('/itinaries', itinarieController.itinariesList);
+router.post('/itinaries', itinarieController.itinarieCreate);
+router.get('/itinaries/:startAddress', itinarieController.itinariesBystartAddress)
+router.get('/itinaries/:address', itinarieController.itinariesByAddress)
+router.put('/itinarie/:itinaries_id', itinarieController.itinariesUpdate)
+router.patch('/itinarie/:itinaries_id/seats', itinarieController.itinariesUpdateSeats)
+router.delete('/itinarie/:itinaries_id', itinarieController.itinariesDelete)
 
 // ItinariesUser
-router.get('/bookings', itinarie_userController.itinaries_userList);
 router.post('/bookings', itinarie_userController.itinarie_userCreate);
+router.get('/bookings', itinarie_userController.itinaries_userList);
 
 // Destination
 router.get('/destinations', destinationController.destinationList);
