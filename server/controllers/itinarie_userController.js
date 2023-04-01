@@ -34,13 +34,71 @@ exports.itinarie_userCreate = async (req, res) => {
         })
 }
 
-exports.itinaries_userById = async function (req, res) {
-    await Itinaries_User.findAll()
+exports.itinarie_userById = async function (req, res) {
+    await Itinaries_User.findAll({ where: { itinaries_user_id: req.params.itinaries_user_id } })
         .then(data => {
-            console.log("All itinaries_user:", JSON.stringify(data, null, 2));
+            console.log(`All itinaries_user with :${req.params.itinaries_user_id} in params`, JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
             res.status(500).json({ message: err.message })
         })
+}
+
+exports.itinaries_userDelete = async (req, res) => {
+    if (req.params.itinaries_user_id) {
+        await Itinaries_User.destroy(
+            {
+                where: { itinaries_user_id: req.params.itinaries_user_id }
+            }
+        )
+            .then(data => {
+                // console.log(destination.toJSON());
+                res.json(data);
+            })
+            .catch(err => {
+                res.status(500).json({ message: err.message })
+            })
+    }
+    else res.status(400).json({ message: 'Itinarie_user not found' })
+}
+
+exports.itinaries_userAcceptPassenger = async (req, res) => {
+    if (req.params.itinaries_user_id) {
+        await Itinaries_User.update(
+            {
+                request_user: true
+            }, {
+            where: { itinaries_user_id: req.params.itinaries_user_id }
+        }
+        )
+            .then(data => {
+                // console.log(destination.toJSON());
+                res.json(data);
+            })
+            .catch(err => {
+                res.status(500).json({ message: err.message })
+            })
+    }
+    else res.status(400).json({ message: 'Itinarie_user not found' })
+}
+
+exports.itinaries_userRefusedPassenger = async (req, res) => {
+    if (req.params.itinaries_user_id) {
+        await Itinaries_User.update(
+            {
+                request_user: false
+            }, {
+            where: { itinaries_user_id: req.params.itinaries_user_id }
+        }
+        )
+            .then(data => {
+                // console.log(destination.toJSON());
+                res.json(data);
+            })
+            .catch(err => {
+                res.status(500).json({ message: err.message })
+            })
+    }
+    else res.status(400).json({ message: 'Itinarie_user not found' })
 }

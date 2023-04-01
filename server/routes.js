@@ -21,6 +21,10 @@ router.delete('/itinarie/:itinaries_id', itinarieController.itinariesDelete)
 // ItinariesUser
 router.post('/bookings', itinarie_userController.itinarie_userCreate);
 router.get('/bookings', itinarie_userController.itinaries_userList);
+router.get('/booking/:itinaries_user_id', itinarie_userController.itinarie_userById)
+router.delete('/booking/:itinaries_user_id', itinarie_userController.itinaries_userDelete)
+router.patch('/booking/:itinaries_user_id/accept', itinarie_userController.itinaries_userAcceptPassenger)
+router.patch('/booking/:itinaries_user_id/deny', itinarie_userController.itinaries_userRefusedPassenger)
 
 // Destination
 router.get('/destinations', destinationController.destinationList);

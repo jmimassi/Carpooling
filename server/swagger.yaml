@@ -295,7 +295,7 @@ paths:
           description: Impossible de supprimer l'itinéraire
 
   /booking/{itinaries_user_id}/accept:
-    put:
+    patch:
       tags:
         - Bookings
       summary: Accepter un passager
@@ -306,15 +306,16 @@ paths:
           required: true
           schema:
             type: integer
-        - name: request_user
-          in: path
-          description: Nombre de places disponibles
-          required: true
-          schema:
-            type: object
-            properties:
-              request_user:
-                type: boolean
+      # requestBody:
+      #   description: Informations de l'itinéraire mises à jour
+      #   required: true
+      #   content:
+      #     application/json:
+      #       schema:
+      #         type: object
+      #         properties:
+      #           request_user:
+      #             type: boolean
       responses:
         "200":
           description: réservation mis à jour avec succès
@@ -326,7 +327,7 @@ paths:
           description: Impossible de mettre à jour la réservation
 
   /booking/{itinaries_user_id}/deny:
-    put:
+    patch:
       tags:
         - Bookings
       summary: Refuser un passager
@@ -337,15 +338,16 @@ paths:
           required: true
           schema:
             type: integer
-        - name: request_user
-          in: path
-          description: Nombre de places disponibles
-          required: true
-          schema:
-            type: object
-            properties:
-              request_user:
-                type: boolean
+      # requestBody:
+      #   description: Modifier le status d'un passager
+      #   required: true
+      #   content:
+      #     application/json:
+      #       schema:
+      #         type: object
+      #         properties:
+      #           request_user:
+      #             type: boolean
       responses:
         "200":
           description: réservation mis à jour avec succès
