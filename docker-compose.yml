@@ -9,3 +9,9 @@ services:
       - "3307:3306"
     volumes:
       - $HOME/Desktop/MySQL-Snippets/carpooling.sql:/carpooling.sql
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
