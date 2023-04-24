@@ -9,6 +9,7 @@ import { ItinariesComponent } from './components/itinaries/itinaries.component';
 import { PublishItinariesComponent } from './components/publish-itinaries/publish-itinaries.component';
 import { MyItinariesComponent } from './components/my-itinaries/my-itinaries.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
