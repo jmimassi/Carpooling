@@ -24,10 +24,6 @@ export class UserService {
     return this.http.get(this.baseUrl + 'users');
   }
 
-  // login(): Observable<any> {
-  //   return this.http.post(this.baseUrl + 'login', {
-  //     "username": "root",
-  //     "password": "root"
-  //   });
-  // }
+  
+
 }
