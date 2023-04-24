@@ -58,6 +58,23 @@ paths:
         "404":
           description: Création de l'utilisateur impossible
 
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Obtenir la liste des utilisateurs et leurs informations
+      responses:
+        "200":
+          description: Liste des utilisateurs récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Users"
+        "404":
+          description: Impossible de récupérer la liste des utilisateurs disponibles
+
   /itinaries:
     post:
       tags:

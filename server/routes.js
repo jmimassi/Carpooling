@@ -8,6 +8,7 @@ let destinationController = require('./controllers/destinationController');
 
 // User
 router.post('/user/register', userController.userCreate);
+router.get('/users', userController.userList);
 
 // Itinaries
 router.get('/itinaries', itinarieController.itinariesList);
