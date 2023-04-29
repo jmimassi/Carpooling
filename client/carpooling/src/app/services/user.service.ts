@@ -19,11 +19,20 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  // Sans token
   getUserList(): Observable<any> {
     return this.http.get(this.baseUrl + 'users');
   }
 
+  userCreate(): Observable<any> {
+    return this.http.post(this.baseUrl + 'user/register', {
+      "email": "email",
+      "password": "password",
+      "address": "address",
+      "number_passengers_max":3,
+      "lisence_plate": "lisence_plate",
+      "picture": "picture"
+    });
+  }
   
 
 }
