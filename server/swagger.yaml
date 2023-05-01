@@ -58,6 +58,28 @@ paths:
         "404":
           description: Création de l'utilisateur impossible
 
+  /user/logout:
+    post:
+      tags:
+        - Users
+      summary: Déconnecter l' utilisateur
+      requestBody:
+        description:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogin"
+      responses:
+        "200":
+          description: Confirmation de la déconnexion de l'utilisateur avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserLogin"
+        "404":
+          description: Déconnexion de l'utilisateur impossible
+
   /users:
     get:
       tags:

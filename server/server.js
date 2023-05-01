@@ -1,10 +1,15 @@
 let express = require('express');
 let routes = require('./routes');
 let app = express();
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 const cors = require('cors');
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:4200']
+}));
 
 // Importing the database model
 const Sequelize = require('sequelize');

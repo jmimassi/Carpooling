@@ -1,14 +1,37 @@
 let express = require('express');
-
+const jwt = require("jsonwebtoken")
 let router = express.Router();
 let userController = require('./controllers/userController');
 let itinarieController = require('./controllers/itinarieController');
 let itinarie_userController = require('./controllers/itinarie_userController');
 let destinationController = require('./controllers/destinationController');
+const cookieParser = require('cookie-parser')
+
+const isAuthorized = (req, res, next) => {
+    console.log(req.headers)
+    if (typeof req.cookies['token'] !== "undefined") {
+        //     //     // retrieve the authorization header and parse out the JWT using the split function
+        let token = req.cookies['token'];
+        //     //     // Here we validate that the JSON Web Token is valid
+        jwt.verify(token, 'my_secret_key', (err, payload) => {
+            if (err) {
+                res.status(401).json({ error: "Not Authorized" });
+            }
+            req.user = payload; // allow to use the user id in the controller
+            return next();
+        });
+    }
+    else {
+        res.send('headers is undefined')
+    }
+
+}
 
 // User
 router.post('/user/register', userController.userCreate);
-router.get('/users', userController.userList);
+router.get('/users', isAuthorized, userController.userList);
+router.post('/user/login', userController.userLogin)
+router.post('/user/logout', userController.userLogout)
 
 // Itinaries
 router.get('/itinaries', itinarieController.itinariesList);
