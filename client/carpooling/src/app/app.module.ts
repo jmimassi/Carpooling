@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TopbarComponent } from './components/topbar-menu/topbar.component';
 import { TopbarEmptyComponent } from './components/topbar-empty/topbar-empty.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TopbarEmptyComponent } from './components/topbar-empty/topbar-empty.com
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule
 
   ],
   providers: [],

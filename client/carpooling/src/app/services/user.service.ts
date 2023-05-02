@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+// import { MonFormulaire } from './mon-formulaire.model';
 
 export class User {
   'email': string;
   'password': string;
   'address': string;
-  'number_passenger_max': number;
+  'number_passengers_max': number;
   'lisence_plate': string;
   'picture': string;
 }
@@ -20,19 +21,16 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUserList(): Observable<any> {
-    return this.http.get(this.baseUrl + 'users');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.get(this.baseUrl + 'protected/users', { "headers": headers });
   }
 
-  userCreate(): Observable<any> {
-    return this.http.post(this.baseUrl + 'user/register', {
-      "email": "email",
-      "password": "password",
-      "address": "address",
-      "number_passengers_max":3,
-      "lisence_plate": "lisence_plate",
-      "picture": "picture"
-    });
+  userCreate(users: { email: string; password: string, address: string, number_passengers_max: number, lisence_plate: string, picture: string }): Observable<any> {
+    return this.http.post(this.baseUrl + 'user/register', users);
   }
-  
+
 
 }

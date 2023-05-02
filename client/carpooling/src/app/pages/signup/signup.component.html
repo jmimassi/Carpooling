@@ -8,6 +8,29 @@
             <div class=" bg-slate-50 pb-12">
                 Login
             </div>
+            <form #monFormulaire="ngForm" (ngSubmit)="onSubmit(monFormulaire.value)">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" ngModel>
+
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" ngModel>
+
+                <label for="address">Adresse:</label>
+                <input type="text" id="address" name="address" ngModel>
+
+                <label for="number_passengers_max">Nombre de passagers maximum:</label>
+                <input type="number" id="number_passengers_max" name="number_passengers_max" ngModel>
+
+                <label for="lisence_plate">Plaque d'immatriculation:</label>
+                <input type="text" id="lisence_plate" name="lisence_plate" ngModel>
+
+                <label for="picture">Image:</label>
+                <input type="text" id="picture" name="picture" ngModel>
+
+                <button type="submit">Envoyer</button>
+            </form>
+
+
             <div>
                 <a routerLink="/signin"> signin</a>
             </div>

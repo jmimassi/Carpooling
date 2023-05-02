@@ -8,14 +8,5 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-  users: User[] = []
-  emailFormControl: any;
 
-  constructor(private userService: UserService) { }
-
-  login() {
-    this.userService.userCreate().subscribe(
-      data => localStorage.setItem('token', data.token)
-    )
-  }
 }
