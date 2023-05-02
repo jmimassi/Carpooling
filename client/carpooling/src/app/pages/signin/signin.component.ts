@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService, User } from '../../services/user.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-signin',
@@ -7,8 +8,9 @@ import { UserService, User } from '../../services/user.service';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent {
-  users : User[] = []
-  
+  users: User[] = []
+  emailFormControl: any;
+
   constructor(private userService: UserService) { }
 
   login() {

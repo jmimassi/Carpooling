@@ -8,17 +8,17 @@ import { UserService, User } from '../../services/user.service';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent {
-  users: User[]= []
+  users: User[] = []
 
-  constructor( private userService : UserService) {}
+  constructor(private userService: UserService) { }
 
 
-  ngOnInit() {
-    this.userService.getUserList().subscribe(
-      data => {
-        this.users = data
-      console.log(this.users);
-      }
-  )
-  }
+  // ngOnInit() {
+  //   this.userService.getUserList().subscribe(
+  //     data => {
+  //       this.users = data
+  //     console.log(this.users);
+  //     }
+  // )
+  // }
 }

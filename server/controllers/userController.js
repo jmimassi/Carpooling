@@ -31,9 +31,8 @@ exports.userCreate = async (req, res) => {
     await user.save()
 
         .then(data => {
-
-            console.log(user.toJSON(), token, jwtExpirySeconds * 1000);
-            res.json(data, token, jwtExpirySeconds * 1000);
+            console.log(data)
+            res.json(data);
         })
         .catch(err => {
             res.status(500).json({ message: err.message })
