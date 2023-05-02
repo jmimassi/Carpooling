@@ -45,6 +45,17 @@ exports.itinarie_userById = async function (req, res) {
         })
 }
 
+exports.itinarie_userByUserConnected = async function (req, res) {
+    await Itinaries_User.findAll({ where: { fk_user: req.user.id } })
+        .then(data => {
+            console.log(`All itinaries_user with :${req.user.id} in params`, JSON.stringify(data, null, 2));
+            res.json(data);
+        })
+        .catch(err => {
+            res.status(500).json({ message: err.message })
+        })
+}
+
 exports.itinaries_userDelete = async (req, res) => {
     if (req.params.itinaries_user_id) {
         await Itinaries_User.destroy(

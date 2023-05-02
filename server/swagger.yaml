@@ -295,6 +295,21 @@ paths:
                 items:
                   $ref: "#/components/schemas/Itinaries_User"
 
+  /bookings/userConnected:
+    get:
+      tags:
+        - Bookings
+      summary: Obtenir toutes les informations des réservation du user connecté
+      responses:
+        "200":
+          description: Liste des destinations universitaires
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries_User"
+        "404":
+          description: Destinations introuvable
+
   /booking/{itinaries_user_id}:
     get:
       tags:

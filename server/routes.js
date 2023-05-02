@@ -17,6 +17,7 @@ const isAuthorized = (req, res, next) => {
             if (err) {
                 res.status(401).json({ error: "Not Authorized" });
             }
+            console.log(payload)
             req.user = payload; // allow to use the user id in the controller
             return next();
         });
@@ -45,6 +46,7 @@ router.delete('/itinarie/:itinaries_id', itinarieController.itinariesDelete)
 // ItinariesUser
 router.post('/bookings', itinarie_userController.itinarie_userCreate);
 router.get('/bookings', itinarie_userController.itinaries_userList);
+router.get('/bookings/:fk_user', isAuthorized, itinarie_userController.itinarie_userByUserConnected)
 router.get('/booking/:itinaries_user_id', itinarie_userController.itinarie_userById)
 router.delete('/booking/:itinaries_user_id', itinarie_userController.itinaries_userDelete)
 router.patch('/booking/:itinaries_user_id/accept', itinarie_userController.itinaries_userAcceptPassenger)
