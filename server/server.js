@@ -5,22 +5,22 @@ const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 const cors = require('cors');
-app.use(cookieParser());
 app.use(cors({
     credentials: true,
     origin: ['http://localhost:4200']
 }));
+app.use(cookieParser());
 
 // Importing the database model
 const Sequelize = require('sequelize');
 const db = require('./db.js');
-
 // Creating all the tables defined in agency
 //db.sync()
 db.sync({ alter: true })
 
 
 app.use("/api", routes);
+
 
 
 const swaggerUi = require('swagger-ui-express');

@@ -14,16 +14,6 @@ export class SignupComponent {
 
   constructor(private userService: UserService) { }
 
-
-  // ngOnInit() {
-  //   this.userService.getUserList().subscribe(
-  //     data => {
-  //       this.users = data
-  //       console.log(this.users);
-  //     }
-  //   )
-  // }
-
   onSubmit(users: { email: string; password: string, address: string, number_passengers_max: number, lisence_plate: string, picture: string }) {
     this.userService.userCreate(users).subscribe(
       data => localStorage.setItem('token', data.token)

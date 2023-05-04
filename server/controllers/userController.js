@@ -65,14 +65,15 @@ exports.userLogin = async (req, res, next) => {
         algorithm: "HS256",
         expiresIn: jwtExpirySeconds,
     })
-    res.cookie("token", token, { httpOnly: true, secure: true, maxAge: jwtExpirySeconds * 1000 });
-
+    console.log("c'est le login qui a été push", payload)
+    res.cookie("token", token, { httpOnly: false, secure: false, maxAge: jwtExpirySeconds * 1000 });
+    console.log(token)
     res.send(user)
 }
 
 exports.userLogout = async (req, res) => {
-    res.cookie('token', '', { maxAge: 0 })
-
+    res.cookie('token', '', { httpOnly: false, secure: false, maxAge: 0 });
+    console.log('ici ca logoout')
     res.send({
         message: 'succes'
     })

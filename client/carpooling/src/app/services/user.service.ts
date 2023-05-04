@@ -32,5 +32,13 @@ export class UserService {
     return this.http.post(this.baseUrl + 'user/register', users);
   }
 
+  userLogin(users: { email: string; password: string }): Observable<any> {
+    return this.http.post(this.baseUrl + 'user/login', users, { withCredentials: true });
+  }
+
+  userLogout(): Observable<any> {
+    return this.http.post(this.baseUrl + 'user/logout', null, { withCredentials: true });
+  }
+
 
 }
