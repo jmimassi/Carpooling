@@ -16,14 +16,14 @@ exports.userList = async function (req, res) {
 }
 
 exports.userCreate = async (req, res) => {
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(req.body.password, salt)
+    // const salt = await bcrypt.genSalt(10)
+    // const hashedPassword = await bcrypt.hash(req.body.password, salt)
 
     let user = User.build({
         email: req.body.email,
-        password: hashedPassword,
+        password: req.body.password,
         address: req.body.address,
-        number_passengers_max: req.body.number_passengers_max,
+        // number_passengers_max: req.body.number_passengers_max,
         lisence_plate: req.body.lisence_plate,
         picture: req.body.picture
     })
@@ -51,7 +51,13 @@ exports.userLogin = async (req, res, next) => {
         })
     }
 
-    if (!await bcrypt.compare(req.body.password, user.password)) {
+    // if (!await bcrypt.compare(req.body.password, user.password)) {
+    //     console.log('user')
+    //     return res.status(400).send({
+    //         message: 'invalid credentials'
+    //     })
+    // }
+    if (req.body.password !== user.password) {
         console.log('user')
         return res.status(400).send({
             message: 'invalid credentials'
@@ -66,15 +72,14 @@ exports.userLogin = async (req, res, next) => {
         expiresIn: jwtExpirySeconds,
     })
     console.log("c'est le login qui a été push", payload)
-    res.cookie("token", token, { httpOnly: false, secure: false, maxAge: jwtExpirySeconds * 1000 });
+    // res.cookie("token", token, { httpOnly: false, secure: false, maxAge: jwtExpirySeconds * 1000 });
     console.log(token)
-    res.send(user)
+    res.json({ "token": token, "maxAge": jwtExpirySeconds * 1000 });
 }
 
-exports.userLogout = async (req, res) => {
-    res.cookie('token', '', { httpOnly: false, secure: false, maxAge: 0 });
-    console.log('ici ca logoout')
-    res.send({
-        message: 'succes'
-    })
-}
+// exports.userLogout = async (req, res) => {
+//     localStorage.removeItem("token");
+//     res.send({
+//         message: 'succes'
+//     })
+// }

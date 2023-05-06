@@ -28,20 +28,36 @@ export class UserService {
   //   return this.http.get(this.baseUrl + 'protected/users', { "headers": headers });
   // }
 
-  UserList(): Observable<any> { 
-    return this.http.get(this.baseUrl + 'users');
+  UserList(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.get(this.baseUrl + 'users', { "headers": headers });
   }
 
-  userCreate(users: { email: string; password: string, address: string, number_passengers_max: number, lisence_plate: string, picture: string }): Observable<any> {
-    return this.http.post(this.baseUrl + 'user/register', users);
+  userCreate(users: { email: string; password: string, address: string, lisence_plate: string, picture: string }): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.post(this.baseUrl + 'user/register', users, { "headers": headers });
   }
 
   userLogin(users: { email: string; password: string }): Observable<any> {
-    return this.http.post(this.baseUrl + 'user/login', users, { withCredentials: true });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.post(this.baseUrl + 'user/login', users, { "headers": headers });
   }
 
   userLogout(): Observable<any> {
-    return this.http.post(this.baseUrl + 'user/logout', null, { withCredentials: true });
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    })
+    return this.http.post(this.baseUrl + 'user/logout', null, { "headers": headers });
   }
 
 

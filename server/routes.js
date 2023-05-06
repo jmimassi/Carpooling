@@ -4,41 +4,60 @@ let router = express.Router();
 let userController = require('./controllers/userController');
 let itinarieController = require('./controllers/itinarieController');
 let itinarie_userController = require('./controllers/itinarie_userController');
-let destinationController = require('./controllers/destinationController');
+// let destinationController = require('./controllers/destinationController');
 const cookieParser = require('cookie-parser')
 
-const isAuthorized = (req, res, next) => {
-    console.log(req.headers)
-    if (typeof req.cookies['token'] !== "undefined") {
-        //     //     // retrieve the authorization header and parse out the JWT using the split function
-        let token = req.cookies['token'];
-        //     //     // Here we validate that the JSON Web Token is valid
-        jwt.verify(token, 'my_secret_key', (err, payload) => {
+// const isAuthorized = (req, res, next) => {
+//     console.log(req.headers)
+//     if (typeof req.cookies['token'] !== "undefined") {
+//         //     //     // retrieve the authorization header and parse out the JWT using the split function
+//         let token = req.cookies['token'];
+//         //     //     // Here we validate that the JSON Web Token is valid
+//         jwt.verify(token, 'my_secret_key', (err, payload) => {
+//             if (err) {
+//                 res.status(401).json({ error: "Not Authorized" });
+//             }
+//             console.log(payload)
+//             req.user = payload; // allow to use the user id in the controller
+//             return next();
+//         });
+//     }
+//     else {
+//         res.send('headers is undefined')
+//     }
+
+// }
+
+function isAuthorized(req, res, next) {
+    if (typeof req.headers.authorization !== "undefined") {
+        let token = req.headers.authorization.split(' ')[1];
+        jwt.verify(token, "my_secret_key", (err, payload) => {
             if (err) {
                 res.status(401).json({ error: "Not Authorized" });
+            } else {
+                req.user = payload;
+                return next();
             }
-            console.log(payload)
-            req.user = payload; // allow to use the user id in the controller
-            return next();
-        });
+        })
     }
     else {
-        res.send('headers is undefined')
+        res.status(403).json({ error: "Nothing sent" });
     }
-
 }
 
 // User
 router.post('/user/register', userController.userCreate);
 router.get('/users', isAuthorized, userController.userList);
 router.post('/user/login', userController.userLogin)
-router.post('/user/logout', userController.userLogout)
+// router.post('/user/logout', userController.userLogout)
 
 // Itinaries
 router.get('/itinaries', itinarieController.itinariesList);
 router.post('/itinaries', itinarieController.itinarieCreate);
-router.get('/itinaries/:startAddress', itinarieController.itinariesBystartAddress)
-router.get('/itinaries/:address', itinarieController.itinariesByAddress)
+router.get('/itinaries/startAddress/:startAddress', itinarieController.itinariesBystartAddress)
+router.get('/itinaries/destination/:destination', itinarieController.itinariesByDestination)
+router.get('/itinariesFormatted/', itinarieController.itinariesListFormatted)
+router.get('/itinaries/email/:email', itinarieController.itinariesByEmail)
 router.put('/itinarie/:itinaries_id', itinarieController.itinariesUpdate)
 router.patch('/itinarie/:itinaries_id/seats', itinarieController.itinariesUpdateSeats)
 router.delete('/itinarie/:itinaries_id', itinarieController.itinariesDelete)
@@ -53,7 +72,7 @@ router.patch('/booking/:itinaries_user_id/accept', itinarie_userController.itina
 router.patch('/booking/:itinaries_user_id/deny', itinarie_userController.itinaries_userRefusedPassenger)
 
 // Destination
-router.get('/destinations', destinationController.destinationList);
-router.post('/destinations', destinationController.destinationCreate);
+// router.get('/destinations', destinationController.destinationList);
+// router.post('/destinations', destinationController.destinationCreate);
 
 module.exports = router;

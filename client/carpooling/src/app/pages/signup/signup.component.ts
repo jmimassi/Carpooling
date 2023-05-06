@@ -14,9 +14,11 @@ import { Router } from '@angular/router';
 
 export class SignupComponent {
 
+  users: User[] = [];
+
   constructor(private userService: UserService, private router: Router) { }
 
-  onSubmit(users: { email: string; password: string, address: string, number_passengers_max: number, lisence_plate: string, picture: string }) {
+  onSubmit(users: { email: string; password: string, address: string, lisence_plate: string, picture: string }) {
     this.userService.userCreate(users).subscribe(
       data => {
         localStorage.setItem('token', data.token);
@@ -28,6 +30,15 @@ export class SignupComponent {
       }
     );
     console.log('users que je vois dans le signup component', users)
+  }
+
+  ngOnInit() {
+    this.userService.UserList().subscribe(
+      data => {
+        this.users = data
+        console.log(this.users);
+      }
+    )
   }
 
 

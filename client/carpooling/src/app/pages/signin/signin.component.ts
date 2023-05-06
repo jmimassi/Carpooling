@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService, User } from '../../services/user.service';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -9,19 +10,17 @@ import { FormGroup } from '@angular/forms';
 })
 export class SigninComponent {
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   onSubmit(users: { email: string; password: string }) {
     this.userService.userLogin(users).subscribe(
       data => localStorage.setItem('token', data.token)
     )
+    this.router.navigate(['/itinaries']); // navigate to dashboard page
     console.log('users que je vois dans le signin component', users)
   }
 
   onClick() {
-    this.userService.userLogout().subscribe(
-    )
-    console.log('users que je vois dans le signin component')
+    localStorage.removeItem('token');
   }
-
 }

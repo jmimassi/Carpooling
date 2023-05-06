@@ -135,7 +135,24 @@ paths:
         "404":
           description: Impossible de récupérer la liste des itinéraires disponibles
 
-  /itinaries/{startAddress}:
+  /itinariesFormatted/:
+    get:
+      tags:
+        - Itinaries
+      summary: Obtenir la liste des itinéraires disponibles formattés
+      responses:
+        "200":
+          description: Liste des itinéraires récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de récupérer la liste des itinéraires disponibles
+
+  /itinaries/startAddress/{startAddress}:
     get:
       tags:
         - Itinaries
@@ -159,13 +176,37 @@ paths:
         "404":
           description: Impossible de récupérer la liste des itinéraires disponibles
 
-  /itinaries/{address}:
+  /itinaries/email/{email}:
+    get:
+      tags:
+        - Itinaries
+      summary: Obtenir la liste des itinéraires disponibles pour un user
+      parameters:
+        - name: email
+          in: path
+          description: le user
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Liste des itinéraires récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de récupérer la liste des itinéraires disponibles
+
+  /itinaries/destination/{destination}:
     get:
       tags:
         - Itinaries
       summary: Obtenir les informations de la destination universitaire disponible
       parameters:
-        - name: address
+        - name: destination
           in: path
           description: Destination
           required: true
@@ -412,40 +453,40 @@ paths:
         "404":
           description: Impossible de mettre à jour la réservation
 
-  /destinations:
-    post:
-      tags:
-        - Destinations
-      summary: Créer une nouvelle destination
-      requestBody:
-        description: Informations de la destination
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Destination"
-      responses:
-        "200":
-          description: Creation de destiantion effectuée avec succès
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Destination"
-        "404":
-          description: Creation de destination impossible
-    get:
-      tags:
-        - Destinations
-      summary: Obtenir toutes les destinations universitaires disponibles
-      responses:
-        "200":
-          description: Liste de toutes les destinations universitaires
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Destination"
-        "404":
-          description: Destinations introuvable
+  # /destinations:
+  #   post:
+  #     tags:
+  #       - Destinations
+  #     summary: Créer une nouvelle destination
+  #     requestBody:
+  #       description: Informations de la destination
+  #       required: true
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/Destination"
+  #     responses:
+  #       "200":
+  #         description: Creation de destiantion effectuée avec succès
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Destination"
+  #       "404":
+  #         description: Creation de destination impossible
+  #   get:
+  #     tags:
+  #       - Destinations
+  #     summary: Obtenir toutes les destinations universitaires disponibles
+  #     responses:
+  #       "200":
+  #         description: Liste de toutes les destinations universitaires
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Destination"
+  #       "404":
+  #         description: Destinations introuvable
 
 components:
   schemas:
@@ -468,12 +509,16 @@ components:
     Itinaries:
       type: object
       properties:
-        fk_destination:
-          type: integer
         startAddress:
           type: string
         seats:
           type: integer
+        destination:
+          type: string
+        startDate:
+          type: string
+        hours:
+          type: string
 
     Itinaries_User:
       type: object
@@ -489,11 +534,11 @@ components:
         message:
           type: string
 
-    Destination:
-      type: object
-      properties:
-        address:
-          type: string
+    # Destination:
+    #   type: object
+    #   properties:
+    #     address:
+    #       type: string
 
     UserLogin:
       type: object

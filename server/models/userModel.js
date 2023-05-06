@@ -9,7 +9,7 @@ const User = db.define('user', {
     },
     password: { type: Sequelize.STRING, allowNull: false },
     address: { type: Sequelize.STRING, allowNull: false },
-    number_passengers_max: { type: Sequelize.INTEGER, allowNull: true },
+    // number_passengers_max: { type: Sequelize.INTEGER, allowNull: true },
     lisence_plate: { type: Sequelize.STRING, allowNull: true },
     picture: { type: Sequelize.STRING, allowNull: false },
 })

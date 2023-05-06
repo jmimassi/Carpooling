@@ -3,12 +3,13 @@ require('dotenv').config()
 Sequelize = require('sequelize')
 const sequelize = new Sequelize(
     'carpooling',
-    'test',
-    'test', {
+    'root',
+    'root', {
     dialect: 'mysql',
-    host: 'pat.infolab.ecam.be',
-    //port: 3306
-    port: 63346
+    // host: 'pat.infolab.ecam.be',
+    host: 'localhost',
+    port: 3307
+    // port: 63346
 }
 );
 

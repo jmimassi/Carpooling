@@ -1,53 +1,29 @@
-// import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { Observable } from 'rxjs';
-
-// export class Itinaries {
-//   "itinaries_id": number;
-//   "fk_destination": number;
-//   "startAddress": string;
-//   "seats": number
-// }
-
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class ItinariesService {
-//   baseUrl: string = 'http://localhost:8000/api/'
-
-//   constructor(private http: HttpClient) { }
-
-//   ItinariesList(): Observable<any> {
-//     return this.http.get(this.baseUrl + 'itinaries');
-//   }
-
-//   ItinariesCreate(users: { email: string; password: string, address: string, number_passengers_max: number, lisence_plate: string, picture: string }): Observable<any> {
-//     return this.http.post(this.baseUrl + 'itinaries', {
-//       "fk_destination": number;
-//       "startAddress": string;
-//       "seats": number
-//     });
-//   }
-
-//   ItinariesStartAddressList(): Observable<any> {
-//     return this.http.get(this.baseUrl + 'itinaries/{startAddress}');
-//   }
-
-//   ItinariesAdressList(): Observable<any> {
-//     return this.http.get(this.baseUrl + 'itinaries/{address}');
-//   }
-
-// }
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export class Itinaries {
   "itinaries_id": number;
-  "fk_destination": number;
+  "destination": string;
   "startAddress": string;
-  "seats": number
+  "seats": number;
+  "email": string;
+  "itinaries_users": string[];
+  "startDate": string;
+  "hours": string;
+
+}
+
+export class ItinariesWithEmailAndStartDate {
+  "itinaries_id": number;
+  "destination": string;
+  "startAddress": string;
+  "seats": number;
+  "emailspassenger": string[];
+  "emailconductors": string;
+  "startDate": string;
+  "hours": string;
+
 }
 
 @Injectable({
@@ -62,7 +38,11 @@ export class ItinariesService {
     return this.http.get(this.baseUrl + 'itinaries');
   }
 
-  itinariesCreate(itinaries: { fk_destination: number; startAddress: string, seats: number }): Observable<any> {
+  itinariesListFormatted(): Observable<any> {
+    return this.http.get(this.baseUrl + 'itinariesFormatted');
+  }
+
+  itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
     return this.http.post(this.baseUrl + 'itinaries', itinaries);
   }
 
