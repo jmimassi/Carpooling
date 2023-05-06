@@ -20,12 +20,16 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUserList(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    })
-    return this.http.get(this.baseUrl + 'protected/users', { "headers": headers });
+  // getUserList(): Observable<any> {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+  //   })
+  //   return this.http.get(this.baseUrl + 'protected/users', { "headers": headers });
+  // }
+
+  UserList(): Observable<any> { 
+    return this.http.get(this.baseUrl + 'users');
   }
 
   userCreate(users: { email: string; password: string, address: string, number_passengers_max: number, lisence_plate: string, picture: string }): Observable<any> {
