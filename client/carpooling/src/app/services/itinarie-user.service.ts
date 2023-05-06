@@ -3,10 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export class ItinariesUser {
-  'itinaries_user_id': number;
+  'itinaries_user_id'?: number;
   'type_user': string;
   'request_user': boolean;
   'message': string;
+  'fk_itinaries': number;
+  'fk_user': string;
 }
 
 
@@ -15,7 +17,7 @@ export class ItinariesUser {
 })
 export class ItinariesUserService {
 
-  
+
 
   baseUrl: string = 'http://localhost:8000/api/';
 
@@ -26,7 +28,7 @@ export class ItinariesUserService {
   }
 
   itinariesUserCreate(itinariesUser: ItinariesUser): Observable<any> {
-    return this.http.post(this.baseUrl, itinariesUser);
+    return this.http.post(this.baseUrl + 'bookings', itinariesUser);
   }
 
   itinariesUserById(itinariesUserId: number): Observable<any> {

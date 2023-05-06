@@ -1,7 +1,31 @@
 <app-topbar></app-topbar>
 
 <!-- <button type="submit" (ngSubmit)="onSubmit()">Envoyer</button> -->
-<ul>
-
-
-</ul>
+<form (ngSubmit)="onSubmit(itinariesForm.value)" #itinariesForm="ngForm">
+    <label>
+        Destination:
+        <input type="text" name="destination" ngModel required>
+    </label>
+    <br>
+    <label>
+        Start Address:
+        <input type="text" name="startAddress" ngModel required>
+    </label>
+    <br>
+    <label>
+        Seats:
+        <input type="number" name="seats" ngModel required>
+    </label>
+    <br>
+    <label>
+        Start Date:
+        <input type="text" name="startDate" ngModel required>
+    </label>
+    <br>
+    <label>
+        Hours:
+        <input type="text" name="hours" ngModel required>
+    </label>
+    <br>
+    <button type="submit">Submit</button>
+</form>
