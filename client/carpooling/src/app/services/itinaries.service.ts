@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { ItinariesUser, ItinariesUserService } from './itinarie-user.service';
+import jwt_decode from 'jwt-decode';
+
 
 export class Itinaries {
   "itinaries_id": number;
@@ -91,14 +93,22 @@ export class ItinariesService {
   // }
 
   itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
-    return this.http.post(this.baseUrl + 'itinaries', itinaries).pipe(
+    const token = localStorage.getItem('token');
+    const decodedToken: any = jwt_decode(token || ''); // provide default value if null
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    console.log(decodedToken)
+
+    return this.http.post(this.baseUrl + 'itinaries', itinaries, { headers }).pipe(
       switchMap((data: any) => {
         const itinaries_id: number = data.itinaries_id;
-        console.log('Nouvel itinéraire créé avec succès. ID : ', itinaries_id);
-
+        console.log('Nouvel itinéraire créé avec succès. ID : ', itinaries_id, headers);
+        console.log('cestletoken', localStorage.getItem('token'))
         const itinariesUser: ItinariesUser = {
           fk_itinaries: itinaries_id,
-          fk_user: 'joseph2',
+          fk_user: decodedToken.id,
           type_user: 'conductor',
           request_user: true,
           message: 'Nouvelle demande de trajet'
@@ -120,6 +130,7 @@ export class ItinariesService {
       })
     );
   }
+
 
 
 
