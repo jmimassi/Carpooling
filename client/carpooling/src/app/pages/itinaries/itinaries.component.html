@@ -1,20 +1,19 @@
 <app-topbar></app-topbar>
 
-<button type="submit" (ngSubmit)="onSubmit()">Envoyer</button>
-<ul>
-    <ul>
+<!-- <button type="submit" (ngSubmit)="onSubmit()">Envoyer</button> -->
+<li *ngFor="let itinerary of itinaries">
+    {{ itinerary.itinaries_id }}
+    <p>Start Address: {{ itinerary.startAddress }}</p>
+    <p>Destination: {{ itinerary.destination }}</p>
+    <p>Seats: {{ itinerary.seats }}</p>
+    <p>Conductor Email: {{ itinerary.conductorEmail }}</p>
+    <!-- <p>Passenger Emails:
+        <span *ngFor="let passengerEmail of itinerary.passengerEmails">{{ passengerEmail }}</span>
+    </p> -->
+    <p>Start date : {{ itinerary.startDate }} </p>
+    <p>Hours: {{ itinerary.hours }}</p>
+</li>
 
-        <li *ngFor="let itinerary of itinaries">
-            {{ itinerary.itinaries_id }}
-            <p>Start Address: {{ itinerary.startAddress }}</p>
-            <p>Destination: {{ itinerary.destination }}</p>
-            <p>Seats: {{ itinerary.seats }}</p>
-            <p>Email: {{ itinerary.emails }}</p>
-            <p>Start date : {{itinerary.startDate}} </p>
-            <p>hours: {{itinerary.hours}}</p>
-    </ul>
-
-</ul>
 
 <!-- <ul>
     <li *ngFor="let itinerary of itinaries">

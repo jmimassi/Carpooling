@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ItinariesService, Itinaries } from '../../services/itinaries.service';
-import { UserService, User } from '../../services/user.service';
-import { ItinariesUser, ItinariesUserService } from '../../services/itinarie-user.service';
+import { ItinariesService, Itinaries, ItinariesCard } from '../../services/itinaries.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,9 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ItinariesComponent {
 
-  itinaries: Itinaries[] = [];
-  user: User[] = [];
-  itinaries_user: ItinariesUser[] = [];
+  itinaries: ItinariesCard[] = [];
 
   constructor(private itinariesService: ItinariesService, private router: Router) { }
 

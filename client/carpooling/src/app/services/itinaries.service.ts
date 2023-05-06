@@ -14,13 +14,13 @@ export class Itinaries {
 
 }
 
-export class ItinariesWithEmailAndStartDate {
+export class ItinariesCard {
   "itinaries_id": number;
   "destination": string;
   "startAddress": string;
   "seats": number;
-  "emailspassenger": string[];
-  "emailconductors": string;
+  "passengerEmails": string[];
+  "conductorEmail": string;
   "startDate": string;
   "hours": string;
 
