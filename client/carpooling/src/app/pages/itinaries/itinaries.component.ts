@@ -11,6 +11,8 @@ export class ItinariesComponent {
 
   itinaries: ItinariesCard[] = [];
 
+  selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
+
   constructor(private itinariesService: ItinariesService, private router: Router) { }
 
   ngOnInit() {
@@ -21,6 +23,10 @@ export class ItinariesComponent {
         console.log("c'est les itiniraire", this.itinaries);
       }
     )
+  }
+
+  updateDetails(itinerary: any) {
+    this.selectedItinerary = itinerary;
   }
 
   onSubmit() {
