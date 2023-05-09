@@ -63,6 +63,7 @@ exports.itinariesList = async function (req, res) {
 
 exports.itinariesListFormatted = async function (req, res) {
     let listformatted = [];
+    console.log('')
     await Itinaries.findAll({
         include: [
             {
@@ -82,7 +83,9 @@ exports.itinariesListFormatted = async function (req, res) {
 
                 itinerary.itinaries_users.forEach((user) => {
                     if (user.type_user === 'conductor') {
+                        console.log("c'est un conducteur le boug", user.user.email);
                         conductorEmail = user.user.email;
+                        console.log(conductorEmail);
                     } else if (user.type_user === 'passenger') {
                         passengerEmails.push(user.user.email);
                     }

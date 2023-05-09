@@ -93,15 +93,22 @@ export class ItinariesService {
   // }
 
   itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
+
     const token = localStorage.getItem('token');
-    const decodedToken: any = jwt_decode(token || ''); // provide default value if null
+    if (!token) {
+      // handle case where token is not present
+      console.error('Token not found in localStorage');
+      return of(null);
+    }
+
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
-    console.log(decodedToken)
 
-    return this.http.post(this.baseUrl + 'itinaries', itinaries, { headers }).pipe(
+    const decodedToken: any = jwt_decode(token);
+    console.log(decodedToken)
+    return this.http.post(this.baseUrl + 'itinaries', itinaries, { "headers": headers }).pipe(
       switchMap((data: any) => {
         const itinaries_id: number = data.itinaries_id;
         console.log('Nouvel itinéraire créé avec succès. ID : ', itinaries_id, headers);
@@ -111,12 +118,13 @@ export class ItinariesService {
           fk_user: decodedToken.id,
           type_user: 'conductor',
           request_user: true,
-          message: 'Nouvelle demande de trajet'
+          message: 'Initialisation of the itinar'
         };
+        console.log('cestletoken2', localStorage.getItem('token'))
 
         return this.itinariesUserService.itinariesUserCreate(itinariesUser).pipe(
           tap((response: any) => {
-            console.log('Nouvelle demande de trajet créée avec succès. ID : ', response.id);
+            console.log('Nouvelle demande de trajet créée avec succès. ID : ', decodedToken.id);
           }),
           catchError((error: any) => {
             console.error('Une erreur est survenue lors de la création de la demande de trajet : ', error);

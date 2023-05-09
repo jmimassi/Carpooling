@@ -35,9 +35,9 @@ export class PublishItinariesComponent {
 
     this.itinariesService.itinariesCreate(itinarie_user).subscribe(
       data => {
-        localStorage.setItem('token', data.token);
+        // localStorage.setItem('token', data.token);
         // form.reset(); // reset the form after successful submission
-        // this.router.navigate(['/signin']); // navigate to dashboard page
+        this.router.navigate(['/itinaries']); // navigate to dashboard page
       },
       error => {
         console.log(error);
