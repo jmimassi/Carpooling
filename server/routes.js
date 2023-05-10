@@ -29,6 +29,7 @@ const cookieParser = require('cookie-parser')
 // }
 
 function isAuthorized(req, res, next) {
+    console.log(req.headers.authorization)
     if (typeof req.headers.authorization !== "undefined") {
         let token = req.headers.authorization.split(' ')[1];
         jwt.verify(token, "my_secret_key", (err, payload) => {
@@ -49,14 +50,14 @@ function isAuthorized(req, res, next) {
 router.post('/user/register', userController.userCreate);
 router.get('/users', isAuthorized, userController.userList);
 router.post('/user/login', userController.userLogin)
-// router.post('/user/logout', userController.userLogout)
 
 // Itinaries
 router.get('/itinaries', itinarieController.itinariesList);
 router.post('/itinaries', itinarieController.itinarieCreate);
 router.get('/itinaries/startAddress/:startAddress', itinarieController.itinariesBystartAddress)
 router.get('/itinaries/destination/:destination', itinarieController.itinariesByDestination)
-router.get('/itinariesFormatted/', itinarieController.itinariesListFormatted)
+router.get('/itinariesCard/', itinarieController.itinariesCardList)
+router.get('/itinariesMyCard/', isAuthorized, itinarieController.itinariesMyCardList)
 router.get('/itinaries/email/:email', itinarieController.itinariesByEmail)
 router.put('/itinarie/:itinaries_id', itinarieController.itinariesUpdate)
 router.patch('/itinarie/:itinaries_id/seats', itinarieController.itinariesUpdateSeats)

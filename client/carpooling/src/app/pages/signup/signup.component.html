@@ -1,39 +1,53 @@
-<div class="flex flex-col">
+<div class="flex flex-col overflow-y-hidden">
     <div class="">
         <app-topbar-empty></app-topbar-empty>
     </div>
 
-    <div class="h-screen bg-slate-100 flex justify-center items-center">
-        <div>
-            <div class=" bg-slate-50 pb-12">
-                Login
-            </div>
+    <div class="flex flex-col h-screen bg-slate-100 justify-center items-center">
+        <div class="bg-slate-50 rounded-md px-4 py-6">
+            <h2 class="text-center font-bold text-lg mb-4">Login</h2>
             <form #monFormulaire="ngForm" (ngSubmit)="onSubmit(monFormulaire.value)">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" ngModel>
+                <div class="mb-4">
+                    <label for="email" class="block font-bold mb-1">Email:</label>
+                    <input type="email" id="email" name="email" ngModel
+                        class="w-full rounded border-gray-400 py-2 px-3">
+                </div>
 
-                <label for="password">Mot de passe:</label>
-                <input type="password" id="password" name="password" ngModel>
+                <div class="mb-4">
+                    <label for="password" class="block font-bold mb-1">Mot de passe:</label>
+                    <input type="password" id="password" name="password" ngModel
+                        class="w-full rounded border-gray-400 py-2 px-3">
+                </div>
 
-                <label for="address">Adresse:</label>
-                <input type="text" id="address" name="address" ngModel>
+                <div class="mb-4">
+                    <label for="address" class="block font-bold mb-1">Adresse:</label>
+                    <input type="text" id="address" name="address" ngModel
+                        class="w-full rounded border-gray-400 py-2 px-3">
+                </div>
 
-                <!-- <label for="number_passengers_max">Nombre de passagers maximum:</label>
-                <input type="number" id="number_passengers_max" name="number_passengers_max" ngModel> -->
+                <div class="mb-4">
+                    <label for="lisence_plate" class="block font-bold mb-1">Plaque d'immatriculation:</label>
+                    <input type="text" id="lisence_plate" name="lisence_plate" ngModel
+                        class="w-full rounded border-gray-400 py-2 px-3">
+                </div>
 
-                <label for="lisence_plate">Plaque d'immatriculation:</label>
-                <input type="text" id="lisence_plate" name="lisence_plate" ngModel>
+                <div class="mb-4">
+                    <label for="picture" class="block font-bold mb-1">Image:</label>
+                    <input type="text" id="picture" name="picture" ngModel
+                        class="w-full rounded border-gray-400 py-2 px-3">
+                </div>
 
-                <label for="picture">Image:</label>
-                <input type="text" id="picture" name="picture" ngModel>
-
-                <button type="submit">Envoyer</button>
+                <button type="submit"
+                    class="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-700">
+                    Envoyer
+                </button>
             </form>
 
-
-            <div>
-                <a routerLink="/signin"> signin</a>
+            <div class="mt-4">
+                <a routerLink="/signin" class="text-blue-500 hover:text-blue-700 font-bold">Sign in</a>
             </div>
         </div>
     </div>
+
+
 </div>

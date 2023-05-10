@@ -43,54 +43,12 @@ export class ItinariesService {
   }
 
   itinariesListFormatted(): Observable<any> {
-    return this.http.get(this.baseUrl + 'itinariesFormatted');
+    return this.http.get(this.baseUrl + 'itinariesCard');
   }
 
-  // itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
-  //   return this.http.post(this.baseUrl + 'itinaries', itinaries);
-  // }
-
-  // itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
-  //   return this.http.post(this.baseUrl + 'itinaries', itinaries).pipe(
-  //     tap((data: any) => {
-  //       // ici, vous pouvez utiliser l'ID de l'itinéraire retourné pour effectuer une requête supplémentaire
-  //       const itinaries_id = data.itinaries_id;
-  //       this.http.get(this.baseUrl + 'itinaries/' + itinaries_id).subscribe(
-  //         (itinariesData: any) => {
-  //           // ici, vous pouvez utiliser les données de l'itinéraire retourné par la requête supplémentaire
-  //           console.log(itinariesData);
-  //         }
-  //       );
-  //     })
-  //   );
-  // }
-
-  // itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
-  //   return this.http.post(this.baseUrl + 'itinaries', itinaries).pipe(
-  //     switchMap((data: any) => {
-  //       const itinaries_id: number = data.itinaries_id;
-  //       console.log('Nouvel itinéraire créé avec succès. ID : ', itinaries_id);
-
-  //       const itinarie_user: ItinariesUser = {
-  //         // itinaries_user_id?: number;
-  //         fk_itinaries: itinaries_id,
-  //         fk_user: 'joseph',
-  //         type_user: 'conductor',
-  //         request_user: true,
-  //         message: 'Nouvelle demande de trajet'
-  //       };
-
-  //       this.itinariesUserService.itinariesUserCreate(itinarie_user).subscribe(
-  //         (response: any) => {
-  //           console.log('Nouvelle demande de trajet créée avec succès. ID : ', response.id);
-  //         },
-  //         (error: any) => {
-  //           console.error('Une erreur est survenue lors de la création de la demande de trajet : ', error);
-  //         }
-  //       );
-  //     })
-  //   );
-  // }
+  itinariesListMyCard(): Observable<any> {
+    return this.http.get(this.baseUrl + 'itinariesMyCard');
+  }
 
   itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
 
@@ -118,7 +76,7 @@ export class ItinariesService {
           fk_user: decodedToken.id,
           type_user: 'conductor',
           request_user: true,
-          message: 'Initialisation of the itinar'
+          message: 'Initialisation of the itinary'
         };
         console.log('cestletoken2', localStorage.getItem('token'))
 

@@ -25,43 +25,8 @@ exports.itinariesList = async function (req, res) {
         })
 }
 
-// exports.itinariesListFormatted = async function (req, res) {
-//     let listformatted = [];
-//     await Itinaries.findAll({
-//         include: [{
-//             model: Itinaries_User,
-//             include: [{
-//                 model: User,
-//                 // attributes: ['email'] // Add this line to select only the email attribute of the User model
-//             }]
-//         }]
-//     })
-//         .then(data => {
-//             data.forEach(itinerary => {
-//                 let itineraryObj = {
-//                     "itinaries_id": itinerary.itinaries_id,
-//                     "startAddress": itinerary.startAddress,
-//                     "seats": itinerary.seats,
-//                     "destination": itinerary.destination,
-//                     "createdAt": itinerary.createdAt,
-//                     "updatedAt": itinerary.updatedAt,
-//                     "startDate": itinerary.startDate,
-//                     "hours": itinerary.hours
-//                 };
-//                 itinerary.itinaries_users.forEach(user => {
-//                     itineraryObj['email'] = user.user.email; // Add the email attribute of the User model to the itinerary object
-//                 });
-//                 listformatted.push(itineraryObj);
-//             });
-//             console.log("All itinaries:", JSON.stringify(listformatted, null, 2));
-//             res.json(listformatted);
-//         })
-//         .catch(err => {
-//             res.status(500).json({ message: err.message })
-//         })
-// }
 
-exports.itinariesListFormatted = async function (req, res) {
+exports.itinariesCardList = async function (req, res) {
     let listformatted = [];
     console.log('')
     await Itinaries.findAll({
@@ -83,14 +48,11 @@ exports.itinariesListFormatted = async function (req, res) {
 
                 itinerary.itinaries_users.forEach((user) => {
                     if (user.type_user === 'conductor') {
-                        console.log("c'est un conducteur le boug", user.user.email);
                         conductorEmail = user.user.email;
-                        console.log(conductorEmail);
                     } else if (user.type_user === 'passenger') {
                         passengerEmails.push(user.user.email);
                     }
                 });
-
                 let itineraryObj = {
                     itinaries_id: itinerary.itinaries_id,
                     startAddress: itinerary.startAddress,
@@ -114,6 +76,64 @@ exports.itinariesListFormatted = async function (req, res) {
             res.status(500).json({ message: err.message });
         });
 };
+
+exports.itinariesMyCardList = async function (req, res) {
+    let listformatted = [];
+    await Itinaries_User.findAll({
+        where: { fk_user: req.user },
+        include: [
+            {
+                model: Itinaries,
+                include: [
+                    {
+                        model: Itinaries_User,
+                        include: [
+                            {
+                                model: User,
+                            },
+                        ],
+                    },
+                ],
+            },
+        ],
+    })
+        .then((data) => {
+            data.forEach((itineraryUser) => {
+                const itinerary = itineraryUser.itinary;
+                let conductorEmail = '';
+                let passengerEmails = [];
+
+                itinerary.itinaries_users.forEach((user) => {
+                    if (user.type_user === 'conductor') {
+                        conductorEmail = user.user.email;
+                    } else if (user.type_user === 'passenger') {
+                        passengerEmails.push(user.user.email);
+                    }
+                });
+                let itineraryObj = {
+                    itinaries_id: itinerary.itinaries_id,
+                    startAddress: itinerary.startAddress,
+                    seats: itinerary.seats,
+                    destination: itinerary.destination,
+                    createdAt: itinerary.createdAt,
+                    updatedAt: itinerary.updatedAt,
+                    startDate: itinerary.startDate,
+                    hours: itinerary.hours,
+                    conductorEmail: conductorEmail,
+                    passengerEmails: passengerEmails,
+                };
+
+                listformatted.push(itineraryObj);
+            });
+
+            console.log('My itinaries:', JSON.stringify(listformatted, null, 2));
+            res.json(listformatted);
+        })
+        .catch((err) => {
+            res.status(500).json({ message: err.message });
+        });
+};
+
 
 
 exports.itinarieCreate = async (req, res) => {

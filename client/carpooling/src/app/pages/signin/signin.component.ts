@@ -22,5 +22,6 @@ export class SigninComponent {
 
   onClick() {
     localStorage.removeItem('token');
+    this.router.navigate(['/signup']); // navigate to dashboard page
   }
 }
