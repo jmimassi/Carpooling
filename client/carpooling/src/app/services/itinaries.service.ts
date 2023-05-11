@@ -47,7 +47,11 @@ export class ItinariesService {
   }
 
   itinariesListMyCard(): Observable<any> {
-    return this.http.get(this.baseUrl + 'itinariesMyCard');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.get(this.baseUrl + 'itinariesMyCard', {headers: headers});
   }
 
   itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {

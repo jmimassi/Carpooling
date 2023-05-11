@@ -72,7 +72,7 @@ exports.userLogin = async (req, res, next) => {
         expiresIn: jwtExpirySeconds,
     })
     console.log("c'est le login qui a été push", payload)
-    // res.cookie("token", token, { httpOnly: false, secure: false, maxAge: jwtExpirySeconds * 1000 });
+    res.cookie("token", token, { httpOnly: true, secure: true, maxAge: jwtExpirySeconds * 1000 });
     console.log(token)
     res.json({ "token": token, "maxAge": jwtExpirySeconds * 1000 });
 }
