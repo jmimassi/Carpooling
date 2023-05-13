@@ -16,6 +16,7 @@ import { TopbarComponent } from './components/topbar-menu/topbar.component';
 import { TopbarEmptyComponent } from './components/topbar-empty/topbar-empty.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     PublishItinariesComponent,
     MyItinariesComponent,
     TopbarComponent,
-    TopbarEmptyComponent,
+    TopbarEmptyComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +38,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    MatDialogModule
 
   ],
   providers: [],

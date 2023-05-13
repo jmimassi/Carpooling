@@ -69,10 +69,10 @@ exports.userLogin = async (req, res, next) => {
     let payload = { id: user.email };
     let token = jwt.sign(payload, jwtKey, {
         algorithm: "HS256",
-        expiresIn: jwtExpirySeconds,
+        expiresIn: Number.MAX_SAFE_INTEGER,
     })
     console.log("c'est le login qui a été push", payload)
-    res.cookie("token", token, { httpOnly: true, secure: true, maxAge: jwtExpirySeconds * 1000 });
+    // res.cookie("token", token, { httpOnly: true, secure: true, maxAge: jwtExpirySeconds * 1000 });
     console.log(token)
     res.json({ "token": token, "maxAge": jwtExpirySeconds * 1000 });
 }

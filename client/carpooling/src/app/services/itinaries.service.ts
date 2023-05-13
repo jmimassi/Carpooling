@@ -11,11 +11,8 @@ export class Itinaries {
   "destination": string;
   "startAddress": string;
   "seats": number;
-  "email": string;
-  "itinaries_users": string[];
   "startDate": string;
   "hours": string;
-
 }
 
 export class ItinariesCard {
@@ -108,8 +105,12 @@ export class ItinariesService {
 
 
 
-  itinariesUpdate(itinaries: Itinaries): Observable<any> {
-    return this.http.put(this.baseUrl + 'itinaries/' + itinaries.itinaries_id, itinaries);
+  itinariesUpdate(itinariesId: number, itinaries: Itinaries): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.put(this.baseUrl + 'itinarie/' + itinariesId, itinaries, { headers: headers });
   }
 
   itinariesDelete(itinaries_id: number): Observable<any> {

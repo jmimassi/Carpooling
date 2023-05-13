@@ -206,13 +206,28 @@ exports.itinariesByDestination = async function (req, res) {
         })
 }
 
+// itinaries_id: {
+//     type: Sequelize.INTEGER,
+//     allowNull: false,
+//     autoIncrement: true,
+//     primaryKey: true
+// },
+// // fk_destination: { type: Sequelize.STRING, allowNull: false },
+// startAddress: { type: Sequelize.STRING, allowNull: false },
+// seats: { type: Sequelize.INTEGER, allowNull: false },
+// destination: { type: Sequelize.STRING, allowNull: false },
+// startDate: { type: Sequelize.STRING, allowNull: false },
+// hours: { type: Sequelize.STRING, allowNull: false }
+
 exports.itinariesUpdate = async (req, res) => {
     if (req.params.itinaries_id) {
         await Itinaries.update(
             {
-                fk_destination: req.body.fk_destination,
+                destination: req.body.destination,
                 startAddress: req.body.startAddress,
-                seats: req.body.seats
+                seats: req.body.seats,
+                hours: req.body.hours,
+                startDate: req.body.startDate
             }, {
             where: { itinaries_id: req.params.itinaries_id }
         }
