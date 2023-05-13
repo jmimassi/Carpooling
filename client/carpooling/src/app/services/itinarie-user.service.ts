@@ -1,11 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export class ItinariesUser {
   'itinaries_user_id'?: number;
   'type_user': string;
-  'request_user': boolean;
+  'request_user': number;
   'message': string;
   'fk_itinaries': number;
   'fk_user': string;
@@ -28,7 +28,11 @@ export class ItinariesUserService {
   }
 
   itinariesUserCreate(itinariesUser: ItinariesUser): Observable<any> {
-    return this.http.post(this.baseUrl + 'bookings', itinariesUser);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.post(this.baseUrl + 'bookings', itinariesUser, { "headers": headers });
   }
 
   itinariesUserById(itinariesUserId: number): Observable<any> {

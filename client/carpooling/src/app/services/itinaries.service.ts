@@ -80,7 +80,7 @@ export class ItinariesService {
           fk_itinaries: itinaries_id,
           fk_user: decodedToken.id,
           type_user: 'conductor',
-          request_user: true,
+          request_user: 1,
           message: 'Initialisation of the itinary'
         };
         console.log('cestletoken2', localStorage.getItem('token'))
@@ -102,9 +102,6 @@ export class ItinariesService {
     );
   }
 
-
-
-
   itinariesUpdate(itinariesId: number, itinaries: Itinaries): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -114,7 +111,11 @@ export class ItinariesService {
   }
 
   itinariesDelete(itinaries_id: number): Observable<any> {
-    return this.http.delete(this.baseUrl + 'itinaries/' + itinaries_id);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.delete(this.baseUrl + 'itinarie/' + itinaries_id, { "headers": headers });
   }
 
   itinariesUpdateSeats(itinaries_id: number, seats: number): Observable<any> {

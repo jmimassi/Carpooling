@@ -14,9 +14,14 @@
                 <p>Start Address: {{ itinerary.startAddress }}</p>
                 <!-- <p>Destination: {{ itinerary.destination }}</p> -->
                 <p>Seats: {{ itinerary.seats }}</p>
-                <p>Conductor : {{ itinerary.conductorEmail }}</p>
+                <p>Conductor: {{ itinerary.conductorEmail }}</p>
                 <p>Start date: {{ itinerary.startDate }}</p>
                 <p>Hours: {{ itinerary.hours }}</p>
+                <!-- Ajouter la condition pour afficher le bouton uniquement lorsque le username est différent du conductor -->
+                <button *ngIf="username !== itinerary.conductorEmail" (click)="climbBoardModal(itinerary)"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                    Climb on Board
+                </button>
             </div>
         </div>
     </div>
@@ -24,3 +29,17 @@
         <p class="text-gray-700">{{ selectedItinerary?.destination }}</p>
     </div>
 </div>
+
+<ng-template #modalContent let-dialogRef>
+    <h2 class="text-center text-2xl font-bold mb-4">Envoyer un message au conducteur</h2>
+    <form (ngSubmit)="onSubmitClimb(itinariesUserForm.value)" #itinariesUserForm="ngForm">
+        <div class="mb-4">
+            <label for="message" class="block font-bold mb-1">Message:</label>
+            <input type="text" id="message" name="message" required class="w-full rounded border-gray-400 py-2 px-3"
+                [(ngModel)]="selectedItinerary.message">
+        </div>
+        <div class="text-center">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Enregistrer</button>
+        </div>
+    </form>
+</ng-template>

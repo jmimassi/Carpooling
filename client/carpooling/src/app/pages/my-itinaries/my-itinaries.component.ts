@@ -13,7 +13,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class MyItinariesComponent {
 
-
   username: string = '';
 
   itinaries: ItinariesCard[] = [];
@@ -52,8 +51,15 @@ export class MyItinariesComponent {
 
   searchTerm: string = '';
 
-  deleteItinerary(itinerary: any) {
-    // Ne fait rien
+  deleteItinerary() {
+    const itinariesId = this.selectedItinerary.itinaries_id; // ID de l'itinéraire sélectionné
+    this.itinariesService.itinariesDelete(itinariesId).subscribe(
+      data => {
+        // console.log(data)
+        this.itinaries = data
+        console.log("itinéraire supprimée", this.itinaries);
+      }
+    )
   }
 
   editItinerary(itinerary: any) {
