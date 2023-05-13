@@ -30,4 +30,6 @@ export class MyItinariesComponent {
     this.selectedItinerary = itinerary;
   }
 
+  searchTerm: string = '';
+
 }

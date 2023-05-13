@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class ItinariesComponent {
 
+  searchTerm: string = '';
+
   itinaries: ItinariesCard[] = [];
 
   selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
@@ -32,5 +34,8 @@ export class ItinariesComponent {
   onSubmit() {
     this.router.navigate(['/signin']); // navigate to dashboard page
   }
+
+
+
 }
 

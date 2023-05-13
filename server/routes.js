@@ -56,7 +56,7 @@ router.get('/itinaries', itinarieController.itinariesList);
 router.post('/itinaries', itinarieController.itinarieCreate);
 router.get('/itinaries/startAddress/:startAddress', itinarieController.itinariesBystartAddress)
 router.get('/itinaries/destination/:destination', itinarieController.itinariesByDestination)
-router.get('/itinariesCard/', itinarieController.itinariesCardList)
+router.get('/itinariesCard/', isAuthorized, itinarieController.itinariesCardList)
 router.get('/itinariesMyCard/', isAuthorized, itinarieController.itinariesMyCardList)
 router.get('/itinaries/email/:email', itinarieController.itinariesByEmail)
 router.put('/itinarie/:itinaries_id', itinarieController.itinariesUpdate)

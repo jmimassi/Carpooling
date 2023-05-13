@@ -15,6 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TopbarComponent } from './components/topbar-menu/topbar.component';
 import { TopbarEmptyComponent } from './components/topbar-empty/topbar-empty.component';
 import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    Ng2SearchPipeModule
 
   ],
   providers: [],
