@@ -35,9 +35,12 @@ export class ItinariesUserService {
     return this.http.post(this.baseUrl + 'bookings', itinariesUser, { "headers": headers });
   }
 
-  itinariesUserById(itinariesUserId: number): Observable<any> {
-    return this.http.get(this.baseUrl + itinariesUserId);
+
+  getItinariesUserByItineraryId(itinariesId: number) {
+    console.log(itinariesId)
+    return this.http.get<ItinariesUser[]>(this.baseUrl + `booking/${itinariesId}`);
   }
+
 
   itinariesUserByUserConnected(userId: number): Observable<any> {
     return this.http.get(this.baseUrl + '?fk_user=' + userId);
@@ -47,11 +50,11 @@ export class ItinariesUserService {
     return this.http.delete(this.baseUrl + itinariesUserId);
   }
 
-  itinariesUserAcceptPassenger(itinariesUserId: number): Observable<any> {
-    return this.http.put(this.baseUrl + itinariesUserId + '/accept', {});
+  itinariesUserAcceptPassenger(itinaries_user_id: string): Observable<any> {
+    return this.http.patch(this.baseUrl + 'booking/' + itinaries_user_id + '/accept', {});
   }
 
-  itinariesUserRefusedPassenger(itinariesUserId: number): Observable<any> {
-    return this.http.put(this.baseUrl + itinariesUserId + '/refuse', {});
+  itinariesUserRefusedPassenger(itinaries_user_id: string): Observable<any> {
+    return this.http.patch(this.baseUrl + 'booking/' + itinaries_user_id + '/deny', {});
   }
 }

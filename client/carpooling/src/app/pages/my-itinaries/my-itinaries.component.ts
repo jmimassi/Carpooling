@@ -4,7 +4,7 @@ import { ItinariesUserService, ItinariesUser } from '../../services/itinarie-use
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
-
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-my-itinaries',
@@ -15,9 +15,15 @@ export class MyItinariesComponent {
 
   username: string = '';
 
+  passengersData: any;
+
+  public requestItinaries: any[] = [];
+
   itinaries: ItinariesCard[] = [];
 
   selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
+
+  passengers: ItinariesUser[] = [];
 
   showModal: boolean = false;
 
@@ -73,6 +79,29 @@ export class MyItinariesComponent {
     });
   }
 
+  Request() {
+    if (!this.selectedItinerary) {
+      // Vérifiez si un itinéraire est sélectionné avant de continuer
+      console.error('No itinerary selected');
+      return;
+    }
+
+    const itinerariesId = this.selectedItinerary.itinaries_id;
+
+    this.itinariesService.itinariesListPassenger(itinerariesId).subscribe(
+      data => {
+        this.itinaries = data;
+
+        const encodedData = encodeURIComponent(JSON.stringify(this.itinaries));
+
+        this.router.navigate(['/request'], { queryParams: { data: encodedData } });
+      }
+    );
+  }
+
+
+
+
 
 
   onSubmitEdit(itinarie: {
@@ -110,7 +139,5 @@ export class MyItinariesComponent {
       }
     );
   }
-
-
 
 }

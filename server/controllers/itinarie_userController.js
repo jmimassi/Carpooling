@@ -75,6 +75,7 @@ exports.itinaries_userDelete = async (req, res) => {
 }
 
 exports.itinaries_userAcceptPassenger = async (req, res) => {
+    // console.log(req.params.itinaries_user_id)
     if (req.params.itinaries_user_id) {
         await Itinaries_User.update(
             {
@@ -95,6 +96,7 @@ exports.itinaries_userAcceptPassenger = async (req, res) => {
 }
 
 exports.itinaries_userRefusedPassenger = async (req, res) => {
+    // console.log(req.params.itinaries_user_id)
     if (req.params.itinaries_user_id) {
         await Itinaries_User.update(
             {

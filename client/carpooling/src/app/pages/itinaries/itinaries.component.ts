@@ -4,6 +4,7 @@ import { ItinariesUserService, ItinariesUser } from '../../services/itinarie-use
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-itinaries',
@@ -67,8 +68,8 @@ export class ItinariesComponent {
   onSubmitClimb(itinarie: ItinariesUser) {
     const itinariesId = this.selectedItinerary.itinaries_id; // ID de l'itinéraire sélectionné
 
-    console.log("c'est l'initarie id : ", itinariesId);
-    console.log("c'est l'itinéraire ou on veut aller", itinarie)
+    console.log("c'est l'itineraire id : ", itinariesId);
+    console.log("c'est l'itinéraire où on veut aller", itinarie);
 
     const updatedItinaries: ItinariesUser = {
       type_user: "passenger",
@@ -78,20 +79,9 @@ export class ItinariesComponent {
       fk_itinaries: itinariesId
     };
 
-    console.log(updatedItinaries)
+    console.log(updatedItinaries);
 
-    this.itinariesUserService.itinariesUserCreate(updatedItinaries).subscribe(
-      data => {
-        // Gestion de la réponse de la requête de mise à jour
-        console.log('Itinéraire mis à jour avec succès', data);
-        // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
-      },
-      error => {
-        // Gestion des erreurs lors de la requête de mise à jour
-        console.log('Erreur lors de la mise à jour de l\'itinéraire', error);
-      }
-    );
+
   }
-
 }
 

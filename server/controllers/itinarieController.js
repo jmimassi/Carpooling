@@ -134,7 +134,27 @@ exports.itinariesMyCardList = async function (req, res) {
         });
 };
 
+exports.itinariesPassengersList = async function (req, res) {
+    if (!req.params.itinaries_id) {
+        return res.status(400).json({ message: 'Missing itinerary ID' });
+    }
 
+    try {
+        const itinerary = await Itinaries.findByPk(req.params.itinaries_id, {
+            include: [{
+                model: Itinaries_User,
+                where: { type_user: 'passenger' },
+                include: [User]
+            }]
+        });
+
+        console.log('All passengers:', JSON.stringify(itinerary, null, 2));
+        res.json(itinerary);
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 exports.itinarieCreate = async (req, res) => {
     let itinarie = Itinaries.build({
@@ -263,26 +283,59 @@ exports.itinariesDelete = async (req, res) => {
 }
 
 
-exports.itinariesUpdateSeats = async (req, res) => {
+exports.itinaries_userDecrementSeat = async (req, res) => {
+    console.log(req.params.itinaries_id)
     if (req.params.itinaries_id) {
-        await Itinaries.update(
-            {
-                seats: req.body.seats
-            }, {
-            where: { itinaries_id: req.params.itinaries_id }
+        try {
+            // Find the Itinarie_User with the given ID
+            const itinarie = await Itinaries.findOne({ where: { itinaries_id: req.params.itinaries_id } });
+
+            if (!itinarie) {
+                return res.status(404).json({ message: 'Itinarie not found' });
+            }
+
+            // Decrease the seats value by one
+            itinarie.seats -= 1;
+
+            // Save the Itinarie_User with the new seats value
+            const updatedItinarie = await itinarie.save();
+
+            // Respond with the updated Itinarie_User
+            res.json(updatedItinarie);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
         }
-        )
-            .then(data => {
-                // console.log(destination.toJSON());
-                res.json(data);
-            })
-            .catch(err => {
-                res.status(500).json({ message: err.message })
-            })
+    } else {
+        res.status(400).json({ message: 'Invalid Itinarie ID' });
     }
-    else res.status(400).json({ message: 'Itinarie not found' })
 }
 
+exports.itinaries_userIncrementSeat = async (req, res) => {
+    console.log(req.params.itinaries_id)
+    if (req.params.itinaries_id) {
+        try {
+            // Find the Itinarie_User with the given ID
+            const itinarie = await Itinaries.findOne({ where: { itinaries_id: req.params.itinaries_id } });
+
+            if (!itinarie) {
+                return res.status(404).json({ message: 'Itinarie not found' });
+            }
+
+            // Decrease the seats value by one
+            itinarie.seats += 1;
+
+            // Save the Itinarie_User with the new seats value
+            const updatedItinarie = await itinarie.save();
+
+            // Respond with the updated Itinarie_User
+            res.json(updatedItinarie);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    } else {
+        res.status(400).json({ message: 'Invalid Itinarie ID' });
+    }
+}
 // exports.itinariesUpdateSeats = async (req, res) => {
 //     const itinaries = await Itinaries.findByPk(req.params.itinaries_id);
 //     if (!itinaries) {

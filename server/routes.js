@@ -58,9 +58,11 @@ router.get('/itinaries/startAddress/:startAddress', itinarieController.itinaries
 router.get('/itinaries/destination/:destination', itinarieController.itinariesByDestination)
 router.get('/itinariesCard/', isAuthorized, itinarieController.itinariesCardList)
 router.get('/itinariesMyCard/', isAuthorized, itinarieController.itinariesMyCardList)
+router.get('/itinaries/PassengerList/:itinaries_id', itinarieController.itinariesPassengersList)
 router.get('/itinaries/email/:email', itinarieController.itinariesByEmail)
 router.put('/itinarie/:itinaries_id', itinarieController.itinariesUpdate)
-router.patch('/itinarie/:itinaries_id/seats', itinarieController.itinariesUpdateSeats)
+router.patch('/itinarie/:itinaries_id/seatsmin', itinarieController.itinaries_userDecrementSeat)
+router.patch('/itinarie/:itinaries_id/seatsplus', itinarieController.itinaries_userIncrementSeat)
 router.delete('/itinarie/:itinaries_id', itinarieController.itinariesDelete)
 
 // ItinariesUser

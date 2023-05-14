@@ -222,6 +222,28 @@ paths:
         "404":
           description: Destinations introuvable
 
+  /itinaries/PassengerList/{itinaries_id}:
+    get:
+      tags:
+        - Itinaries
+      summary: Obtenir les informations de la destination universitaire disponible
+      parameters:
+        - name: itinaries_id
+          in: path
+          description: itinaries_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Liste des destinations universitaires
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Destinations introuvable
+
   /itinarie/{itinaries_id}:
     put:
       tags:
@@ -268,7 +290,7 @@ paths:
         "404":
           description: Impossible de supprimer l'itinéraire
 
-  /itinarie/{itinaries_id}/seats:
+  /itinarie/{itinaries_id}/seatsmin:
     patch:
       tags:
         - Itinaries
@@ -280,16 +302,28 @@ paths:
           required: true
           schema:
             type: integer
-      requestBody:
-        description: Informations de l'itinéraire mises à jour
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                seats:
-                  type: integer
+      responses:
+        "200":
+          description: nombre de places mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Itinaries"
+        "404":
+          description: Impossible de mettre à jour le nombre de places
+
+  /itinarie/{itinaries_id}/seatsplus:
+    patch:
+      tags:
+        - Itinaries
+      summary: Mettre à jour le nombre de places disponibles dans un itinéraire existant pour un conducteur
+      parameters:
+        - name: itinaries_id
+          in: path
+          description: ID de l'itinéraire
+          required: true
+          schema:
+            type: integer
       responses:
         "200":
           description: nombre de places mis à jour avec succès
@@ -400,7 +434,7 @@ paths:
           description: ID de la réservation
           required: true
           schema:
-            type: integer
+            type: string
       # requestBody:
       #   description: Informations de l'itinéraire mises à jour
       #   required: true
@@ -432,7 +466,7 @@ paths:
           description: ID de la réservation
           required: true
           schema:
-            type: integer
+            type: string
       # requestBody:
       #   description: Modifier le status d'un passager
       #   required: true

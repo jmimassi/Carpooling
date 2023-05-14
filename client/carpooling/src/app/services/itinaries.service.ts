@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { ItinariesUser, ItinariesUserService } from './itinarie-user.service';
 import jwt_decode from 'jwt-decode';
 
@@ -33,6 +33,8 @@ export class ItinariesCard {
 export class ItinariesService {
   baseUrl: string = 'http://localhost:8000/api/'
 
+  public selectedItinerary: any;
+
   constructor(private http: HttpClient, private itinariesUserService: ItinariesUserService) { }
 
   itinariesList(): Observable<any> {
@@ -47,12 +49,20 @@ export class ItinariesService {
     return this.http.get(this.baseUrl + 'itinariesCard', { "headers": headers });
   }
 
+  itinariesListPassenger(itinaries_id: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.get(this.baseUrl + `itinaries/PassengerList/${itinaries_id}`, { "headers": headers });
+  }
+
   itinariesListMyCard(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
-    return this.http.get(this.baseUrl + 'itinariesMyCard', { "headers": headers });
+    return this.http.get(this.baseUrl + 'itinariesMyCard/', { "headers": headers });
   }
 
   itinariesCreate(itinaries: { destination: string; startAddress: string, seats: number }): Observable<any> {
@@ -118,10 +128,36 @@ export class ItinariesService {
     return this.http.delete(this.baseUrl + 'itinarie/' + itinaries_id, { "headers": headers });
   }
 
-  itinariesUpdateSeats(itinaries_id: number, seats: number): Observable<any> {
-    const data = { "seats": seats };
-    return this.http.patch(this.baseUrl + 'itinaries/' + itinaries_id, data);
+  itinariesIncrementSeats(itinaries_id: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.patch(this.baseUrl + 'itinarie/' + itinaries_id + '/seatsplus', {}, { headers })
+      .pipe(
+        map((response: any) => {
+          const updatedSeats = response.seats - 1;
+          return { ...response, seats: updatedSeats };
+        })
+      );
   }
+
+  itinariesDecrementSeats(itinaries_id: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.patch(this.baseUrl + 'itinarie/' + itinaries_id + '/seatsmin', {}, { headers })
+      .pipe(
+        map((response: any) => {
+          const updatedSeats = response.seats - 1;
+          return { ...response, seats: updatedSeats };
+        })
+      );
+  }
+
 
   itinariesByStartAddress(startAddress: string): Observable<any> {
     const params = { "startAddress": startAddress };
