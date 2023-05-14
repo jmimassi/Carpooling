@@ -57,22 +57,22 @@ exports.itinarie_userByUserConnected = async function (req, res) {
 }
 
 exports.itinaries_userDelete = async (req, res) => {
-    if (req.params.itinaries_user_id) {
-        await Itinaries_User.destroy(
-            {
-                where: { itinaries_user_id: req.params.itinaries_user_id }
-            }
-        )
-            .then(data => {
-                // console.log(destination.toJSON());
+    const { fk_user, fk_itinaries } = req.params;
+    if (fk_user && fk_itinaries) {
+        await Itinaries_User.destroy({
+            where: { fk_user, fk_itinaries },
+        })
+            .then((data) => {
                 res.json(data);
             })
-            .catch(err => {
-                res.status(500).json({ message: err.message })
-            })
+            .catch((err) => {
+                res.status(500).json({ message: err.message });
+            });
+    } else {
+        res.status(400).json({ message: 'Invalid parameters' });
     }
-    else res.status(400).json({ message: 'Itinarie_user not found' })
-}
+};
+
 
 exports.itinaries_userAcceptPassenger = async (req, res) => {
     // console.log(req.params.itinaries_user_id)

@@ -35,19 +35,17 @@ export class ItinariesUserService {
     return this.http.post(this.baseUrl + 'bookings', itinariesUser, { "headers": headers });
   }
 
-
   getItinariesUserByItineraryId(itinariesId: number) {
     console.log(itinariesId)
     return this.http.get<ItinariesUser[]>(this.baseUrl + `booking/${itinariesId}`);
   }
 
-
   itinariesUserByUserConnected(userId: number): Observable<any> {
     return this.http.get(this.baseUrl + '?fk_user=' + userId);
   }
 
-  itinariesUserDelete(itinariesUserId: number): Observable<any> {
-    return this.http.delete(this.baseUrl + itinariesUserId);
+  itinariesUserDelete(fk_user: string, fk_itinaries: string): Observable<any> {
+    return this.http.delete(this.baseUrl + 'booking/user/' + fk_user + '/itinarie/' + fk_itinaries);
   }
 
   itinariesUserAcceptPassenger(itinaries_user_id: string): Observable<any> {

@@ -6,6 +6,7 @@ import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { concatMap } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-my-itinaries',
   templateUrl: './my-itinaries.component.html',
@@ -59,6 +60,7 @@ export class MyItinariesComponent {
 
   deleteItinerary() {
     const itinariesId = this.selectedItinerary.itinaries_id; // ID de l'itinéraire sélectionné
+    console.log(itinariesId);
     this.itinariesService.itinariesDelete(itinariesId).subscribe(
       data => {
         // console.log(data)
@@ -100,8 +102,21 @@ export class MyItinariesComponent {
   }
 
 
+  cancelItinerary() {
+    const fk_user = this.username; // Get the current logged-in user's ID
+    const fk_itinaries = this.selectedItinerary.itinaries_id; // ID of the selected itinerary
 
-
+    this.itinaries_userService.itinariesUserDelete(fk_user, fk_itinaries).subscribe(
+      data => {
+        // Handle the success response
+        console.log('Itinerary booking deleted successfully', data);
+      },
+      error => {
+        // Handle the error response
+        console.log('Error deleting itinerary booking', error);
+      }
+    );
+  }
 
 
   onSubmitEdit(itinarie: {

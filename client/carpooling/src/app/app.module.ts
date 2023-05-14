@@ -18,6 +18,10 @@ import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RequestComponent } from './pages/request/request.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -41,8 +45,11 @@ import { RequestComponent } from './pages/request/request.component';
     MatInputModule,
     FormsModule,
     Ng2SearchPipeModule,
-    MatDialogModule
-
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    NgxMatTimepickerModule.setLocale('en-GB'),
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

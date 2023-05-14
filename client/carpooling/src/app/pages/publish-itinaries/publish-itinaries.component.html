@@ -25,9 +25,14 @@
                 </div>
 
                 <div class="mb-4">
-                    <label for="startDate" class="block font-bold mb-1">Date de départ:</label>
-                    <input type="text" id="startDate" name="startDate" ngModel required
-                        class="w-full rounded border-gray-400 py-2 px-3">
+                    <label for="seats" class="block font-bold mb-1">Date de départ:</label>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput [matDatepicker]="picker" id="startDate" name="startDate" ngModel required>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
                 </div>
 
                 <div class="mb-4">

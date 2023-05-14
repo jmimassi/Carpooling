@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { MatDialog } from '@angular/material/dialog';
 import { concatMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-itinaries',
@@ -23,7 +25,7 @@ export class ItinariesComponent {
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
-  constructor(private itinariesService: ItinariesService, private router: Router, private itinariesUserService: ItinariesUserService, private dialog: MatDialog) { }
+  constructor(private itinariesService: ItinariesService, private router: Router, private itinariesUserService: ItinariesUserService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
 
   ngOnInit() {
@@ -55,14 +57,22 @@ export class ItinariesComponent {
   }
 
   climbBoardModal(itinerary: any) {
-    const dialogRef = this.dialog.open(this.modalContent, {
-      // width: '400px', // Définissez la largeur du modal selon vos besoins
-      data: { itinerary: itinerary }
-    });
+    if (itinerary.passengerEmails.includes(this.username)) {
+      this.snackBar.open('You are already a passenger on this itinerary.', 'Close', {
+        duration: 3000,
+        panelClass: 'error-snackbar' // Apply a custom CSS class for styling the snackbar
+      });
+      return;
+    } else {
+      const dialogRef = this.dialog.open(this.modalContent, {
+        // width: '400px', // Définissez la largeur du modal selon vos besoins
+        data: { itinerary: itinerary }
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // Logique à exécuter après la fermeture du modal, si nécessaire
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        // Logique à exécuter après la fermeture du modal, si nécessaire
+      })
+    };
   }
 
   onSubmitClimb(itinarie: ItinariesUser) {
@@ -81,7 +91,25 @@ export class ItinariesComponent {
 
     console.log(updatedItinaries);
 
-
+    this.itinariesUserService.itinariesUserCreate(updatedItinaries).subscribe(
+      data => {
+        // Gestion de la réponse de la requête de création
+        console.log('Itinéraire créé avec succès', data);
+        // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
+      },
+      error => {
+        // Gestion des erreurs lors de la requête de création
+        console.log('Erreur lors de la création de l\'itinéraire', error);
+      }
+    );
   }
+
+
+
+
+
+
+
+
 }
 

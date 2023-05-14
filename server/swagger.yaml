@@ -423,6 +423,31 @@ paths:
         "404":
           description: Impossible de supprimer l'itinéraire
 
+  /booking/user/{fk_user}/itinarie/{fk_itinaries}:
+    delete:
+      tags:
+        - Bookings
+      summary: Supprimer une réservation existante
+      parameters:
+        - in: path
+          name: fk_user
+          required: true
+          description: ID de la réservation à supprimer
+          schema:
+            type: string
+        - in: path
+          name: fk_itinaries
+          required: true
+          description: ID de la réservation à supprimer
+          schema:
+            type: string
+        
+      responses:
+        "200":
+          description: Itinéraire supprimé avec succès
+        "404":
+          description: Impossible de supprimer l'itinéraire
+
   /booking/{itinaries_user_id}/accept:
     patch:
       tags:
