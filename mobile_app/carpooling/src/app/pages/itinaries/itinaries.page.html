@@ -18,7 +18,7 @@
         <p>Start date: {{ itinerary.startDate }}</p>
         <p>Hours: {{ itinerary.hours }}</p>
       </ion-label>
-      <ion-button *ngIf="username !== itinerary.conductorEmail" (click)="climbBoardModal()">Climb on
+      <ion-button *ngIf="username !== itinerary.conductorEmail" (click)="climbBoardModal(itinerary)">Climb on
         Board</ion-button>
     </ion-item>
   </ion-list>

@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'request',
     loadChildren: () => import('./pages/request/request.module').then(m => m.RequestPageModule)
   },
+  {
+    path: 'climb-on-board',
+    loadChildren: () => import('./pages/climb-on-board/climb-on-board.module').then( m => m.ClimbOnBoardPageModule)
+  },
 ];
 
 @NgModule({

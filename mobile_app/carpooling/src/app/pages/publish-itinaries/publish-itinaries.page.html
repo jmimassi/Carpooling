@@ -1,13 +1,44 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>publish-itinaries</ion-title>
+    <ion-title>Ajouter un itinéraire</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">publish-itinaries</ion-title>
+      <ion-title size="large">Ajouter un itinéraire</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col>
+        <form (ngSubmit)="onSubmit(itinariesForm.value)" #itinariesForm="ngForm">
+          <ion-item>
+            <ion-label position="stacked">Destination</ion-label>
+            <ion-input type="text" name="destination" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Adresse de départ</ion-label>
+            <ion-input type="text" name="startAddress" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Nombre de places</ion-label>
+            <ion-input type="number" name="seats" ngModel required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Date et heure de départ</ion-label>
+            <ion-datetime display-format="DD/MM/YYYY HH:mm" picker-format="DD/MM/YYYY HH:mm" name="startDateTime"
+              [(ngModel)]="itinarie.startDateTime" required></ion-datetime>
+          </ion-item>
+
+          <ion-button expand="full" type="submit">Ajouter</ion-button>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
