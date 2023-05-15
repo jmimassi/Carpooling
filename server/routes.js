@@ -52,7 +52,7 @@ router.get('/users', isAuthorized, userController.userList);
 router.post('/user/login', userController.userLogin)
 
 // Itinaries
-router.get('/itinaries', itinarieController.itinariesList);
+router.get('/itinaries', isAuthorized, itinarieController.itinariesList);
 router.post('/itinaries', itinarieController.itinarieCreate);
 router.get('/itinaries/startAddress/:startAddress', itinarieController.itinariesBystartAddress)
 router.get('/itinaries/destination/:destination', itinarieController.itinariesByDestination)

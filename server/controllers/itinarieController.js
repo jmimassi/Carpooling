@@ -79,9 +79,11 @@ exports.itinariesCardList = async function (req, res) {
         });
 };
 
+
+
 exports.itinariesMyCardList = async function (req, res) {
     let listformatted = [];
-    console.log('')
+
     await Itinaries.findAll({
         include: [
             {
@@ -97,18 +99,18 @@ exports.itinariesMyCardList = async function (req, res) {
         .then((data) => {
             data.forEach((itinerary) => {
                 let conductorEmail = '';
-                let passengerEmails = [];
+                let passengerRequest = {};
 
                 itinerary.itinaries_users.forEach((user) => {
                     if (user.type_user === 'conductor') {
                         conductorEmail = user.user.email;
                     } else if (user.type_user === 'passenger') {
-                        passengerEmails.push(user.user.email);
+                        passengerRequest[user.fk_user] = user.request_user; // Add fk_user as key and request_user as value to the dictionary
                     }
                 });
-                console.log(req.user.id)
-                console.log(conductorEmail)
-                if (conductorEmail == req.user.id || passengerEmails.includes(req.user.id)) {
+
+                // Check if the user is either the conductor or a passenger
+                if (conductorEmail == req.user.id || Object.keys(passengerRequest).includes(req.user.id)) {
                     let itineraryObj = {
                         itinaries_id: itinerary.itinaries_id,
                         startAddress: itinerary.startAddress,
@@ -119,7 +121,7 @@ exports.itinariesMyCardList = async function (req, res) {
                         startDate: itinerary.startDate,
                         hours: itinerary.hours,
                         conductorEmail: conductorEmail,
-                        passengerEmails: passengerEmails,
+                        passengerRequest: passengerRequest,
                     };
 
                     listformatted.push(itineraryObj);
@@ -133,6 +135,7 @@ exports.itinariesMyCardList = async function (req, res) {
             res.status(500).json({ message: err.message });
         });
 };
+
 
 exports.itinariesPassengersList = async function (req, res) {
     if (!req.params.itinaries_id) {

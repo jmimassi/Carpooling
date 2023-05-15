@@ -8,13 +8,15 @@
             </div>
         </div>
         <div class="grid gap-4">
-            <div *ngFor="let itinerary of itinaries | filter: searchTerm" [ngClass]="{
-                'bg-red-500': !itinerary.request_user,
-                'bg-green-500': itinerary.request_user
-            }" class="bg-white p-4 rounded-lg shadow cursor-pointer" (click)="updateDetails(itinerary)">
+            <div *ngFor="let itinerary of itinaries | filter: searchTerm"
+                [style.backgroundColor]="itinerary.passengerRequest[username] ? (itinerary.passengerRequest[username] ? 'green' : '') : ''"
+                class="bg-white p-4 rounded-lg shadow cursor-pointer" (click)="updateDetails(itinerary)">
+
+
                 <!-- Content of the itinerary card -->
                 <h2 class="text-xl">{{ itinerary.destination }}</h2>
                 <p>Start Address: {{ itinerary.startAddress }}</p>
+                <!-- {{ itinerary.passengerRequest[username]}} -->
                 <!-- <p>Destination: {{ itinerary.destination }}</p> -->
                 <p>Seats: {{ itinerary.seats }}</p>
                 <p>Conductor: {{ itinerary.conductorEmail }}</p>

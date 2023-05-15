@@ -3,7 +3,7 @@
 <div class="flex justify-center items-center">
     <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
         <div *ngFor="let user of receivedData.itinaries_users" class="bg-white rounded-lg shadow-lg"
-            [ngClass]="{'bg-red-100': !user.request_user, 'bg-green-100': user.request_user}">
+            [style.background-color]="user.request_user ? '#CCFFCC' : '#FFCCCC'">
             <div class="p-4">
                 <h5 class="text-lg font-bold mb-2">{{ user.fk_user }}</h5>
                 <p class="text-gray-600">{{ user.message }}</p>
