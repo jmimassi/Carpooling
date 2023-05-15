@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { IonicModule } from '@ionic/angular';
 
 import { SignupPageRoutingModule } from './signup-routing.module';
-
+import { UserService, User } from '../../services/user.service';
 import { SignupPage } from './signup.page';
 
 @NgModule({
@@ -13,8 +13,11 @@ import { SignupPage } from './signup.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    SignupPageRoutingModule
+    SignupPageRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  declarations: [SignupPage]
+  declarations: [SignupPage],
+  providers: [UserService]
 })
-export class SignupPageModule {}
+export class SignupPageModule { }

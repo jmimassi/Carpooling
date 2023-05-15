@@ -3,6 +3,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
     path: 'itinaries',
     loadChildren: () => import('./pages/itinaries/itinaries.module').then(m => m.ItinariesPageModule)
   },
@@ -15,22 +24,17 @@ const routes: Routes = [
     loadChildren: () => import('./pages/publish-itinaries/publish-itinaries.module').then(m => m.PublishItinariesPageModule)
   },
   {
-    path: 'request',
-    loadChildren: () => import('./pages/request/request.module').then(m => m.RequestPageModule)
+    path: 'signup',
+    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
   },
   {
     path: 'signin',
     loadChildren: () => import('./pages/signin/signin.module').then(m => m.SigninPageModule)
   },
   {
-    path: 'signup',
-    loadChildren: () => import('./pages/signup/signup.module').then(m => m.SignupPageModule)
+    path: 'request',
+    loadChildren: () => import('./pages/request/request.module').then(m => m.RequestPageModule)
   },
-  {
-    path: '',
-    redirectTo: 'signup',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({

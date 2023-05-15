@@ -7,7 +7,6 @@ export class User {
   'email': string;
   'password': string;
   'address': string;
-  'number_passengers_max': number;
   'lisence_plate': string;
   'picture': string;
 }
@@ -29,11 +28,7 @@ export class UserService {
   // }
 
   UserList(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
-    })
-    return this.http.get(this.baseUrl + 'users', { "headers": headers });
+    return this.http.get(this.baseUrl + 'users');
   }
 
   userCreate(users: { email: string; password: string, address: string, lisence_plate: string, picture: string }): Observable<any> {

@@ -48,7 +48,7 @@ function isAuthorized(req, res, next) {
 
 // User
 router.post('/user/register', userController.userCreate);
-router.get('/users', isAuthorized, userController.userList);
+router.get('/users', userController.userList);
 router.post('/user/login', userController.userLogin)
 
 // Itinaries
