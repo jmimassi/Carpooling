@@ -1,24 +1,40 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { UserService, User } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.page.html',
   styleUrls: ['./signin.page.scss'],
 })
-export class SigninPage {
-  email: string;
-  password: string;
 
-  constructor() {
-    this.email = '';
-    this.password = '';
+export class SigninPage {
+  signinForm: FormGroup;
+
+  constructor(private userService: UserService, private router: Router) {
+    this.signinForm = new FormGroup({
+      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'password': new FormControl(null, Validators.required),
+    });
   }
 
+  onSubmit() {
+    if (this.signinForm.valid) {
+      this.userService.userLogin(this.signinForm.value).subscribe(
+        data => {
+          localStorage.setItem('token', data.token);
+          this.router.navigate(['/itinaries']); // navigate to dashboard page
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
 
-  onSignin() {
-    // Implémentez ici la logique de connexion
-    console.log('Connexion en cours...');
-    console.log('Email:', this.email);
-    console.log('Mot de passe:', this.password);
+  onLogout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/signup']); // navigate to dashboard page
   }
 }

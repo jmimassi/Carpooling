@@ -27,7 +27,8 @@ export class SignupPage {
     if (this.signupForm.valid) {
       this.userService.userCreate(this.signupForm.value).subscribe(
         data => {
-          localStorage.setItem('token', data.token);
+          console.log(data);
+          // localStorage.setItem('token', data.token);
           this.router.navigate(['/signin']); // navigate to dashboard page
         },
         error => {

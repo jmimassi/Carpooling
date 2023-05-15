@@ -21,7 +21,7 @@ export class SignupComponent {
   onSubmit(users: { email: string; password: string, address: string, lisence_plate: string, picture: string }) {
     this.userService.userCreate(users).subscribe(
       data => {
-        localStorage.setItem('token', data.token);
+        // localStorage.setItem('token', data.token);
         // form.reset(); // reset the form after successful submission
         this.router.navigate(['/signin']); // navigate to dashboard page
       },
