@@ -1,26 +1,38 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>My Itinaries</ion-title>
+    <ion-title>My Itineraries</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">My Itinaries</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-searchbar placeholder="Rechercher"></ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let itinerary of myItinaries">
-      <!-- Afficher les détails de l'itinéraire -->
+    <ion-item *ngFor="let itinerary of itineraries" (click)="updateDetails(itinerary)">
       <ion-label>
         <h2>{{ itinerary.destination }}</h2>
         <p>Start Address: {{ itinerary.startAddress }}</p>
         <p>Seats: {{ itinerary.seats }}</p>
-        <p>Start Date: {{ itinerary.startDate }}</p>
+        <p>Conductor: {{ itinerary.conductorEmail }}</p>
+        <p>Start date: {{ itinerary.startDate }}</p>
         <p>Hours: {{ itinerary.hours }}</p>
       </ion-label>
+      <div *ngIf="username !== itinerary.conductorEmail">
+        <ion-button (click)="cancelItinerary()">Annuler</ion-button>
+      </div>
+      <div *ngIf="username === itinerary.conductorEmail">
+        <ion-button (click)="deleteItinerary()">Supprimer</ion-button>
+        <ion-button (click)="editItinerary(itinerary)">Modifier</ion-button>
+      </div>
+      <div *ngIf="username !== itinerary.conductorEmail">
+        <ion-button (click)="requestItinerary()">Request</ion-button>
+      </div>
     </ion-item>
   </ion-list>
+
+  <ion-card *ngIf="selectedItinerary">
+    <ion-card-content>
+      <p>{{ selectedItinerary.destination }}</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
