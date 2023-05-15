@@ -23,9 +23,7 @@
       <div *ngIf="username === itinerary.conductorEmail">
         <ion-button (click)="deleteItinerary()">Supprimer</ion-button>
         <ion-button (click)="editItinerary(itinerary)">Modifier</ion-button>
-      </div>
-      <div *ngIf="username !== itinerary.conductorEmail">
-        <ion-button (click)="requestItinerary()">Request</ion-button>
+        <ion-button (click)="requestItinerary(itinerary)">Request</ion-button>
       </div>
     </ion-item>
   </ion-list>

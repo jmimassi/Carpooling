@@ -13,6 +13,7 @@ export class MyItinariesPage {
   username: string = '';
   searchTerm: string = '';
   itineraries: ItinariesCard[] = [];
+  itinaries: any[] = [];
   selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
@@ -85,14 +86,25 @@ export class MyItinariesPage {
   }
 
   editItinerary(itinerary: any) {
-
+    this.selectedItinerary = itinerary;
+    const encodedData = encodeURIComponent(JSON.stringify(this.selectedItinerary));
+    this.router.navigate(['/modified-my-itinaries'], { queryParams: { data: encodedData } });
   }
 
-  Request() {
-    // Logique pour la demande d'itinéraire
+  requestItinerary(itinerary: any) {
+    this.selectedItinerary = itinerary;
+    const itinerariesId = this.selectedItinerary.itinaries_id;
+
+    this.itinariesService.itinariesListPassenger(itinerariesId).subscribe(
+      data => {
+        this.itinaries = data;
+        const encodedData = encodeURIComponent(JSON.stringify(this.itinaries));
+        this.router.navigate(['/request'], { queryParams: { data: encodedData } });
+      },
+      error => {
+        console.error('Erreur lors de la récupération des passagers', error);
+      }
+    );
   }
 
-  requestItinerary() {
-
-  }
 }

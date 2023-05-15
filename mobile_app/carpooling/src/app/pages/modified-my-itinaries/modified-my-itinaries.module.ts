@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RequestPageRoutingModule } from './request-routing.module';
+import { ModifiedMyItinariesPageRoutingModule } from './modified-my-itinaries-routing.module';
 
-import { RequestPage } from './request.page';
+import { ModifiedMyItinariesPage } from './modified-my-itinaries.page';
 import { UserService } from 'src/app/services/user.service';
 import { ItinariesUserService, ItinariesUser } from 'src/app/services/itinarie-user.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,10 +17,10 @@ import { ItinariesService } from 'src/app/services/itinaries.service';
     CommonModule,
     FormsModule,
     IonicModule,
-    RequestPageRoutingModule,
+    ModifiedMyItinariesPageRoutingModule,
     HttpClientModule
   ],
-  declarations: [RequestPage],
+  declarations: [ModifiedMyItinariesPage],
   providers: [ItinariesService, UserService, ItinariesUserService]
 })
-export class RequestPageModule { }
+export class ModifiedMyItinariesPageModule { }

@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>modified_my-itinaries</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">modified_my-itinaries</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Edit Itinerary</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form (ngSubmit)="onSubmitEdit()">
+        <ion-item>
+          <ion-label>Destination</ion-label>
+          <ion-input type="text" [(ngModel)]="itinerary.destination" name="destination"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Start Address</ion-label>
+          <ion-input type="text" [(ngModel)]="itinerary.startAddress" name="startAddress"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Seats</ion-label>
+          <ion-input type="number" [(ngModel)]="itinerary.seats" name="seats"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Start Date</ion-label>
+          <ion-input type="date" [(ngModel)]="itinerary.startDate" name="startDate"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Hours</ion-label>
+          <ion-input type="text" [(ngModel)]="itinerary.hours" name="hours"></ion-input>
+        </ion-item>
+
+        <div class="ion-text-center">
+          <ion-button expand="full" type="submit">Save Changes</ion-button>
+        </div>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

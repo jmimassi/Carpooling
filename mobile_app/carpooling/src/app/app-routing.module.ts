@@ -37,7 +37,11 @@ const routes: Routes = [
   },
   {
     path: 'climb-on-board',
-    loadChildren: () => import('./pages/climb-on-board/climb-on-board.module').then( m => m.ClimbOnBoardPageModule)
+    loadChildren: () => import('./pages/climb-on-board/climb-on-board.module').then(m => m.ClimbOnBoardPageModule)
+  },
+  {
+    path: 'modified-my-itinaries',
+    loadChildren: () => import('./pages/modified-my-itinaries/modified-my-itinaries.module').then(m => m.ModifiedMyItinariesPageModule)
   },
 ];
 
