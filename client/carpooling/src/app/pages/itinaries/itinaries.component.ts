@@ -29,7 +29,7 @@ export class ItinariesComponent {
 
 
   ngOnInit() {
-    this.itinariesService.itinariesListFormatted().subscribe(
+    this.itinariesService.itinariesListCard().subscribe(
       data => {
         // console.log(data)
         this.itinaries = data

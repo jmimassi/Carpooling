@@ -41,7 +41,7 @@ export class ItinariesService {
     return this.http.get(this.baseUrl + 'itinaries');
   }
 
-  itinariesListFormatted(): Observable<any> {
+  itinariesListCard(): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`

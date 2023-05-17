@@ -235,19 +235,6 @@ exports.itinariesByDestination = async function (req, res) {
         })
 }
 
-// itinaries_id: {
-//     type: Sequelize.INTEGER,
-//     allowNull: false,
-//     autoIncrement: true,
-//     primaryKey: true
-// },
-// // fk_destination: { type: Sequelize.STRING, allowNull: false },
-// startAddress: { type: Sequelize.STRING, allowNull: false },
-// seats: { type: Sequelize.INTEGER, allowNull: false },
-// destination: { type: Sequelize.STRING, allowNull: false },
-// startDate: { type: Sequelize.STRING, allowNull: false },
-// hours: { type: Sequelize.STRING, allowNull: false }
-
 exports.itinariesUpdate = async (req, res) => {
     if (req.params.itinaries_id) {
         await Itinaries.update(
@@ -345,11 +332,3 @@ exports.itinaries_userIncrementSeat = async (req, res) => {
         res.status(400).json({ message: 'Invalid Itinarie ID' });
     }
 }
-// exports.itinariesUpdateSeats = async (req, res) => {
-//     const itinaries = await Itinaries.findByPk(req.params.itinaries_id);
-//     if (!itinaries) {
-//         return res.status(400).json({ message: 'Itinarie not found' });
-//     }
-//     await itinaries.update({ seats: req.body.seats }, { where: { itinaries_id: req.params.itinaries_id } });
-//     res.json(itinaries);
-// };

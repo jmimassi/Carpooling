@@ -18,7 +18,7 @@ export class PublishItinariesComponent {
   constructor(private itinariesService: ItinariesService, private router: Router, private itinaries_userService: ItinariesUserService) { }
 
   ngOnInit() {
-    this.itinariesService.itinariesListFormatted().subscribe(
+    this.itinariesService.itinariesListCard().subscribe(
       data => {
         // console.log(data)
         this.itinaries = data
