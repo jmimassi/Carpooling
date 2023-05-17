@@ -1,32 +1,32 @@
-<app-topbar></app-topbar>
-<div class="flex">
-    <div class="w-300 bg-gray-100 p-6 h-screen overflow-y-auto">
-        <div class="sticky top-0">
-            <div class="mb-4">
-                <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher"
-                    class="w-full px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500" />
+<div class="flex flex-col h-screen">
+    <app-topbar></app-topbar>
+    <div class="flex flex-1 overflow-hidden">
+        <div class="w-300 bg-gray-100 p-6 overflow-y-auto">
+            <div class="sticky top-0">
+                <div class="mb-4">
+                    <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher"
+                        class="w-full px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500" />
+                </div>
+            </div>
+            <div class="grid gap-4">
+                <div *ngFor="let itinerary of itinaries | filter: searchTerm" (click)="updateDetails(itinerary)"
+                    class="bg-white p-4 rounded-lg shadow cursor-pointer">
+                    <h2 class="text-xl">{{ itinerary.destination }}</h2>
+                    <p>Start Address: {{ itinerary.startAddress }}</p>
+                    <p>Seats: {{ itinerary.seats }}</p>
+                    <p>Conductor: {{ itinerary.conductorEmail }}</p>
+                    <p>Start date: {{ itinerary.startDate }}</p>
+                    <p>Hours: {{ itinerary.hours }}</p>
+                    <button *ngIf="username !== itinerary.conductorEmail" (click)="climbBoardModal(itinerary)"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                        Climb on Board
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="grid gap-4">
-            <div *ngFor="let itinerary of itinaries | filter: searchTerm" (click)="updateDetails(itinerary)"
-                class="bg-white p-4 rounded-lg shadow cursor-pointer">
-                <h2 class="text-xl">{{ itinerary.destination }}</h2>
-                <p>Start Address: {{ itinerary.startAddress }}</p>
-                <!-- <p>Destination: {{ itinerary.destination }}</p> -->
-                <p>Seats: {{ itinerary.seats }}</p>
-                <p>Conductor: {{ itinerary.conductorEmail }}</p>
-                <p>Start date: {{ itinerary.startDate }}</p>
-                <p>Hours: {{ itinerary.hours }}</p>
-                <!-- Ajouter la condition pour afficher le bouton uniquement lorsque le username est différent du conductor -->
-                <button *ngIf="username !== itinerary.conductorEmail" (click)="climbBoardModal(itinerary)"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
-                    Climb on Board
-                </button>
-            </div>
+        <div class="flex-1 bg-gray-100 p-6 overflow-y-auto">
+            <p class="text-gray-700">{{ selectedItinerary?.destination }}</p>
         </div>
-    </div>
-    <div class="flex-1 bg-gray-100 p-6">
-        <p class="text-gray-700">{{ selectedItinerary?.destination }}</p>
     </div>
 </div>
 
