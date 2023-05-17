@@ -28,7 +28,7 @@ exports.itinariesList = async function (req, res) {
 
 exports.itinariesCardList = async function (req, res) {
     let listformatted = [];
-    console.log('')
+    console.log('');
     await Itinaries.findAll({
         include: [
             {
@@ -45,16 +45,17 @@ exports.itinariesCardList = async function (req, res) {
             data.forEach((itinerary) => {
                 let conductorEmail = '';
                 let passengerEmails = [];
-
+                let licensePlate = '';
                 itinerary.itinaries_users.forEach((user) => {
+                    licensePlate = user.user.lisence_plate; // Add license plate to the itinerary
                     if (user.type_user === 'conductor') {
                         conductorEmail = user.user.email;
                     } else if (user.type_user === 'passenger') {
                         passengerEmails.push(user.user.email);
                     }
                 });
-                console.log(req.user.id)
-                console.log(conductorEmail)
+                console.log(req.user.id);
+                console.log(conductorEmail);
                 let itineraryObj = {
                     itinaries_id: itinerary.itinaries_id,
                     startAddress: itinerary.startAddress,
@@ -66,6 +67,7 @@ exports.itinariesCardList = async function (req, res) {
                     hours: itinerary.hours,
                     conductorEmail: conductorEmail,
                     passengerEmails: passengerEmails,
+                    licensePlate: licensePlate, // Add license plate to the itinerary object
                 };
 
                 listformatted.push(itineraryObj);
@@ -100,10 +102,13 @@ exports.itinariesMyCardList = async function (req, res) {
             data.forEach((itinerary) => {
                 let conductorEmail = '';
                 let passengerRequest = {};
+                let licensePlate = '';
 
                 itinerary.itinaries_users.forEach((user) => {
+                    licensePlate = user.user.lisence_plate
                     if (user.type_user === 'conductor') {
                         conductorEmail = user.user.email;
+
                     } else if (user.type_user === 'passenger') {
                         passengerRequest[user.fk_user] = user.request_user; // Add fk_user as key and request_user as value to the dictionary
                     }
@@ -122,6 +127,7 @@ exports.itinariesMyCardList = async function (req, res) {
                         hours: itinerary.hours,
                         conductorEmail: conductorEmail,
                         passengerRequest: passengerRequest,
+                        licensePlate: licensePlate
                     };
 
                     listformatted.push(itineraryObj);
