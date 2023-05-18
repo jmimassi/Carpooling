@@ -5,10 +5,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar placeholder="Rechercher"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" placeholder="Rechercher"></ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let itinerary of itineraries" (click)="updateDetails(itinerary)">
+    <ion-item *ngFor="let itinerary of filterItineraries()" (click)="updateDetails(itinerary)">
       <ion-label>
         <h2>{{ itinerary.destination }}</h2>
         <p>Start Address: {{ itinerary.startAddress }}</p>

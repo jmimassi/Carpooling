@@ -107,4 +107,18 @@ export class MyItinariesPage {
     );
   }
 
+  filterItineraries() {
+    if (!this.searchTerm) {
+      return this.itineraries;
+    }
+
+    const searchTermLower = this.searchTerm.toLowerCase();
+
+    return this.itineraries.filter(itineraries => {
+      return (
+        itineraries.destination.toLowerCase().includes(searchTermLower)
+      );
+    });
+  }
+
 }

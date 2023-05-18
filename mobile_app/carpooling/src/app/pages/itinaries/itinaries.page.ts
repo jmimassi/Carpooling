@@ -58,4 +58,18 @@ export class ItinariesPage implements OnInit {
     this.router.navigate(['/climb-on-board'], { queryParams: { data: encodedData } });
   }
 
+  filterItineraries() {
+    if (!this.searchTerm) {
+      return this.itinaries;
+    }
+
+    const searchTermLower = this.searchTerm.toLowerCase();
+
+    return this.itinaries.filter(itinerary => {
+      return (
+        itinerary.destination.toLowerCase().includes(searchTermLower)
+      );
+    });
+  }
+
 }
