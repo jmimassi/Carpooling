@@ -15,7 +15,7 @@ export class SignupPage {
 
   constructor(private userService: UserService, private router: Router) {
     this.signupForm = new FormGroup({
-      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'email': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, Validators.required),
       'address': new FormControl(null, Validators.required),
       'lisence_plate': new FormControl(null, Validators.required),
