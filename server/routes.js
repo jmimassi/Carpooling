@@ -53,26 +53,26 @@ router.post('/user/login', userController.userLogin)
 
 // Itinaries
 router.get('/itinaries', isAuthorized, itinarieController.itinariesList);
-router.post('/itinaries', itinarieController.itinarieCreate);
-router.get('/itinaries/startAddress/:startAddress', itinarieController.itinariesBystartAddress)
-router.get('/itinaries/destination/:destination', itinarieController.itinariesByDestination)
+router.post('/itinaries', isAuthorized, itinarieController.itinarieCreate);
+router.get('/itinaries/startAddress/:startAddress', isAuthorized, itinarieController.itinariesBystartAddress)
+router.get('/itinaries/destination/:destination', isAuthorized, itinarieController.itinariesByDestination)
 router.get('/itinariesCard/', isAuthorized, itinarieController.itinariesCardList)
 router.get('/itinariesMyCard/', isAuthorized, itinarieController.itinariesMyCardList)
-router.get('/itinaries/PassengerList/:itinaries_id', itinarieController.itinariesPassengersList)
-router.get('/itinaries/email/:email', itinarieController.itinariesByEmail)
-router.put('/itinarie/:itinaries_id', itinarieController.itinariesUpdate)
-router.patch('/itinarie/:itinaries_id/seatsmin', itinarieController.itinaries_userDecrementSeat)
-router.patch('/itinarie/:itinaries_id/seatsplus', itinarieController.itinaries_userIncrementSeat)
-router.delete('/itinarie/:itinaries_id', itinarieController.itinariesDelete)
+router.get('/itinaries/PassengerList/:itinaries_id', isAuthorized, itinarieController.itinariesPassengersList)
+router.get('/itinaries/email/:email', isAuthorized, itinarieController.itinariesByEmail)
+router.put('/itinarie/:itinaries_id', isAuthorized, itinarieController.itinariesUpdate)
+router.patch('/itinarie/:itinaries_id/seatsmin', isAuthorized, itinarieController.itinaries_userDecrementSeat)
+router.patch('/itinarie/:itinaries_id/seatsplus', isAuthorized, itinarieController.itinaries_userIncrementSeat)
+router.delete('/itinarie/:itinaries_id', isAuthorized, itinarieController.itinariesDelete)
 
 // ItinariesUser
-router.post('/bookings', itinarie_userController.itinarie_userCreate);
-router.get('/bookings', itinarie_userController.itinaries_userList);
+router.post('/bookings', isAuthorized, itinarie_userController.itinarie_userCreate);
+router.get('/bookings', isAuthorized, itinarie_userController.itinaries_userList);
 router.get('/bookings/:fk_user', isAuthorized, itinarie_userController.itinarie_userByUserConnected)
-router.get('/booking/:itinaries_user_id', itinarie_userController.itinarie_userById)
-router.delete('/booking/user/:fk_user/itinarie/:fk_itinaries', itinarie_userController.itinaries_userDelete)
-router.patch('/booking/:itinaries_user_id/accept', itinarie_userController.itinaries_userAcceptPassenger)
-router.patch('/booking/:itinaries_user_id/deny', itinarie_userController.itinaries_userRefusedPassenger)
+router.get('/booking/:itinaries_user_id', isAuthorized, itinarie_userController.itinarie_userById)
+router.delete('/booking/user/:fk_user/itinarie/:fk_itinaries', isAuthorized, itinarie_userController.itinaries_userDelete)
+router.patch('/booking/:itinaries_user_id/accept', isAuthorized, itinarie_userController.itinaries_userAcceptPassenger)
+router.patch('/booking/:itinaries_user_id/deny', isAuthorized, itinarie_userController.itinaries_userRefusedPassenger)
 
 // Destination
 // router.get('/destinations', destinationController.destinationList);
