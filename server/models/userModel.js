@@ -8,10 +8,10 @@ const User = db.define('user', {
         primaryKey: true
     },
     password: { type: Sequelize.STRING, allowNull: false },
-    address: { type: Sequelize.STRING, allowNull: false },
+    address: { type: Sequelize.STRING, allowNull: true },
     // number_passengers_max: { type: Sequelize.INTEGER, allowNull: true },
     lisence_plate: { type: Sequelize.STRING, allowNull: true },
-    picture: { type: Sequelize.STRING, allowNull: false },
+    picture: { type: Sequelize.STRING, allowNull: true },
 })
 
 module.exports = User
