@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
 })
 export class PublishItinariesPage {
   itinarie: any = {
-    startDate: new Date().toISOString().substring(0, 10), // Initialise la valeur de startDate avec la date actuelle
-    hours: '', // Initialise la valeur de hours avec une chaîne vide
+    startDate: new Date().toISOString().substring(0, 10), // Actual Date
+    hours: '', // Initialized hours
   };
 
   constructor(private itinariesService: ItinariesService, private router: Router) { }
 
+  // Submit the form to crate a new itinerarie as a conductor
   onSubmit(itinarie: {
     destination: string,
     startAddress: string,

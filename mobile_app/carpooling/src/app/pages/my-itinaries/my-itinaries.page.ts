@@ -13,8 +13,7 @@ export class MyItinariesPage {
   username: string = '';
   searchTerm: string = '';
   itineraries: ItinariesCard[] = [];
-  itinaries: any[] = [];
-  selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
+  selectedItinerary: any;
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   constructor(
@@ -23,6 +22,7 @@ export class MyItinariesPage {
     private itinariesUserService: ItinariesUserService,
   ) { }
 
+  // Fetch data at the start of the component
   ionViewWillEnter() {
     this.itinariesService.itinariesListMyCard().subscribe((data) => {
       this.itineraries = data;
@@ -39,30 +39,7 @@ export class MyItinariesPage {
     this.username = decodedToken.id;
   }
 
-  updateDetails(itinerary: any) {
-    this.selectedItinerary = itinerary;
-
-    const updatedItinerary: Itinaries = {
-      itinaries_id: this.selectedItinerary.itinaries_id,
-      destination: this.selectedItinerary.destination,
-      startAddress: this.selectedItinerary.startAddress,
-      seats: this.selectedItinerary.seats,
-      startDate: this.selectedItinerary.startDate,
-      hours: this.selectedItinerary.hours
-    };
-
-    this.itinariesService.itinariesUpdate(updatedItinerary.itinaries_id, updatedItinerary)
-      .subscribe(
-        (data) => {
-          console.log('Itinerary updated successfully', data);
-        },
-        (error) => {
-          console.error('Error updating itinerary', error);
-        }
-      );
-  }
-
-
+  // Cancel a booking as a conductor
   cancelItinerary(itinerary: any) {
     this.selectedItinerary = itinerary;
     if (!this.selectedItinerary) {
@@ -73,13 +50,10 @@ export class MyItinariesPage {
     const fk_user = this.username; // Get the current logged-in user's ID
     const fk_itinaries = this.selectedItinerary.itinaries_id; // ID of the selected itinerary
 
-    const itinariesId = this.selectedItinerary.itinaries_id;
-
     this.itinariesUserService.itinariesUserDelete(fk_user, fk_itinaries).subscribe(
       (data) => {
         console.log('Itinerary cancelled successfully', data);
-        // Réinitialiser les itinéraires ou effectuer toute autre action nécessaire
-        this.itineraries = this.itineraries.filter((itineraries) => itineraries.itinaries_id !== itinariesId);
+        this.itineraries = this.itineraries.filter((itineraries) => itineraries.itinaries_id !== fk_itinaries);
       },
       (error) => {
         console.error('Error cancelling itinerary', error);
@@ -87,6 +61,7 @@ export class MyItinariesPage {
     );
   }
 
+  // Delete an itinerary as a conductor
   deleteItinerary(itinerary: any) {
     this.selectedItinerary = itinerary;
     if (!this.selectedItinerary) {
@@ -99,7 +74,6 @@ export class MyItinariesPage {
     this.itinariesService.itinariesDelete(itinariesId).subscribe(
       (data) => {
         console.log('Itinerary deleted successfully', data);
-        // Réinitialiser les itinéraires ou effectuer toute autre action nécessaire
         this.itineraries = this.itineraries.filter((itinerary) => itinerary.itinaries_id !== itinariesId);
       },
       (error) => {
@@ -108,6 +82,7 @@ export class MyItinariesPage {
     );
   }
 
+  // Open the new page which allows us to modify a specific itinerary
   editItinerary(itinerary: any) {
     this.selectedItinerary = itinerary;
     console.log(this.selectedItinerary)
@@ -115,6 +90,7 @@ export class MyItinariesPage {
     this.router.navigate(['/modified-my-itinaries'], { queryParams: { data: encodedData } });
   }
 
+  // Open the new page which allows us to accept or deny passenger as a conductor
   requestItinerary(itinerary: any) {
     this.selectedItinerary = itinerary;
     const itinariesId = this.selectedItinerary.itinaries_id;
@@ -124,11 +100,11 @@ export class MyItinariesPage {
       data => {
         console.log(data);
         if (data) {
-          this.itinaries = data;
+          this.itineraries = data;
         } else {
-          this.itinaries = [];
+          this.itineraries = [];
         }
-        const encodedData = encodeURIComponent(JSON.stringify(this.itinaries));
+        const encodedData = encodeURIComponent(JSON.stringify(this.itineraries));
         this.router.navigate(['/request'], { queryParams: { data: encodedData } });
       },
       error => {
@@ -137,7 +113,7 @@ export class MyItinariesPage {
     );
   }
 
-
+  // Filter by destination
   filterItineraries() {
     if (!this.searchTerm) {
       return this.itineraries;

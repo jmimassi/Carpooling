@@ -17,9 +17,7 @@ export class SignupPage {
     this.signupForm = new FormGroup({
       'email': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, Validators.required),
-      // 'address': new FormControl(null, Validators.required),
       'lisence_plate': new FormControl(null, Validators.required),
-      // 'picture': new FormControl(null, Validators.required),
     });
   }
 
@@ -28,8 +26,7 @@ export class SignupPage {
       this.userService.userCreate(this.signupForm.value).subscribe(
         data => {
           console.log(data);
-          // localStorage.setItem('token', data.token);
-          this.router.navigate(['/signin']); // navigate to dashboard page
+          // this.router.navigate(['/signin']); // navigate to dashboard page
         },
         error => {
           console.log(error);

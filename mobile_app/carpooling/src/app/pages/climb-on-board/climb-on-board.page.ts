@@ -19,6 +19,7 @@ export class ClimbOnBoardPage {
     private itinariesUserService: ItinariesUserService
   ) { }
 
+  // Fetch data at the start of the component
   ionViewWillEnter() {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -39,6 +40,7 @@ export class ClimbOnBoardPage {
     });
   }
 
+  // Send message to the conductor
   onSubmit() {
     const itinariesId = this.itinerary.itinaries_id;
 
@@ -55,7 +57,6 @@ export class ClimbOnBoardPage {
     this.itinariesUserService.itinariesUserCreate(updatedItinaries).subscribe(
       data => {
         console.log('Itinéraire créé avec succès', data);
-        // Perform any additional actions here
 
         // Naviguer vers la page de l'itinéraire
         this.router.navigate(['/itinaries']);

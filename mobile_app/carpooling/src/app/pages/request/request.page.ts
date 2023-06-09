@@ -18,6 +18,7 @@ export class RequestPage {
     private itinariesUserService: ItinariesUserService,
   ) { }
 
+  // Fetch data at the start of the component
   ionViewWillEnter() {
     this.route.queryParams.subscribe(params => {
       const encodedData = params['data'];
@@ -27,6 +28,7 @@ export class RequestPage {
     });
   }
 
+  // Accept a user by decrementing the number of seats and changing his request_user attribute to true
   acceptRequest(user: any) {
     if (user.request_user) {
       return;
@@ -51,6 +53,7 @@ export class RequestPage {
     );
   }
 
+  // Deny a user by incrementing the number of seats and changing his request_user attribute to false
   denyRequest(user: any) {
     if (!user.request_user) {
       return;
@@ -66,11 +69,9 @@ export class RequestPage {
       data => {
         user.request_user = false;
         console.log('Denial and seat increment success:', data);
-        // Effectuer d'autres actions si nécessaire
       },
       error => {
         console.error('Error denying passenger and incrementing seats:', error);
-        // Effectuer d'autres actions en cas d'erreur
       }
     );
   }

@@ -18,7 +18,6 @@ export class ItinariesPage {
   searchTerm: string = '';
   itinaries: ItinariesCard[] = [];
   selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
-  // @ViewChild(ItinariesService) private itinariesService!: ItinariesService;
 
   @ViewChild('modalContent') modalContent: any;
 
@@ -31,6 +30,7 @@ export class ItinariesPage {
     private itinariesService: ItinariesService
   ) { }
 
+  // Fetch data at the start of the component
   ionViewWillEnter() {
     this.itinariesService.itinariesListFormatted().subscribe((data) => {
       this.itinaries = data;
@@ -47,11 +47,7 @@ export class ItinariesPage {
     this.username = decodedToken.id;
   }
 
-
-  updateDetails(itinerary: any) {
-    this.selectedItinerary = itinerary;
-  }
-
+  // Open the page to send a message to the conductor
   climbBoardModal(itinerary: any) {
     this.selectedItinerary = itinerary;
     const encodedData = encodeURIComponent(JSON.stringify(this.selectedItinerary));
@@ -59,6 +55,7 @@ export class ItinariesPage {
     this.router.navigate(['/climb-on-board'], { queryParams: { data: encodedData } });
   }
 
+  // Filter by destination
   filterItineraries() {
     if (!this.searchTerm) {
       return this.itinaries;

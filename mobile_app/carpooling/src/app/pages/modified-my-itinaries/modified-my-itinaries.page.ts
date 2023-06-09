@@ -17,6 +17,7 @@ export class ModifiedMyItinariesPage implements OnInit {
     private router: Router
   ) { }
 
+  // Fetch data at the start of the component
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const encodedData = params['data'];
@@ -27,6 +28,8 @@ export class ModifiedMyItinariesPage implements OnInit {
     });
   }
 
+
+  // Submit the edited form
   onSubmitEdit() {
     const itinariesId = this.itinerary.itinaries_id; // ID de l'itinéraire sélectionné
 
@@ -43,15 +46,10 @@ export class ModifiedMyItinariesPage implements OnInit {
 
     this.itinariesService.itinariesUpdate(itinariesId, updatedItinaries).subscribe(
       data => {
-        // Gestion de la réponse de la requête de mise à jour
         console.log('Itinéraire mis à jour avec succès', data);
-        // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
-
-        // Naviguer vers la page "my-itinaries"
         this.router.navigate(['/my-itinaries']);
       },
       error => {
-        // Gestion des erreurs lors de la requête de mise à jour
         console.log('Erreur lors de la mise à jour de l\'itinéraire', error);
       }
     );

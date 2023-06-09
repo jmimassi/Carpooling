@@ -19,6 +19,7 @@ export class SigninPage {
     });
   }
 
+  // Login with an existing user
   onSubmit() {
     if (this.signinForm.valid) {
       this.userService.userLogin(this.signinForm.value).subscribe(
@@ -33,6 +34,7 @@ export class SigninPage {
     }
   }
 
+  // Logout by removing the token from the localStorage
   onLogout() {
     localStorage.removeItem('token');
     this.router.navigate(['/signup']); // navigate to dashboard page
