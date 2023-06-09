@@ -157,6 +157,7 @@ exports.itinariesPassengersList = async function (req, res) {
             }]
         });
 
+
         console.log('All passengers:', JSON.stringify(itinerary, null, 2));
         res.json(itinerary);
 
