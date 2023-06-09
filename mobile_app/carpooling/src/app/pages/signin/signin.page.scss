@@ -1,0 +1,30 @@
+.form-title {
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.form-input {
+  width: 80%;
+  margin-bottom: 15px;
+}
+
+.form-button {
+  width: 80%;
+}
+
+.signup-link {
+  display: block;
+  margin-top: 20px;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+}

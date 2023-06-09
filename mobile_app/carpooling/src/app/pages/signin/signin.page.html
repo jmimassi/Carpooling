@@ -7,24 +7,29 @@
       <ion-title>My Itineraries</ion-title>
     </ion-toolbar>
   </ion-header>
-  <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Login</ion-card-title>
-      </ion-card-header>
 
+  <ion-card-header>
+    <ion-card-title class="form-title">Login</ion-card-title>
+  </ion-card-header>
+
+  <form [formGroup]="signinForm" (ngSubmit)="onSubmit()" class="form-container">
+    <ion-item class="form-input">
       <ion-label position="floating">Email</ion-label>
       <ion-input formControlName="email" type="email" required></ion-input>
+    </ion-item>
 
+    <ion-item class="form-input">
       <ion-label position="floating">Mot de passe</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
-      <ion-button expand="full" type="submit" [disabled]="!signinForm.valid">Envoyer</ion-button>
-    </ion-card>
-    <ion-button expand="full" (click)="onLogout()">Logout</ion-button>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="!signinForm.valid" class="form-button">Envoyer</ion-button>
+    <ion-button expand="block" (click)="onLogout()" class="form-button">Logout</ion-button>
   </form>
 
 
+
   <div class="ion-text-center">
-    <a routerLink="/signup">Sign up</a>
+    <a routerLink="/signup" class="signup-link">Sign up</a>
   </div>
 </ion-content>

@@ -17,9 +17,9 @@ export class SignupPage {
     this.signupForm = new FormGroup({
       'email': new FormControl(null, [Validators.required]),
       'password': new FormControl(null, Validators.required),
-      'address': new FormControl(null, Validators.required),
+      // 'address': new FormControl(null, Validators.required),
       'lisence_plate': new FormControl(null, Validators.required),
-      'picture': new FormControl(null, Validators.required),
+      // 'picture': new FormControl(null, Validators.required),
     });
   }
 
