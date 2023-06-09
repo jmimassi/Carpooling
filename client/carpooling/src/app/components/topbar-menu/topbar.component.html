@@ -1,27 +1,27 @@
 <nav class="flex bg-zinc-900 text-white h-11 items-center">
-    <div class="ml-4">
-        Carpooling
+  <div class="ml-4">
+    Carpooling
+  </div>
+  <div class="flex w-full justify-end">
+    <div class="flex w-2/3 justify-end gap-6 mr-6">
+      <div>
+        <a routerLink="/itinaries"> Itinaries </a>
+      </div>
+      <div>
+        <a routerLink="/publishitinaries"> Publish </a>
+      </div>
+      <div>
+        <a routerLink="/signin"> Sign In</a>
+      </div>
+      <div>
+        <a routerLink="/signup"> Sign Up</a>
+      </div>
+      <div>
+        <a routerLink="/myitinaries"> My Itinaries</a>
+      </div>
     </div>
-    <div class="flex w-full justify-end">
-        <div class="flex w-2/3 justify-end gap-6 mr-6">
-            <div>
-                <a routerLink="/itinaries"> Itinaries </a>
-            </div>
-            <div>
-                <a routerLink="/publishitinaries"> publishitinaries </a>
-            </div>
-            <div>
-                <a routerLink="/signin"> signin</a>
-            </div>
-            <div>
-                <a routerLink="/signup"> signup</a>
-            </div>
-            <div>
-                <a routerLink="/myitinaries"> myitinaries</a>
-            </div>
-        </div>
-        <div class="text-white font-semibold mr-4">
-            {{ username }}
-        </div>
+    <div class="text-white font-semibold mr-4">
+      {{ username }}
     </div>
+  </div>
 </nav>

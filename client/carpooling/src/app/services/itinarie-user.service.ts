@@ -11,48 +11,46 @@ export class ItinariesUser {
   'fk_user': string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class ItinariesUserService {
-
-
-
-  baseUrl: string = 'http://localhost:8000/api/';
+  baseUrl: string = 'http://pat.infolab.ecam.be:60846/api/';
 
   constructor(private http: HttpClient) { }
 
-  itinariesUserList(): Observable<any> {
-    return this.http.get(this.baseUrl);
-  }
-
-  itinariesUserCreate(itinariesUser: ItinariesUser): Observable<any> {
-    const headers = new HttpHeaders({
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`
     });
-    return this.http.post(this.baseUrl + 'bookings', itinariesUser, { "headers": headers });
+  }
+
+  itinariesUserList(): Observable<any> {
+    return this.http.get(this.baseUrl, { headers: this.getHeaders() });
+  }
+
+  itinariesUserCreate(itinariesUser: ItinariesUser): Observable<any> {
+    return this.http.post(this.baseUrl + 'bookings', itinariesUser, { headers: this.getHeaders() });
   }
 
   getItinariesUserByItineraryId(itinariesId: number) {
-    console.log(itinariesId)
-    return this.http.get<ItinariesUser[]>(this.baseUrl + `booking/${itinariesId}`);
+    return this.http.get<ItinariesUser[]>(this.baseUrl + `booking/${itinariesId}`, { headers: this.getHeaders() });
   }
 
   itinariesUserByUserConnected(userId: number): Observable<any> {
-    return this.http.get(this.baseUrl + '?fk_user=' + userId);
+    return this.http.get(this.baseUrl + '?fk_user=' + userId, { headers: this.getHeaders() });
   }
 
   itinariesUserDelete(fk_user: string, fk_itinaries: string): Observable<any> {
-    return this.http.delete(this.baseUrl + 'booking/user/' + fk_user + '/itinarie/' + fk_itinaries);
+    return this.http.delete(this.baseUrl + 'booking/user/' + fk_user + '/itinarie/' + fk_itinaries, { headers: this.getHeaders() });
   }
 
   itinariesUserAcceptPassenger(itinaries_user_id: string): Observable<any> {
-    return this.http.patch(this.baseUrl + 'booking/' + itinaries_user_id + '/accept', {});
+    return this.http.patch(this.baseUrl + 'booking/' + itinaries_user_id + '/accept', {}, { headers: this.getHeaders() });
   }
 
   itinariesUserRefusedPassenger(itinaries_user_id: string): Observable<any> {
-    return this.http.patch(this.baseUrl + 'booking/' + itinaries_user_id + '/deny', {});
+    return this.http.patch(this.baseUrl + 'booking/' + itinaries_user_id + '/deny', {}, { headers: this.getHeaders() });
   }
 }

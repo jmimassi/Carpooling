@@ -3,10 +3,9 @@ import { ItinariesService, Itinaries, ItinariesCard } from '../../services/itina
 import { ItinariesUserService, ItinariesUser } from '../../services/itinarie-user.service';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { concatMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
 
 @Component({
   selector: 'app-itinaries',
@@ -14,38 +13,39 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./itinaries.component.css']
 })
 export class ItinariesComponent {
-
   username: string = '';
-
   searchTerm: string = '';
-
   itinaries: ItinariesCard[] = [];
-
   selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
-
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+  dialogRef!: MatDialogRef<any>;
 
-  constructor(private itinariesService: ItinariesService, private router: Router, private itinariesUserService: ItinariesUserService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
-
+  constructor(
+    private itinariesService: ItinariesService,
+    private router: Router,
+    private itinariesUserService: ItinariesUserService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
+  ) { }
 
   ngOnInit() {
-    this.itinariesService.itinariesListCard().subscribe(
-      data => {
-        // console.log(data)
-        this.itinaries = data
-        console.log("c'est les itiniraire", this.itinaries);
-      }
-    )
+    this.fetchItinaries(); // Fetch the itinaries on component initialization
 
     const token = localStorage.getItem('token');
     if (!token) {
-      // handle case where token is not present
       console.error('Token not found in localStorage');
       return;
     }
 
     const decodedToken: any = jwt_decode(token);
     this.username = decodedToken.id;
+  }
+
+  fetchItinaries() {
+    this.itinariesService.itinariesListCard().subscribe((data) => {
+      this.itinaries = data;
+      console.log("These are the itineraries", this.itinaries);
+    });
   }
 
   updateDetails(itinerary: any) {
@@ -64,15 +64,18 @@ export class ItinariesComponent {
       });
       return;
     } else {
-      const dialogRef = this.dialog.open(this.modalContent, {
+      this.dialogRef = this.dialog.open(this.modalContent, {
         // width: '400px', // Définissez la largeur du modal selon vos besoins
         data: { itinerary: itinerary }
       });
 
-      dialogRef.afterClosed().subscribe(result => {
+      this.dialogRef.afterClosed().subscribe((result) => {
         // Logique à exécuter après la fermeture du modal, si nécessaire
-      })
-    };
+        if (result) {
+          this.fetchItinaries(); // Fetch the itinaries after climbing on board
+        }
+      });
+    }
   }
 
   onSubmitClimb(itinarie: ItinariesUser) {
@@ -92,24 +95,16 @@ export class ItinariesComponent {
     console.log(updatedItinaries);
 
     this.itinariesUserService.itinariesUserCreate(updatedItinaries).subscribe(
-      data => {
+      (data) => {
         // Gestion de la réponse de la requête de création
         console.log('Itinéraire créé avec succès', data);
+        this.dialogRef.close(true); // Close the modal after submitting the form and pass true as the result
         // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
       },
-      error => {
+      (error) => {
         // Gestion des erreurs lors de la requête de création
         console.log('Erreur lors de la création de l\'itinéraire', error);
       }
     );
   }
-
-
-
-
-
-
-
-
 }
-

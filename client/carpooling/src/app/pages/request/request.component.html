@@ -1,20 +1,20 @@
 <app-topbar></app-topbar>
 
 <div class="flex flex-col items-center justify-center h-screen">
-    <h2 class="text-2xl font-bold mb-4">Request</h2>
-    <div class="max-w-4xl bg-white rounded-xl shadow-lg p-8">
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
-            <div *ngFor="let user of receivedData.itinaries_users" class="bg-white rounded-lg shadow-lg"
-                [style.background-color]="user.request_user ? '#CCFFCC' : '#FFCCCC'">
-                <div class="p-4">
-                    <h5 class="text-lg font-bold mb-2">{{ user.fk_user }}</h5>
-                    <p class="text-gray-600">{{ user.message }}</p>
-                </div>
-                <div class="p-4 flex justify-end">
-                    <button class="btn btn-success mr-2" (click)="acceptRequest(user)">Accept</button>
-                    <button class="btn btn-danger" (click)="denyRequest(user)">Deny</button>
-                </div>
-            </div>
+  <h2 class="text-2xl font-bold mb-4">Request</h2>
+  <div class="max-w-4xl bg-white rounded-xl shadow-lg p-8">
+    <div class="grid grid-cols-3 sm:grid-cols-4 gap-4">
+      <div *ngFor="let user of receivedData.itinaries_users" class="bg-white rounded-lg shadow-lg"
+        [style.background-color]="user.request_user ? '#CCFFCC' : '#FFCCCC'">
+        <div class="p-4">
+          <h5 class="text-lg font-bold mb-2">{{ user.fk_user }}</h5>
+          <p class="text-gray-600">{{ user.message }}</p>
         </div>
+        <div class="p-4 flex justify-end">
+          <button class="btn btn-success mr-2" (click)="acceptRequest(user)">Accept</button>
+          <button class="btn btn-danger" (click)="denyRequest(user)">Deny</button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

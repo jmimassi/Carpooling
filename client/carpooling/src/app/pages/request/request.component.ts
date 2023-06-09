@@ -42,6 +42,7 @@ export class RequestComponent {
       data => {
         // Gestion de la réponse après l'acceptation du passager et la diminution des places
         console.log('Acceptance and seat decrement success:', data);
+        user.request_user = true;
         // Effectuer d'autres actions si nécessaire
       },
       error => {
@@ -67,6 +68,7 @@ export class RequestComponent {
     ).subscribe(
       data => {
         // Gestion de la réponse après l'acceptation du passager et la diminution des places
+        user.request_user = false;
         console.log('Acceptance and seat decrement success:', data);
         // Effectuer d'autres actions si nécessaire
       },

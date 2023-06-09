@@ -9,17 +9,17 @@ import { RequestComponent } from './pages/request/request.component';
 
 
 const routes: Routes = [
-    { path: '', redirectTo: '/signin', pathMatch: 'full' },
-    { path: 'itinaries', component: ItinariesComponent },
-    { path: 'publishitinaries', component: PublishItinariesComponent },
-    { path: 'signin', component: SigninComponent },
-    { path: 'signup', component: SignupComponent },
-    { path: 'myitinaries', component: MyItinariesComponent },
-    { path: 'request', component: RequestComponent },
+  { path: '', redirectTo: '/signin', pathMatch: 'full' },
+  { path: 'itinaries', component: ItinariesComponent },
+  { path: 'publishitinaries', component: PublishItinariesComponent },
+  { path: 'signin', component: SigninComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'myitinaries', component: MyItinariesComponent },
+  { path: 'request', component: RequestComponent },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

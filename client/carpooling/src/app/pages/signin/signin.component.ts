@@ -14,14 +14,16 @@ export class SigninComponent {
 
   onSubmit(users: { email: string; password: string }) {
     this.userService.userLogin(users).subscribe(
-      data => localStorage.setItem('token', data.token)
-    )
-    this.router.navigate(['/itinaries']); // navigate to dashboard page
-    console.log('users que je vois dans le signin component', users)
+      data => {
+        localStorage.setItem('token', data.token);
+        this.router.navigate(['/itinaries']); // navigate to dashboard page
+      }
+    );
+    console.log('users que je vois dans le signin component', users);
   }
 
   onClick() {
     localStorage.removeItem('token');
-    this.router.navigate(['/signup']); // navigate to dashboard page
+    this.router.navigate(['/signup']); // navigate to signup page
   }
 }
