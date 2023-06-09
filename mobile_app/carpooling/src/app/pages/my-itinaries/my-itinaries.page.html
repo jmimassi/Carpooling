@@ -39,13 +39,21 @@
           <div class="label-spacing">🕒 Hours:</div>
           <div class="label-spacing-value">{{ itinerary.hours }}</div>
         </div>
+        <div>
+          <div class="label-spacing" *ngIf="itinerary.passengerRequest.hasOwnProperty(username)">👥 Passenger Request:
+          </div>
+          <div class="label-spacing-value" *ngIf="itinerary.passengerRequest.hasOwnProperty(username)">
+            {{ itinerary.passengerRequest[username] ? 'Accepted' : 'Not Accepted' }}
+          </div>
+        </div>
+
         <div class="button-container">
           <div *ngIf="username !== itinerary.conductorEmail">
-            <ion-button (click)="cancelItinerary(itinerary)" expand="full">Annuler</ion-button>
+            <ion-button (click)="cancelItinerary(itinerary)" expand="full">Cancel</ion-button>
           </div>
           <div *ngIf="username === itinerary.conductorEmail" class="button-container">
-            <ion-button (click)="deleteItinerary(itinerary)" expand="full">Supprimer</ion-button>
-            <ion-button (click)="editItinerary(itinerary)" expand="full">Modifier</ion-button>
+            <ion-button (click)="deleteItinerary(itinerary)" expand="full">Delete</ion-button>
+            <ion-button (click)="editItinerary(itinerary)" expand="full">Edit</ion-button>
             <ion-button (click)="requestItinerary(itinerary)" expand="full">Request</ion-button>
           </div>
         </div>

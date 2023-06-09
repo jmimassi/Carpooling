@@ -25,7 +25,7 @@ export class ItinariesCard {
   "startDate": string;
   "hours": string;
   "licensePlate": string;
-
+  "passengerRequest": Record<string, boolean>;
 }
 
 @Injectable({
