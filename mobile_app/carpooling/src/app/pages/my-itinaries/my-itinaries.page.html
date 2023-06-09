@@ -14,23 +14,42 @@
   <ion-list>
     <ion-item *ngFor="let itinerary of filterItineraries()">
       <ion-label>
-        <h2>{{ itinerary.destination }}</h2>
-        <p>Start Address: {{ itinerary.startAddress }}</p>
-        <p>Seats: {{ itinerary.seats }}</p>
-        <p>Lisence Plate: {{ itinerary.licensePlate }}</p>
-        <p>Conductor: {{ itinerary.conductorEmail }}</p>
-        <p>Start date: {{ itinerary.startDate }}</p>
-        <p>Hours: {{ itinerary.hours }}</p>
+        <h2 class="label-spacing-destination">📍 {{ itinerary.destination }}</h2>
+        <div>
+          <div class="label-spacing">🏠 Start Address:</div>
+          <div class="label-spacing-value">{{ itinerary.startAddress }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">🚗 License Plate:</div>
+          <div class="label-spacing-value">{{ itinerary.licensePlate }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">🪑 Seats:</div>
+          <div class="label-spacing-value">{{ itinerary.seats }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">👤 Conductor:</div>
+          <div class="label-spacing-value">{{ itinerary.conductorEmail }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">⏰ Start date:</div>
+          <div class="label-spacing-value">{{ itinerary.startDate }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">🕒 Hours:</div>
+          <div class="label-spacing-value">{{ itinerary.hours }}</div>
+        </div>
+        <div class="button-container">
+          <div *ngIf="username !== itinerary.conductorEmail">
+            <ion-button (click)="cancelItinerary(itinerary)" expand="full">Annuler</ion-button>
+          </div>
+          <div *ngIf="username === itinerary.conductorEmail" class="button-container">
+            <ion-button (click)="deleteItinerary(itinerary)" expand="full">Supprimer</ion-button>
+            <ion-button (click)="editItinerary(itinerary)" expand="full">Modifier</ion-button>
+            <ion-button (click)="requestItinerary(itinerary)" expand="full">Request</ion-button>
+          </div>
+        </div>
       </ion-label>
-      <div *ngIf="username !== itinerary.conductorEmail">
-        <ion-button (click)="cancelItinerary(itinerary)">Annuler</ion-button>
-      </div>
-      <div *ngIf="username === itinerary.conductorEmail" class="button-container">
-        <ion-button (click)="deleteItinerary(itinerary)">Supprimer</ion-button>
-        <ion-button (click)="editItinerary(itinerary)">Modifier</ion-button>
-        <ion-button (click)="requestItinerary(itinerary)">Request</ion-button>
-      </div>
-
     </ion-item>
   </ion-list>
 

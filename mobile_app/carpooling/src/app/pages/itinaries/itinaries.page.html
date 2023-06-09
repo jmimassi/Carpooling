@@ -13,19 +13,38 @@
   <ion-list>
     <ion-item *ngFor="let itinerary of filterItineraries()" (click)="updateDetails(itinerary)">
       <ion-label>
-        <h2>{{ itinerary.destination }}</h2>
-        <p>Start Address: {{ itinerary.startAddress }}</p>
-        <p>Lisence Plate: {{ itinerary.licensePlate }}</p>
-        <p>Seats: {{ itinerary.seats }}</p>
-        <p>Conductor: {{ itinerary.conductorEmail }}</p>
-        <p>Start date: {{ itinerary.startDate }}</p>
-        <p>Hours: {{ itinerary.hours }}</p>
+        <h2 class="label-spacing-destination">📍 {{ itinerary.destination }}</h2>
+        <div>
+          <div class="label-spacing">🏠 Start Address:</div>
+          <div class="label-spacing-value">{{ itinerary.startAddress }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">🚗 License Plate:</div>
+          <div class="label-spacing-value">{{ itinerary.licensePlate }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">🪑 Seats:</div>
+          <div class="label-spacing-value">{{ itinerary.seats }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">👤 Conductor:</div>
+          <div class="label-spacing-value">{{ itinerary.conductorEmail }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">⏰ Start date:</div>
+          <div class="label-spacing-value">{{ itinerary.startDate }}</div>
+        </div>
+        <div>
+          <div class="label-spacing">🕒 Hours:</div>
+          <div class="label-spacing-value">{{ itinerary.hours }}</div>
+        </div>
+        <ion-button *ngIf="!(itinerary.passengerEmails?.includes(username)) && username !== itinerary.conductorEmail"
+          class="button-container ion-text-center" (click)="climbBoardModal(itinerary)">🚶 Climb on Board</ion-button>
+        <p *ngIf="itinerary.passengerEmails?.includes(username)" class="ion-text-center">✅ You are already on board</p>
+
       </ion-label>
-      <ion-button *ngIf="!(itinerary.passengerEmails?.includes(username)) && username !== itinerary.conductorEmail"
-        (click)="climbBoardModal(itinerary)">Climb on
-        Board</ion-button>
-      <p *ngIf="itinerary.passengerEmails?.includes(username)">You are already on board</p>
     </ion-item>
+
   </ion-list>
 
 
