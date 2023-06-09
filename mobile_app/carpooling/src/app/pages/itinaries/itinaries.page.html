@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Itinéraires</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Itineraries</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,40 +15,18 @@
       <ion-label>
         <h2>{{ itinerary.destination }}</h2>
         <p>Start Address: {{ itinerary.startAddress }}</p>
-        <!-- <p>Destination: {{ itinerary.destination }}</p> -->
         <p>Lisence Plate: {{ itinerary.licensePlate }}</p>
         <p>Seats: {{ itinerary.seats }}</p>
         <p>Conductor: {{ itinerary.conductorEmail }}</p>
         <p>Start date: {{ itinerary.startDate }}</p>
         <p>Hours: {{ itinerary.hours }}</p>
       </ion-label>
-      <ion-button *ngIf="username !== itinerary.conductorEmail" (click)="climbBoardModal(itinerary)">Climb on
+      <ion-button *ngIf="!(itinerary.passengerEmails?.includes(username)) && username !== itinerary.conductorEmail"
+        (click)="climbBoardModal(itinerary)">Climb on
         Board</ion-button>
+      <p *ngIf="itinerary.passengerEmails?.includes(username)">You are already on board</p>
     </ion-item>
   </ion-list>
 
-  <!-- <ion-card *ngIf="selectedItinerary">
-    <ion-card-content>
-      <p>{{ selectedItinerary.destination }}</p>
-    </ion-card-content>
-  </ion-card> -->
 
-  <!-- <ion-modal #modalContent>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title class="ion-text-center">Envoyer un message au conducteur</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content>
-      <form (ngSubmit)="onSubmitClimb(itinariesUserForm.value)" #itinariesUserForm="ngForm">
-        <ion-item>
-          <ion-label position="floating">Message:</ion-label>
-          <ion-input type="text" [(ngModel)]="selectedItinerary.message" name="message" required></ion-input>
-        </ion-item>
-        <div class="ion-text-center">
-          <ion-button type="submit">Enregistrer</ion-button>
-        </div>
-      </form>
-    </ion-content>
-  </ion-modal> -->
 </ion-content>

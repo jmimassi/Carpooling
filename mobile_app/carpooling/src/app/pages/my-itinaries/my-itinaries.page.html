@@ -1,8 +1,12 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
     <ion-title>My Itineraries</ion-title>
   </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
   <ion-searchbar [(ngModel)]="searchTerm" placeholder="Rechercher"></ion-searchbar>
@@ -19,10 +23,10 @@
         <p>Hours: {{ itinerary.hours }}</p>
       </ion-label>
       <div *ngIf="username !== itinerary.conductorEmail">
-        <ion-button (click)="cancelItinerary()">Annuler</ion-button>
+        <ion-button (click)="cancelItinerary(itinerary)">Annuler</ion-button>
       </div>
       <div *ngIf="username === itinerary.conductorEmail" class="button-container">
-        <ion-button (click)="deleteItinerary()">Supprimer</ion-button>
+        <ion-button (click)="deleteItinerary(itinerary)">Supprimer</ion-button>
         <ion-button (click)="editItinerary(itinerary)">Modifier</ion-button>
         <ion-button (click)="requestItinerary(itinerary)">Request</ion-button>
       </div>

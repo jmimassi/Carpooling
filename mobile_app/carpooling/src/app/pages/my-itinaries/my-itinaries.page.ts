@@ -26,6 +26,7 @@ export class MyItinariesPage {
   ionViewWillEnter() {
     this.itinariesService.itinariesListMyCard().subscribe((data) => {
       this.itineraries = data;
+      console.log(this.itineraries)
     });
 
     const token = localStorage.getItem('token');
@@ -62,7 +63,8 @@ export class MyItinariesPage {
   }
 
 
-  cancelItinerary() {
+  cancelItinerary(itinerary: any) {
+    this.selectedItinerary = itinerary;
     if (!this.selectedItinerary) {
       console.error('No itinerary selected');
       return;
@@ -85,7 +87,8 @@ export class MyItinariesPage {
     );
   }
 
-  deleteItinerary() {
+  deleteItinerary(itinerary: any) {
+    this.selectedItinerary = itinerary;
     if (!this.selectedItinerary) {
       console.error('No itinerary selected');
       return;
@@ -107,6 +110,7 @@ export class MyItinariesPage {
 
   editItinerary(itinerary: any) {
     this.selectedItinerary = itinerary;
+    console.log(this.selectedItinerary)
     const encodedData = encodeURIComponent(JSON.stringify(this.selectedItinerary));
     this.router.navigate(['/modified-my-itinaries'], { queryParams: { data: encodedData } });
   }
@@ -118,8 +122,12 @@ export class MyItinariesPage {
 
     this.itinariesService.itinariesListPassenger(itinariesId).subscribe(
       data => {
-        console.log(data)
-        this.itinaries = data;
+        console.log(data);
+        if (data) {
+          this.itinaries = data;
+        } else {
+          this.itinaries = [];
+        }
         const encodedData = encodeURIComponent(JSON.stringify(this.itinaries));
         this.router.navigate(['/request'], { queryParams: { data: encodedData } });
       },
@@ -128,6 +136,7 @@ export class MyItinariesPage {
       }
     );
   }
+
 
   filterItineraries() {
     if (!this.searchTerm) {

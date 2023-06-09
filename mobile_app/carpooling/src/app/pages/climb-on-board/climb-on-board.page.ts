@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { ItinariesUserService, ItinariesUser } from '../../services/itinarie-user.service';
 
@@ -15,6 +15,7 @@ export class ClimbOnBoardPage {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private itinariesUserService: ItinariesUserService
   ) { }
 
@@ -55,6 +56,9 @@ export class ClimbOnBoardPage {
       data => {
         console.log('Itinéraire créé avec succès', data);
         // Perform any additional actions here
+
+        // Naviguer vers la page de l'itinéraire
+        this.router.navigate(['/itinaries']);
       },
       error => {
         console.log('Erreur lors de la création de l\'itinéraire', error);

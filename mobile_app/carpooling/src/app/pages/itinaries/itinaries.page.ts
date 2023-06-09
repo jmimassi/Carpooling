@@ -47,6 +47,7 @@ export class ItinariesPage {
     this.username = decodedToken.id;
   }
 
+
   updateDetails(itinerary: any) {
     this.selectedItinerary = itinerary;
   }

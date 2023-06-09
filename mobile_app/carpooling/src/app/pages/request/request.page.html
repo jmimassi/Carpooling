@@ -1,18 +1,38 @@
 <ion-content>
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/home"></ion-back-button>
+      </ion-buttons>
+      <ion-title>My Itineraries</ion-title>
+    </ion-toolbar>
+  </ion-header>
   <ion-grid class="ion-padding">
     <ion-row>
-      <ion-col size="12" *ngFor="let user of receivedData.itinaries_users">
-        <ion-card [color]="user.request_user ? 'success' : 'danger'">
-          <ion-card-content>
-            <ion-card-title class="ion-text-center">{{ user.fk_user }}</ion-card-title>
-            <p class="ion-text-center">{{ user.message }}</p>
-          </ion-card-content>
-          <div class="card-footer">
-            <ion-button (click)="acceptRequest(user)" expand="block" color="success">Accept</ion-button>
-            <ion-button (click)="denyRequest(user)" expand="block" color="danger">Deny</ion-button>
-          </div>
-        </ion-card>
+      <ion-col size="12">
+        <ng-container
+          *ngIf="receivedData?.itinaries_users && receivedData.itinaries_users.length > 0; else noPassenger">
+          <ion-card *ngFor="let user of receivedData.itinaries_users"
+            [color]="user.request_user ? 'success' : 'danger'">
+            <ion-card-content>
+              <ion-card-title class="ion-text-center">{{ user.fk_user }}</ion-card-title>
+              <p class="ion-text-center">{{ user.message }}</p>
+            </ion-card-content>
+            <div class="card-footer">
+              <ion-button (click)="acceptRequest(user)" expand="block" color="success">Accept</ion-button>
+              <ion-button (click)="denyRequest(user)" expand="block" color="danger">Deny</ion-button>
+            </div>
+          </ion-card>
+        </ng-container>
       </ion-col>
     </ion-row>
+    <ng-template #noPassenger>
+      <ion-row>
+        <ion-col>
+          <p>Pas de passenger</p>
+        </ion-col>
+      </ion-row>
+    </ng-template>
   </ion-grid>
 </ion-content>

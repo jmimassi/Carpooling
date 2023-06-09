@@ -40,6 +40,7 @@ export class RequestPage {
       concatMap(() => this.itinariesUserService.itinariesUserAcceptPassenger(user.itinaries_user_id))
     ).subscribe(
       data => {
+        user.request_user = true;
         console.log('Acceptance and seat decrement success:', data);
         // Effectuer d'autres actions si nécessaire
       },
@@ -63,6 +64,7 @@ export class RequestPage {
       concatMap(() => this.itinariesUserService.itinariesUserRefusedPassenger(user.itinaries_user_id))
     ).subscribe(
       data => {
+        user.request_user = false;
         console.log('Denial and seat increment success:', data);
         // Effectuer d'autres actions si nécessaire
       },
