@@ -13,6 +13,7 @@
         <h2>{{ itinerary.destination }}</h2>
         <p>Start Address: {{ itinerary.startAddress }}</p>
         <p>Seats: {{ itinerary.seats }}</p>
+        <p>Lisence Plate: {{ itinerary.licensePlate }}</p>
         <p>Conductor: {{ itinerary.conductorEmail }}</p>
         <p>Start date: {{ itinerary.startDate }}</p>
         <p>Hours: {{ itinerary.hours }}</p>
@@ -20,17 +21,13 @@
       <div *ngIf="username !== itinerary.conductorEmail">
         <ion-button (click)="cancelItinerary()">Annuler</ion-button>
       </div>
-      <div *ngIf="username === itinerary.conductorEmail">
+      <div *ngIf="username === itinerary.conductorEmail" class="button-container">
         <ion-button (click)="deleteItinerary()">Supprimer</ion-button>
         <ion-button (click)="editItinerary(itinerary)">Modifier</ion-button>
         <ion-button (click)="requestItinerary(itinerary)">Request</ion-button>
       </div>
+
     </ion-item>
   </ion-list>
 
-  <ion-card *ngIf="selectedItinerary">
-    <ion-card-content>
-      <p>{{ selectedItinerary.destination }}</p>
-    </ion-card-content>
-  </ion-card>
 </ion-content>

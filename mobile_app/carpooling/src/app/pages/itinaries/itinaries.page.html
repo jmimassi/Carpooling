@@ -13,6 +13,7 @@
         <h2>{{ itinerary.destination }}</h2>
         <p>Start Address: {{ itinerary.startAddress }}</p>
         <!-- <p>Destination: {{ itinerary.destination }}</p> -->
+        <p>Lisence Plate: {{ itinerary.licensePlate }}</p>
         <p>Seats: {{ itinerary.seats }}</p>
         <p>Conductor: {{ itinerary.conductorEmail }}</p>
         <p>Start date: {{ itinerary.startDate }}</p>
@@ -23,11 +24,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-card *ngIf="selectedItinerary">
+  <!-- <ion-card *ngIf="selectedItinerary">
     <ion-card-content>
       <p>{{ selectedItinerary.destination }}</p>
     </ion-card-content>
-  </ion-card>
+  </ion-card> -->
 
   <!-- <ion-modal #modalContent>
     <ion-header>

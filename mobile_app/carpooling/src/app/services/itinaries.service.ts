@@ -24,6 +24,7 @@ export class ItinariesCard {
   "conductorEmail": string;
   "startDate": string;
   "hours": string;
+  "licensePlate": string;
 
 }
 
@@ -31,7 +32,7 @@ export class ItinariesCard {
   providedIn: 'root'
 })
 export class ItinariesService {
-  baseUrl: string = 'http://localhost:8000/api/'
+  baseUrl: string = 'http://pat.infolab.ecam.be:60846/api/'
 
   public selectedItinerary: any;
 

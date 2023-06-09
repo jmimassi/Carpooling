@@ -19,7 +19,7 @@ export class ItinariesUserService {
 
 
 
-  baseUrl: string = 'http://localhost:8000/api/';
+  baseUrl: string = 'http://pat.infolab.ecam.be:60846/api/';
 
   constructor(private http: HttpClient) { }
 
