@@ -18,7 +18,7 @@ export class RequestPage {
     private itinariesUserService: ItinariesUserService,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.route.queryParams.subscribe(params => {
       const encodedData = params['data'];
       const decodedData = JSON.parse(decodeURIComponent(encodedData));

@@ -8,7 +8,7 @@
   <ion-searchbar [(ngModel)]="searchTerm" placeholder="Rechercher"></ion-searchbar>
 
   <ion-list>
-    <ion-item *ngFor="let itinerary of filterItineraries()" (click)="updateDetails(itinerary)">
+    <ion-item *ngFor="let itinerary of filterItineraries()">
       <ion-label>
         <h2>{{ itinerary.destination }}</h2>
         <p>Start Address: {{ itinerary.startAddress }}</p>

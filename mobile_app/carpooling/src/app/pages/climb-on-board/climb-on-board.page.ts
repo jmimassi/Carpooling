@@ -8,7 +8,7 @@ import { ItinariesUserService, ItinariesUser } from '../../services/itinarie-use
   templateUrl: './climb-on-board.page.html',
   styleUrls: ['./climb-on-board.page.scss'],
 })
-export class ClimbOnBoardPage implements OnInit {
+export class ClimbOnBoardPage {
   itinerary: any;
   message: any;
   username: string = '';
@@ -18,7 +18,7 @@ export class ClimbOnBoardPage implements OnInit {
     private itinariesUserService: ItinariesUserService
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     const token = localStorage.getItem('token');
     if (!token) {
       console.error('Token not found in localStorage');

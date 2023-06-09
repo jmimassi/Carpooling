@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './modified-my-itinaries.page.html',
   styleUrls: ['./modified-my-itinaries.page.scss'],
 })
-export class ModifiedMyItinariesPage implements OnInit {
+export class ModifiedMyItinariesPage {
   itinerary: any;
 
   constructor(
@@ -17,7 +17,7 @@ export class ModifiedMyItinariesPage implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.route.queryParams.subscribe(params => {
       const encodedData = params['data'];
       if (encodedData) {

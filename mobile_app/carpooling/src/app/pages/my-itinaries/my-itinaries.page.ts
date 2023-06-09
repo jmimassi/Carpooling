@@ -1,5 +1,5 @@
 import { Component, ViewChild, TemplateRef } from '@angular/core';
-import { ItinariesService, ItinariesCard } from '../../services/itinaries.service';
+import { ItinariesService, ItinariesCard, Itinaries } from '../../services/itinaries.service';
 import { ItinariesUserService } from '../../services/itinarie-user.service';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
@@ -23,7 +23,7 @@ export class MyItinariesPage {
     private itinariesUserService: ItinariesUserService,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.itinariesService.itinariesListMyCard().subscribe((data) => {
       this.itineraries = data;
     });
@@ -40,7 +40,27 @@ export class MyItinariesPage {
 
   updateDetails(itinerary: any) {
     this.selectedItinerary = itinerary;
+
+    const updatedItinerary: Itinaries = {
+      itinaries_id: this.selectedItinerary.itinaries_id,
+      destination: this.selectedItinerary.destination,
+      startAddress: this.selectedItinerary.startAddress,
+      seats: this.selectedItinerary.seats,
+      startDate: this.selectedItinerary.startDate,
+      hours: this.selectedItinerary.hours
+    };
+
+    this.itinariesService.itinariesUpdate(updatedItinerary.itinaries_id, updatedItinerary)
+      .subscribe(
+        (data) => {
+          console.log('Itinerary updated successfully', data);
+        },
+        (error) => {
+          console.error('Error updating itinerary', error);
+        }
+      );
   }
+
 
   cancelItinerary() {
     if (!this.selectedItinerary) {
@@ -93,10 +113,12 @@ export class MyItinariesPage {
 
   requestItinerary(itinerary: any) {
     this.selectedItinerary = itinerary;
-    const itinerariesId = this.selectedItinerary.itinaries_id;
+    const itinariesId = this.selectedItinerary.itinaries_id;
+    console.log(itinariesId);
 
-    this.itinariesService.itinariesListPassenger(itinerariesId).subscribe(
+    this.itinariesService.itinariesListPassenger(itinariesId).subscribe(
       data => {
+        console.log(data)
         this.itinaries = data;
         const encodedData = encodeURIComponent(JSON.stringify(this.itinaries));
         this.router.navigate(['/request'], { queryParams: { data: encodedData } });

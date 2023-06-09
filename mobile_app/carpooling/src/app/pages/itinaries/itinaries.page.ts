@@ -13,7 +13,7 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './itinaries.page.html',
   styleUrls: ['./itinaries.page.scss']
 })
-export class ItinariesPage implements OnInit {
+export class ItinariesPage {
   username: string = '';
   searchTerm: string = '';
   itinaries: ItinariesCard[] = [];
@@ -31,7 +31,7 @@ export class ItinariesPage implements OnInit {
     private itinariesService: ItinariesService
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.itinariesService.itinariesListFormatted().subscribe((data) => {
       this.itinaries = data;
       console.log("C'est les itinéraires", this.itinaries);
