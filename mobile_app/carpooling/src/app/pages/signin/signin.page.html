@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/home"></ion-back-button>
       </ion-buttons>
-      <ion-title>My Itineraries</ion-title>
+      <ion-title>Sign In</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -19,11 +19,11 @@
     </ion-item>
 
     <ion-item class="form-input">
-      <ion-label position="floating">Mot de passe</ion-label>
+      <ion-label position="floating">Password</ion-label>
       <ion-input formControlName="password" type="password" required></ion-input>
     </ion-item>
 
-    <ion-button expand="block" type="submit" [disabled]="!signinForm.valid" class="form-button">Envoyer</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="!signinForm.valid" class="form-button">Submit</ion-button>
     <ion-button expand="block" (click)="onLogout()" class="form-button">Logout</ion-button>
   </form>
 

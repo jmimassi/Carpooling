@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>My Itineraries</ion-title>
+    <ion-title>Itineraries</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-searchbar [(ngModel)]="searchTerm" placeholder="Rechercher"></ion-searchbar>
+  <ion-searchbar [(ngModel)]="searchTerm" placeholder="Search"></ion-searchbar>
 
   <ion-list>
     <ion-item *ngFor="let itinerary of filterItineraries()">

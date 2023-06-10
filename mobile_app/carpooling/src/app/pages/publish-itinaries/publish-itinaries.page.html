@@ -4,7 +4,7 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/home"></ion-back-button>
       </ion-buttons>
-      <ion-title>My Itineraries</ion-title>
+      <ion-title>Publish Itineraries</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -18,22 +18,22 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Adresse de départ</ion-label>
+            <ion-label position="stacked">Start <Address></Address></ion-label>
             <ion-input type="text" name="startAddress" ngModel required></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Nombre de places</ion-label>
+            <ion-label position="stacked">Seats</ion-label>
             <ion-input type="number" name="seats" ngModel required></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="stacked">Date et heure de départ</ion-label>
+            <ion-label position="stacked">Start Date and Hours</ion-label>
             <ion-datetime display-format="DD/MM/YYYY HH:mm" picker-format="DD/MM/YYYY HH:mm" name="startDateTime"
               [(ngModel)]="itinarie.startDateTime" required></ion-datetime>
           </ion-item>
 
-          <ion-button expand="full" type="submit">Ajouter</ion-button>
+          <ion-button expand="full" type="submit">Add</ion-button>
         </form>
       </ion-col>
     </ion-row>
