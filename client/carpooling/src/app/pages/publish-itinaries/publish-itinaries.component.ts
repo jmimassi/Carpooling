@@ -15,10 +15,11 @@ export class PublishItinariesComponent {
   itinaries_user: ItinariesUser[] = [];
   selectedTime: any;
 
-  constructor(private itinariesService: ItinariesService, private router: Router, private itinaries_userService: ItinariesUserService) { }
+  constructor(private itinariesService: ItinariesService, private router: Router) { }
 
+  // Fetch the itinaries on component initialization
   ngOnInit() {
-    this.itinariesService.itinariesListCard().subscribe(
+    this.itinariesService.itinariesListFormatted().subscribe(
       data => {
         // console.log(data)
         this.itinaries = data
@@ -27,7 +28,8 @@ export class PublishItinariesComponent {
     )
   }
 
-  onSubmit(itinarie_user: {
+  // Create a new itinerary
+  onSubmit(itinarie: {
     destination: string,
     startAddress: string,
     seats: number,
@@ -35,15 +37,13 @@ export class PublishItinariesComponent {
     hours: string
   }) {
     // Extract the date portion from the startDate string
-    const startDate = new Date(itinarie_user.startDate).toISOString().substring(0, 10);
+    const startDate = new Date(itinarie.startDate).toISOString().substring(0, 10);
 
     // Update the itinarie_user object with the formatted startDate
-    const updatedItinarieUser = { ...itinarie_user, startDate };
+    const updatedItinarie = { ...itinarie, startDate };
 
-    this.itinariesService.itinariesCreate(updatedItinarieUser).subscribe(
+    this.itinariesService.itinariesCreate(updatedItinarie).subscribe(
       data => {
-        // localStorage.setItem('token', data.token);
-        // form.reset(); // reset the form after successful submission
         this.router.navigate(['/itinaries']); // navigate to dashboard page
       },
       error => {
@@ -51,12 +51,6 @@ export class PublishItinariesComponent {
       }
     );
 
-    console.log('users que je vois dans le signup component', updatedItinarieUser);
+    console.log('users que je vois dans le signup component', updatedItinarie);
   }
-
-
-  //   onSubmit() {
-  //     this.router.navigate(['/signin']); // navigate to dashboard page
-  //   }
-  // }
 }

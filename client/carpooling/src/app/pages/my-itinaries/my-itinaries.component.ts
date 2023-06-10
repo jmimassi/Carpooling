@@ -16,17 +16,13 @@ export class MyItinariesComponent {
 
   username: string = '';
 
-  passengersData: any;
-
-  public requestItinaries: any[] = [];
-
   itinaries: ItinariesCard[] = [];
 
-  selectedItinerary: any; // variable qui stockera l'itinéraire sélectionné
-
-  passengers: ItinariesUser[] = [];
+  selectedItinerary: any;
 
   showModal: boolean = false;
+
+  searchTerm: string = '';
 
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
@@ -38,6 +34,7 @@ export class MyItinariesComponent {
     private dialog: MatDialog
   ) { }
 
+  // Fetch the itinaries on component initialization
   ngOnInit() {
     this.fetchData(); // Fetch the data when the component initializes
   }
@@ -60,12 +57,12 @@ export class MyItinariesComponent {
     this.username = decodedToken.id;
   }
 
+  // update the right side of the screen when we click on an itinarie card
   updateDetails(itinerary: any) {
     this.selectedItinerary = itinerary;
   }
 
-  searchTerm: string = '';
-
+  // Delete an itinerary as a conductor
   deleteItinerary() {
     const itinariesId = this.selectedItinerary.itinaries_id; // ID of the selected itinerary
     console.log(itinariesId);
@@ -79,21 +76,20 @@ export class MyItinariesComponent {
     );
   }
 
+  // Open the modal to edit the itinerary as a conductor
   editItinerary(itinerary: any) {
     this.dialogRef = this.dialog.open(this.modalContent, {
-      // width: '400px', // Définissez la largeur du modal selon vos besoins
       data: { itinerary: itinerary }
     });
 
     this.dialogRef.afterClosed().subscribe(result => {
       this.fetchData();
-      // Logique à exécuter après la fermeture du modal, si nécessaire
     });
   }
 
+  // Open the page of the passenger that want to climb on board with us as a conductor
   Request() {
     if (!this.selectedItinerary) {
-      // Vérifiez si un itinéraire est sélectionné avant de continuer
       console.error('No itinerary selected');
       return;
     }
@@ -111,7 +107,7 @@ export class MyItinariesComponent {
     );
   }
 
-
+  // Cancel a booking as a passenger
   cancelItinerary() {
     const fk_user = this.username; // Get the current logged-in user's ID
     const fk_itinaries = this.selectedItinerary.itinaries_id; // ID of the selected itinerary
@@ -128,6 +124,7 @@ export class MyItinariesComponent {
     );
   }
 
+  // Submit the edited card
   onSubmitEdit(itinarie: {
     id: number,
     destination: string,
@@ -136,9 +133,9 @@ export class MyItinariesComponent {
     startDate: string,
     hours: string
   }) {
-    const itinariesId = this.selectedItinerary.itinaries_id; // ID de l'itinéraire sélectionné
+    const itinariesId = this.selectedItinerary.itinaries_id;
 
-    console.log("c'est l'itineraire id : ", itinariesId);
+    console.log(itinariesId);
 
     const updatedItinaries: Itinaries = {
       itinaries_id: itinariesId,
@@ -153,13 +150,10 @@ export class MyItinariesComponent {
 
     this.itinariesService.itinariesUpdate(itinariesId, updatedItinaries).subscribe(
       data => {
-        // Gestion de la réponse de la requête de mise à jour
         console.log('Itinéraire mis à jour avec succès', data);
         this.dialogRef.close(); // Close the modal after submitting the form
-        // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
       },
       error => {
-        // Gestion des erreurs lors de la requête de mise à jour
         console.log('Erreur lors de la mise à jour de l\'itinéraire', error);
       }
     );

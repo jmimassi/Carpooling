@@ -17,6 +17,7 @@ export class RequestComponent {
 
   constructor(private route: ActivatedRoute, private itinariesService: ItinariesService, private itinaries_userService: ItinariesUserService, private snackBar: MatSnackBar) { }
 
+  // Fetch the passengers on component initialization
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const encodedData = params['data'];
@@ -26,56 +27,48 @@ export class RequestComponent {
     });
   }
 
+  // Accept the request of the user
   acceptRequest(user: any) {
     if (user.request_user) {
-      this.snackBar.open('La demande de l\'utilisateur est déjà acceptée.', 'Fermer', { duration: 3000 });
+      this.snackBar.open('This user is already accepted', 'Close', { duration: 3000 });
       return;
     }
-    // Logique pour accepter la demande de l'utilisateur
     console.log('Accepted user:', user);
-    const itinerariesId = user.fk_itinaries; // Récupérer l'ID de l'itinéraire à partir de l'utilisateur
+    const itinerariesId = user.fk_itinaries;
 
     console.log(user.itinaries_user_id)
     this.itinariesService.itinariesDecrementSeats(itinerariesId).pipe(
       concatMap(() => this.itinaries_userService.itinariesUserAcceptPassenger(user.itinaries_user_id))
     ).subscribe(
       data => {
-        // Gestion de la réponse après l'acceptation du passager et la diminution des places
         console.log('Acceptance and seat decrement success:', data);
         user.request_user = true;
-        // Effectuer d'autres actions si nécessaire
       },
       error => {
-        // Gestion des erreurs en cas d'échec de l'acceptation du passager ou de la diminution des places
         console.error('Error accepting passenger and decrementing seats:', error);
-        // Effectuer d'autres actions en cas d'erreur
       }
     );
   }
 
+  // Deny the request of the user
   denyRequest(user: any) {
     if (!user.request_user) {
-      this.snackBar.open('La demande de l\'utilisateur est déjà refusée.', 'Fermer', { duration: 3000 });
+      this.snackBar.open('This user is already denied', 'Close', { duration: 3000 });
       return;
     }
-    // Logique pour accepter la demande de l'utilisateur
     console.log('Deny user:', user);
-    const itinerariesId = user.fk_itinaries; // Récupérer l'ID de l'itinéraire à partir de l'utilisateur
+    const itinerariesId = user.fk_itinaries;
 
     console.log(user.itinaries_user_id)
     this.itinariesService.itinariesIncrementSeats(itinerariesId).pipe(
       concatMap(() => this.itinaries_userService.itinariesUserRefusedPassenger(user.itinaries_user_id))
     ).subscribe(
       data => {
-        // Gestion de la réponse après l'acceptation du passager et la diminution des places
         user.request_user = false;
         console.log('Acceptance and seat decrement success:', data);
-        // Effectuer d'autres actions si nécessaire
       },
       error => {
-        // Gestion des erreurs en cas d'échec de l'acceptation du passager ou de la diminution des places
         console.error('Error accepting passenger and decrementing seats:', error);
-        // Effectuer d'autres actions en cas d'erreur
       }
     );
   }

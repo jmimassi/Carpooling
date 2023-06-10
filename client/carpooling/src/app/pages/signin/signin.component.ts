@@ -12,6 +12,7 @@ export class SigninComponent {
 
   constructor(private userService: UserService, private router: Router) { }
 
+  // Login with an existing user
   onSubmit(users: { email: string; password: string }) {
     this.userService.userLogin(users).subscribe(
       data => {
@@ -22,6 +23,7 @@ export class SigninComponent {
     console.log('users que je vois dans le signin component', users);
   }
 
+  // Logout by removing the token from the localStorage
   onClick() {
     localStorage.removeItem('token');
     this.router.navigate(['/signup']); // navigate to signup page

@@ -28,6 +28,7 @@ export class ItinariesComponent {
     private snackBar: MatSnackBar
   ) { }
 
+  // Fetch the itinaries on component initialization
   ngOnInit() {
     this.fetchItinaries(); // Fetch the itinaries on component initialization
 
@@ -42,20 +43,18 @@ export class ItinariesComponent {
   }
 
   fetchItinaries() {
-    this.itinariesService.itinariesListCard().subscribe((data) => {
+    this.itinariesService.itinariesListFormatted().subscribe((data) => {
       this.itinaries = data;
       console.log("These are the itineraries", this.itinaries);
     });
   }
 
+  // update the right side of the screen when we click on an itinarie card
   updateDetails(itinerary: any) {
     this.selectedItinerary = itinerary;
   }
 
-  onSubmit() {
-    this.router.navigate(['/signin']); // navigate to dashboard page
-  }
-
+  // Open a modal to send a message to the conductor to climb on board
   climbBoardModal(itinerary: any) {
     if (itinerary.passengerEmails.includes(this.username)) {
       this.snackBar.open('You are already a passenger on this itinerary.', 'Close', {
@@ -65,12 +64,10 @@ export class ItinariesComponent {
       return;
     } else {
       this.dialogRef = this.dialog.open(this.modalContent, {
-        // width: '400px', // Définissez la largeur du modal selon vos besoins
         data: { itinerary: itinerary }
       });
 
       this.dialogRef.afterClosed().subscribe((result) => {
-        // Logique à exécuter après la fermeture du modal, si nécessaire
         if (result) {
           this.fetchItinaries(); // Fetch the itinaries after climbing on board
         }
@@ -78,8 +75,9 @@ export class ItinariesComponent {
     }
   }
 
+  // Send the form to the conductor to climb on board
   onSubmitClimb(itinarie: ItinariesUser) {
-    const itinariesId = this.selectedItinerary.itinaries_id; // ID de l'itinéraire sélectionné
+    const itinariesId = this.selectedItinerary.itinaries_id;
 
     console.log("c'est l'itineraire id : ", itinariesId);
     console.log("c'est l'itinéraire où on veut aller", itinarie);
@@ -96,13 +94,10 @@ export class ItinariesComponent {
 
     this.itinariesUserService.itinariesUserCreate(updatedItinaries).subscribe(
       (data) => {
-        // Gestion de la réponse de la requête de création
         console.log('Itinéraire créé avec succès', data);
         this.dialogRef.close(true); // Close the modal after submitting the form and pass true as the result
-        // Réinitialisez le formulaire ou effectuez toute autre action nécessaire
       },
       (error) => {
-        // Gestion des erreurs lors de la requête de création
         console.log('Erreur lors de la création de l\'itinéraire', error);
       }
     );
