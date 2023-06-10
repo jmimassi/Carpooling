@@ -8,7 +8,6 @@ const Itinaries = db.define('itinaries', {
         autoIncrement: true,
         primaryKey: true
     },
-    // fk_destination: { type: Sequelize.STRING, allowNull: false },
     startAddress: { type: Sequelize.STRING, allowNull: false },
     seats: { type: Sequelize.INTEGER, allowNull: false },
     destination: { type: Sequelize.STRING, allowNull: false },

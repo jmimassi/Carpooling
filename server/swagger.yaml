@@ -64,7 +64,7 @@ paths:
         - Users
       summary: Déconnecter l' utilisateur
       requestBody:
-        description:
+        description: Déconnecter l'utilisateur
         required: true
         content:
           application/json:
@@ -93,7 +93,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Users"
+                  $ref: "#/components/schemas/User"
         "404":
           description: Impossible de récupérer la liste des utilisateurs disponibles
 
@@ -441,7 +441,7 @@ paths:
           description: ID de la réservation à supprimer
           schema:
             type: string
-        
+
       responses:
         "200":
           description: Itinéraire supprimé avec succès
@@ -592,12 +592,6 @@ components:
           type: boolean
         message:
           type: string
-
-    # Destination:
-    #   type: object
-    #   properties:
-    #     address:
-    #       type: string
 
     UserLogin:
       type: object

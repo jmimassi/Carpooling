@@ -4,7 +4,7 @@ const Itinaries_User = db.Itinaries_User;
 const Itinaries = db.Itinaries;
 const Destination = db.Destination;
 
-
+// Get all itineraries and their associated users
 exports.itinariesList = async function (req, res) {
     let listformatted = [];
     await Itinaries.findAll({
@@ -16,16 +16,17 @@ exports.itinariesList = async function (req, res) {
         }]
     })
         .then(data => {
-            listformatted.push()
-            console.log("All itinaries:", JSON.stringify(data, null, 2));
+            // Process and format the data if needed
+            listformatted.push();
+            console.log("All itineraries:", JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
-        })
+            res.status(500).json({ message: err.message });
+        });
 }
 
-
+// Get all itineraries with formatted data for displaying as cards
 exports.itinariesCardList = async function (req, res) {
     let listformatted = [];
     console.log('');
@@ -43,6 +44,7 @@ exports.itinariesCardList = async function (req, res) {
     })
         .then((data) => {
             data.forEach((itinerary) => {
+                // Extract relevant information from the itinerary and format it as needed
                 let conductorEmail = '';
                 let passengerEmails = [];
                 let licensePlate = '';
@@ -73,7 +75,7 @@ exports.itinariesCardList = async function (req, res) {
                 listformatted.push(itineraryObj);
             });
 
-            console.log('All itinaries:', JSON.stringify(listformatted, null, 2));
+            console.log('All itineraries:', JSON.stringify(listformatted, null, 2));
             res.json(listformatted);
         })
         .catch((err) => {
@@ -81,8 +83,7 @@ exports.itinariesCardList = async function (req, res) {
         });
 };
 
-
-
+// Get the formatted list of itineraries for the current user (conductor or passenger)
 exports.itinariesMyCardList = async function (req, res) {
     let listformatted = [];
 
@@ -100,15 +101,15 @@ exports.itinariesMyCardList = async function (req, res) {
     })
         .then((data) => {
             data.forEach((itinerary) => {
+                // Extract relevant information from the itinerary and format it as needed
                 let conductorEmail = '';
                 let passengerRequest = {};
                 let licensePlate = '';
 
                 itinerary.itinaries_users.forEach((user) => {
-                    licensePlate = user.user.lisence_plate
+                    licensePlate = user.user.lisence_plate;
                     if (user.type_user === 'conductor') {
                         conductorEmail = user.user.email;
-
                     } else if (user.type_user === 'passenger') {
                         passengerRequest[user.fk_user] = user.request_user; // Add fk_user as key and request_user as value to the dictionary
                     }
@@ -134,7 +135,7 @@ exports.itinariesMyCardList = async function (req, res) {
                 }
             });
 
-            console.log('All itinaries:', JSON.stringify(listformatted, null, 2));
+            console.log('All itineraries:', JSON.stringify(listformatted, null, 2));
             res.json(listformatted);
         })
         .catch((err) => {
@@ -142,7 +143,7 @@ exports.itinariesMyCardList = async function (req, res) {
         });
 };
 
-
+// Get the list of passengers for a specific itinerary
 exports.itinariesPassengersList = async function (req, res) {
     if (!req.params.itinaries_id) {
         return res.status(400).json({ message: 'Missing itinerary ID' });
@@ -157,15 +158,14 @@ exports.itinariesPassengersList = async function (req, res) {
             }]
         });
 
-
         console.log('All passengers:', JSON.stringify(itinerary, null, 2));
         res.json(itinerary);
-
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 
+// Create a new itinerary
 exports.itinarieCreate = async (req, res) => {
     let itinarie = Itinaries.build({
         destination: req.body.destination,
@@ -173,28 +173,30 @@ exports.itinarieCreate = async (req, res) => {
         seats: req.body.seats,
         startDate: req.body.startDate,
         hours: req.body.hours,
-    })
+    });
     await itinarie.save()
         .then(data => {
             console.log(itinarie.toJSON());
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
-        })
-}
+            res.status(500).json({ message: err.message });
+        });
+};
 
+// Get itineraries by start address
 exports.itinariesBystartAddress = async function (req, res) {
     await Itinaries.findAll({ where: { startAddress: req.params.startAddress } })
         .then(data => {
-            console.log(`All itinaries with :${req.params.startAddress} in params`, JSON.stringify(data, null, 2));
+            console.log(`All itineraries with :${req.params.startAddress} in params`, JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
-        })
-}
+            res.status(500).json({ message: err.message });
+        });
+};
 
+// Get itineraries by email
 exports.itinariesByEmail = async function (req, res) {
     await Itinaries.findAll({
         include: [{
@@ -208,14 +210,15 @@ exports.itinariesByEmail = async function (req, res) {
     })
         .then(data => {
             console.log(data);
-            console.log(`All itinaries with :${req.params.email} in params`, JSON.stringify(data, null, 2));
+            console.log(`All itineraries with :${req.params.email} in params`, JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
-        })
-}
+            res.status(500).json({ message: err.message });
+        });
+};
 
+// Get itineraries by destination
 exports.itinariesByDestination = async function (req, res) {
     await Itinaries.findAll({
         include: [{
@@ -228,14 +231,15 @@ exports.itinariesByDestination = async function (req, res) {
         }]
     })
         .then(data => {
-            console.log(`All itinaries with :${req.params.destination} in params`, JSON.stringify(data, null, 2));
+            console.log(`All itineraries with :${req.params.destination} in params`, JSON.stringify(data, null, 2));
             res.json(data);
         })
         .catch(err => {
-            res.status(500).json({ message: err.message })
-        })
-}
+            res.status(500).json({ message: err.message });
+        });
+};
 
+// Update an itinerary
 exports.itinariesUpdate = async (req, res) => {
     if (req.params.itinaries_id) {
         await Itinaries.update(
@@ -254,13 +258,14 @@ exports.itinariesUpdate = async (req, res) => {
                 res.json(data);
             })
             .catch(err => {
-                res.status(500).json({ message: err.message })
-            })
+                res.status(500).json({ message: err.message });
+            });
+    } else {
+        res.status(400).json({ message: 'Itinarie not found' });
     }
-    else res.status(400).json({ message: 'Itinarie not found' })
-}
+};
 
-
+// Delete an itinerary
 exports.itinariesDelete = async (req, res) => {
     if (req.params.itinaries_id) {
         await Itinaries.destroy(
@@ -269,67 +274,68 @@ exports.itinariesDelete = async (req, res) => {
             }
         )
             .then(data => {
-                // console.log(destination.toJSON());
                 res.json(data);
             })
             .catch(err => {
-                res.status(500).json({ message: err.message })
-            })
+                res.status(500).json({ message: err.message });
+            });
+    } else {
+        res.status(400).json({ message: 'Itinarie not found' });
     }
-    else res.status(400).json({ message: 'Itinarie not found' })
-}
+};
 
-
+// Decrement the number of available seats for an itinerary
 exports.itinaries_userDecrementSeat = async (req, res) => {
-    console.log(req.params.itinaries_id)
+    console.log(req.params.itinaries_id);
     if (req.params.itinaries_id) {
         try {
-            // Find the Itinarie_User with the given ID
-            const itinarie = await Itinaries.findOne({ where: { itinaries_id: req.params.itinaries_id } });
+            // Find the itinerary with the given ID
+            const itinerary = await Itinaries.findOne({ where: { itinaries_id: req.params.itinaries_id } });
 
-            if (!itinarie) {
+            if (!itinerary) {
                 return res.status(404).json({ message: 'Itinarie not found' });
             }
 
             // Decrease the seats value by one
-            itinarie.seats -= 1;
+            itinerary.seats -= 1;
 
-            // Save the Itinarie_User with the new seats value
-            const updatedItinarie = await itinarie.save();
+            // Save the itinerary with the new seats value
+            const updatedItinerary = await itinerary.save();
 
-            // Respond with the updated Itinarie_User
-            res.json(updatedItinarie);
+            // Respond with the updated itinerary
+            res.json(updatedItinerary);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
     } else {
         res.status(400).json({ message: 'Invalid Itinarie ID' });
     }
-}
+};
 
+// Increment the number of available seats for an itinerary
 exports.itinaries_userIncrementSeat = async (req, res) => {
-    console.log(req.params.itinaries_id)
+    console.log(req.params.itinaries_id);
     if (req.params.itinaries_id) {
         try {
-            // Find the Itinarie_User with the given ID
-            const itinarie = await Itinaries.findOne({ where: { itinaries_id: req.params.itinaries_id } });
+            // Find the itinerary with the given ID
+            const itinerary = await Itinaries.findOne({ where: { itinaries_id: req.params.itinaries_id } });
 
-            if (!itinarie) {
+            if (!itinerary) {
                 return res.status(404).json({ message: 'Itinarie not found' });
             }
 
-            // Decrease the seats value by one
-            itinarie.seats += 1;
+            // Increase the seats value by one
+            itinerary.seats += 1;
 
-            // Save the Itinarie_User with the new seats value
-            const updatedItinarie = await itinarie.save();
+            // Save the itinerary with the new seats value
+            const updatedItinerary = await itinerary.save();
 
-            // Respond with the updated Itinarie_User
-            res.json(updatedItinarie);
+            // Respond with the updated itinerary
+            res.json(updatedItinerary);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }
     } else {
         res.status(400).json({ message: 'Invalid Itinarie ID' });
     }
-}
+};
