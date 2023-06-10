@@ -12,7 +12,7 @@ export class User {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'http://pat.infolab.ecam.be:60846/api/';
+  private baseUrl = 'https://pat.infolab.ecam.be:64346/api/';
 
   constructor(private http: HttpClient) { }
 

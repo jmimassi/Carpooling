@@ -17,7 +17,7 @@ export interface ItinariesUser {
 })
 export class ItinariesUserService {
 
-  baseUrl: string = 'http://pat.infolab.ecam.be:60846/api/';
+  baseUrl: string = 'https://pat.infolab.ecam.be:64346/api/';
 
   headers: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',

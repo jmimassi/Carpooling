@@ -37,7 +37,7 @@ export class ItinariesCard {
   providedIn: 'root'
 })
 export class ItinariesService {
-  baseUrl = 'http://pat.infolab.ecam.be:60846/api/';
+  baseUrl = 'https://pat.infolab.ecam.be:64346/api/';
 
   public selectedItinerary: any;
 
