@@ -142,7 +142,7 @@ export class MyItinariesComponent {
       destination: itinarie.destination,
       startAddress: itinarie.startAddress,
       seats: itinarie.seats,
-      startDate: itinarie.startAddress,
+      startDate: itinarie.startDate,
       hours: itinarie.hours
     };
 
